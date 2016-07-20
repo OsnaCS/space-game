@@ -25,7 +25,7 @@ function init() {
     // Beispiel-Code ...
     
     camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-    camera.position.y = 400;
+    //camera.position.y = 400;
 
     scene = new THREE.Scene();
 
@@ -51,7 +51,8 @@ function init() {
     //sph.position.set(0,0,0);
     //scene.add(sph);
 
-
+    createStars();
+    createAsteroids(); 
     var player = Player();
     player.init();
     var world = World();
@@ -118,11 +119,11 @@ function animate() {
 
 
 
-
+    camera.position.set(ship.position.x , ship.position.y + 200 , ship.position.z - 400);
    // camera.position.x = Math.cos( timer ) * 800;
    // camera.position.z = Math.sin( timer ) * 800;
 
-    camera.lookAt( scene.position );
+    camera.lookAt( ship.position );
 
 
 
@@ -130,7 +131,8 @@ function render() {
 
     // TODO: animation code goes here
 
-
+    updateStars(); 
+  //  updateAsteroids(); 
     renderer.render( scene, camera );
 
 }
