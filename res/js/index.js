@@ -1,10 +1,14 @@
+var camera, scene, renderer, composer;
+
+var spaceship, sphere, planet, spaceshipWrapper;
+
+
+
 $(function () {
 
     var container;
-
-    var camera, scene, renderer, composer;
-
-    var spaceship, sphere, planet;
+    var tick;
+    var clock = new THREE.Clock(true);
 
     // start
     init();
@@ -34,6 +38,7 @@ $(function () {
         //scene.add(new THREE.AmbientLight(0x404040));
 
         var light = new THREE.DirectionalLight(0xffffff);
+        // dirLight.castShadow = true;
         light.position.set(3, 6, 0);
         scene.add(light);
 
@@ -43,12 +48,13 @@ $(function () {
         dirLight.color.setHSL( 0.1, 0.7, 0.5 );
         scene.add( dirLight );
 
+
         var textureLoaderLensFlare = new THREE.TextureLoader();
         textureLoaderLensFlare.load("res/textures/lensflare0.png", function (texture1) {
             textureLoaderLensFlare.load("res/textures/lensflare2.png", function (texture2) {
                 textureLoaderLensFlare.load("res/textures/lensflare3.png", function (texture3) {
                     var light = new THREE.PointLight( 0xffffff, 1.5, 2000 );
-                    light.color.setHSL( 0.55, 0.9, 0.5 );
+                    light.color.setHSL( 32/255, 1, 0.5 );
                     light.position.set( 5, 5, 5 );
                     scene.add( light );
 
@@ -108,19 +114,26 @@ $(function () {
 
         // Spaceship
         var loader = new THREE.JSONLoader();
-
-
-        loader.load("res/models/HeroShipV2.json", function (geometry) {
-
-            spaceship = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({color: "darkgrey",specular: "darkgrey"}));
-            spaceship.position.set(0, 0, 0);
-            scene.add(spaceship);
+        loader.load("res/meshes/HeroShipV5.json", function (geometry) {
+            var textureLoader = new THREE.TextureLoader();
+            textureLoader.load("res/textures/TextureHero.png", function (texture) {
+                spaceship = new THREE.Mesh(geometry, new THREE.MeshPhongMaterial({map:texture}));
+                spaceship.position.set(0, 0, 0);
+                spaceship.rotateY(225);
+                scene.add(spaceship);
+            });
         });
 
         // Event-Listener für Resize
         window.addEventListener("resize", onWindowResize, false);
         window.addEventListener("mousemove", onMouseMove, false);
+
     }
+
+
+
+
+
 
     function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -148,6 +161,7 @@ $(function () {
         render();
 
         // animation goes here
+        //TWEEN.update();
         moveSpaceship();
     }
 
@@ -179,34 +193,9 @@ $(function () {
         }
 
         if (planet !== undefined) {
-            console.log("spin");
             planet.rotateX(0.0002);
             planet.rotateY(0.0002);
         }
-
-    }
-
-    function lensFlareUpdateCallback( object ) {
-
-        var f, fl = object.lensFlares.length;
-        var flare;
-        var vecX = -object.positionScreen.x * 2;
-        var vecY = -object.positionScreen.y * 2;
-
-
-        for( f = 0; f < fl; f++ ) {
-
-            flare = object.lensFlares[ f ];
-
-            flare.x = object.positionScreen.x + vecX * flare.distance;
-            flare.y = object.positionScreen.y + vecY * flare.distance;
-
-            flare.rotation = 0;
-
-        }
-
-        object.lensFlares[ 2 ].y += 0.025;
-        object.lensFlares[ 3 ].rotation = object.positionScreen.x * 0.5 + THREE.Math.degToRad( 45 );
 
     }
 
