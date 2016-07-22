@@ -24,11 +24,9 @@ function init() {
     container = document.createElement( 'div' );
     document.body.appendChild( container );
 
+    
+    scene = new THREE.Scene();
 
-
-
-    //while(!fileLoader.isReady()){};
-        scene = new THREE.Scene();
     // Beispiel-Code ...
     var player = Player();
     player.init();
@@ -55,10 +53,6 @@ function init() {
     });
 
     camera.setTarget('Target');
-
-
-  
-
 
 
 
