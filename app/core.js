@@ -1,84 +1,144 @@
 var container;
 
-var camera, scene, renderer;
+var camera, scene, renderer, clock;
 
-// start
-init();
-animate();
+var fileLoader;
+var interface;
+var ship;
+
+//var projectileList = [];
+
+$(function() {
+    fileLoader = FileLoader();
+    interface = Interface();
+    setTimeout(function(){
+        init();
+        animate();
+    },1000)
+
+});
+
 
 function init() {
-    
-    // HTML-Container erzeugen
+
+    /********** THREE.js initialisieren **********/
+
     container = document.createElement( 'div' );
     document.body.appendChild( container );
 
 
-    
-    
-    
-    // Beispiel-Code ...
-    
-    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-    camera.position.y = 400;
+    //var Collision = Collision();
 
-    scene = new THREE.Scene();
+    //while(!fileLoader.isReady()){};
+        scene = new THREE.Scene();
+    // Beispiel-Code ...
+    var player = Player();
+    player.init();
+
+
+    
+    camera = new THREE.TargetCamera( 60, window.innerWidth / window.innerHeight, 1, 5000 );    
+    camera.addTarget({
+        name:'Target',
+        targetObject: ship,
+        cameraPosition: new THREE.Vector3(0,15,30),
+        fixed: false,
+        stiffness: 0.15,
+        matchRotation: false
+    });
+
+    camera.addTarget({
+        name:'Cockpit',
+        targetObject: ship,
+        cameraPosition: new THREE.Vector3(0,0,-10),
+        fixed: false,
+        stiffness: 1,
+        matchRotation: true
+    });
+
+    camera.setTarget('Target');
+
+
+  
+
+
+
+
+
+    /********** Szene füllen **********/
+
 
     var light, object;
 
     scene.add( new THREE.AmbientLight( 0x404040 ) );
-
     light = new THREE.DirectionalLight( 0xffffff );
     light.position.set( 0, 1, 0 );
     scene.add( light );
-
-    /*var map = new THREE.TextureLoader().load( 'textures/UV_Grid_Sm.jpg' );
-    map.wrapS = map.wrapT = THREE.RepeatWrapping;
-    map.anisotropy = 16;
-
-    var material = new THREE.MeshLambertMaterial( { map: map, side: THREE.DoubleSide } );*/
-    var material = new THREE.MeshBasicMaterial();
-
-    //
+    
+    object = new THREE.AxisHelper( 100 );
+    object.position.set( 0, 0, 0 );
+    scene.add( object );    
+    
 
 
-    //sph = new THREE.Mesh( new THREE.SphereGeometry(50,20,20),material);
-    //sph.position.set(0,0,0);
-    //scene.add(sph);
+    
+
+    /********** Module laden **********/
+
+    
+    var world = World();
+    world.init();
+    createStars();
+    createAsteroids(); 
+  //  THREEx.Transparency.init(sphere); 
+    var movement = Movement();
+    movement.init();
+    interfaceInit();
+    
+
 
     object = new THREE.AxisHelper( 100 );
     object.position.set( 0, 0, 0 );
     scene.add( object );
 
+
    /** object = new THREE.ArrowHelper( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( 0, 0, 0 ), 50 );
     object.position.set( 400, 0, -200 );
     scene.add( object ); */
 
-    //
+
 
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
 
 
-
-    // TODO: scene code goes here
-    // Welt erzeugen
-    // Spieler erzeugen
-    // Gegner erzeugen
-    // ...
-    // => Funktionen aus anderen Dateien laden!!
-
-
-
-
+    /********** Input **********/
+    
     // Szene in DOM einsetzen
     container.appendChild( renderer.domElement );
     // Event-Listener
     window.addEventListener( 'resize', onWindowResize, false );
 
+    clock = new THREE.Clock();
+
+    window.onkeydown = onKeyDown;
+
+    initializeWeapons();
 }
 
-
+function onKeyDown(e) {
+    var movement = Movement();
+    if (e.keyCode == 80 && Pause == false) { // = 'P'
+        PauseScreen = true;
+        interface.toggleMenuOverlay();        
+        movement.unlockPointer();
+    }else if(e.keyCode == 80 && Pause == true){
+        interface.toggleMenuOverlay();        
+        movement.lockPointer();        
+        PauseScreen = false;
+    }
+}
 
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
@@ -88,19 +148,24 @@ function onWindowResize() {
 }
 
 
-
 function animate() {
     // dont touch!
     requestAnimationFrame( animate );
     render();
 }
 
-
-
 function render() {
 
     // TODO: animation code goes here
 
-    renderer.render( scene, camera );
-
+    delta = clock.getDelta();
+    if(!Pause) {
+        renderWeapons();
+        Movement().move(delta);
+        updateStars();
+        updateAsteroids();
+       // THREEx.Transparency.update(sphere, camera); 
+        camera.update();        
+    }
+    renderer.render(scene, camera);
 }
