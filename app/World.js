@@ -47,8 +47,10 @@ function createStars(){
 function createAsteroids(){
 
     var rndSpeedX, rndSpeedY, rndSpeedZ, rotSpeed, rndScale;
-    var  materialAst, astHitBox, hitGeometry;
-    var astTexture, astOriginal, astGeometry;
+
+    var materialAst, astHitBox, hitGeometry;
+    var astTexture, astOriginal;
+
 
     astGeometry = fileLoader.get("AsteroidV2");
     astTexture  = fileLoader.get("AsteroidTex");
@@ -59,8 +61,8 @@ function createAsteroids(){
      rndSpeedY = Math.random()* 20 - 14;
      rndSpeedZ = Math.random()* 20 - 14;
      rotSpeed = Math.random () * 0.05 - 0.01;
-     rndScale = Math.random() * 30;
-
+     rndScale = Math.random() * 70 - 40;
+ 
      var vecSpeed = new THREE.Vector3 (rndSpeedX ,rndSpeedY, rndSpeedZ);
      var vecRot = new THREE.Vector3 (rotSpeed *(Math.random () * (2-0) - 0), rotSpeed * (Math.random() * (2 - 0) - 0 ), rotSpeed * (Math.random() *2 -0));
      asteroidSpeedVecs.push(vecSpeed);
@@ -152,7 +154,9 @@ function asteroidCollision(ast1Index, ast2Index){
     var ast2 = asteroids[ast2Index];
     var ast1Dir = asteroidSpeedVecs[ast1Index];
     var ast2Dir = asteroidSpeedVecs[ast2Index];
-
+    
+    //console.log(asteroidHitBoxes[ast1Index].geometry.parameters.radius);
+  if(asteroidHitBoxes[ast1Index].geometry.parameters.radius>55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius>55){
     var axis = ast2.position.clone();
     axis.sub(ast1.position);
 
@@ -167,7 +171,28 @@ function asteroidCollision(ast1Index, ast2Index){
 
     asteroidSpeedVecs[ast1Index] = ast1Dir;
     asteroidSpeedVecs[ast2Index] = ast2Dir;
+    console.log("Kaputt");
+    
+  } else{
+    if(asteroidHitBoxes[ast1Index].geometry.parameters.radius<55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius>55){
+      console.log("Kaputt");
+      destroyAsteroid(ast1Index);
+      
+    } else{
+    if(asteroidHitBoxes[ast1Index].geometry.parameters.radius>55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius<55){
 
+      destroyAsteroid(ast2Index);
+      console.log("2 hat Bumm gemacht");
+
+    } else{
+    if(asteroidHitBoxes[ast1Index].geometry.parameters.radius<55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius<55){
+      destroyAsteroid(ast1Index);
+      destroyAsteroid(ast2Index);
+      console.log("Das ist wohl ein draw");
+    }
+  }
+}
+}
 }
 
 
@@ -213,14 +238,14 @@ function hitAsteroid(asteroidNumber, collisionType){
 
 //Function to trigger if Asteroid get destroyed
 function destroyAsteroid(asteroidNumber){
-
-    explosionParticleHandler.addExplosion(asteroids[asteroidNumber].position, 5, 0xcccccc);
-
+    //Erzeugt eine Explosion(position, Lebenszeit, Farbe, Geschwindigkeit, Groeße)
+    explosionParticleHandler.addExplosion(asteroids[asteroidNumber].position, 10, 0xcccccc, 1, 1);
+    
+    
     var newRandomPosAstX = Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) -biggerSphereRadius);
     var newRandomPosAstY = Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) -biggerSphereRadius);
     var newRandomPosAstZ = Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) -biggerSphereRadius);
-    var newScale = Math.random() * 30;
-
+    var newScale = Math.random() * 70 - 40;
 
     spawnPowerUp(asteroids[asteroidNumber].position.x,asteroids[asteroidNumber].position.y,asteroids[asteroidNumber].position.z);
     asteroids[asteroidNumber].position.x = ship.position.x + newRandomPosAstX;
