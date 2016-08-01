@@ -15,6 +15,7 @@ var interface;
 var crosshair;
 var ship;
 var player;
+var bot;
 var movement;
 var particleHandler;
 var collision;
@@ -96,7 +97,7 @@ function init() {
     movement = Movement();
     movement.init();
 
-    interfaceInit();
+    interface.init();
 
     crosshair = new Crosshairs();
     crosshair.init();
@@ -221,7 +222,8 @@ function render() {
         renderWeapons();
         movement.move(delta);
         updateStars();
-        updateAsteroids();
+        //updateAsteroids();
+        //bot.updateAI(delta);
         updatePowerUps();
 
         handleCollision();
