@@ -15,6 +15,7 @@ var Pause = true;
 var PauseScreen = false;
 var isFirstPerson = false;
 
+var mouseInverted = 1;
 var Sensitivity = 0.2;
 var maxVel = 14;
 var maxDrift = 5;
@@ -36,6 +37,7 @@ function Movement() {
 
 
             setMaxSpeed(14);
+			setSpeed(2.0);
             var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
             var blocker = document.getElementById('block');
             var instructions = document.getElementById('splash');
@@ -259,11 +261,13 @@ function Movement() {
 
             sphere.position.set(ship.position.x, ship.position.y, ship.position.z);
             biggerSphere.position.set(ship.position.x, ship.position.y, ship.position.z);
+			
             if (shieldActive)
                 shield.position.set(ship.position.x, ship.position.y, ship.position.z);
 
+            mouseY *= mouseInverted;
             mouseX *= Sensitivity;
-            mouseY *= Sensitivity;
+            mouseY *= Sensitivity * mouseInverted;
             lon += mouseX;
             lat -= mouseY;
 
@@ -330,7 +334,7 @@ function stop() {
     xAxis = 0.0;
     yAxis = -0.0;
     zAxis = 0.0;
-    setSpeed(0.0);
+    setSpeed(2.0);
     mouseX = 0.0;
     mouseY = 0.0;
 

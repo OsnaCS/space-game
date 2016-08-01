@@ -95,13 +95,12 @@ function init() {
     world.init();
 
     starfield = new Starfield();
-
     createAsteroids();
 
     movement = Movement();
     movement.init();
 
-    interfaceInit();
+    interface.init();
 
     crosshair = new Crosshairs();
     crosshair.init();

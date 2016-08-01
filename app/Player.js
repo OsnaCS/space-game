@@ -1,8 +1,10 @@
 var ship, frontVector, backVector, directionVector;
 var hitBoxCenter, hitBoxLeftWing, hitBoxRightWing;
 var playerHitBoxes = [];
+
 var cross;
 var shield, shieldGeometry,shieldTex, shieldMaterial; 
+
 
 frontVector = new THREE.Vector3(0, 0, 0);
 
@@ -143,7 +145,6 @@ function Player() {
             particleRay.update();
         },
 
-
         activateShield: function (){
         	 
         	 console.log("SCHILD AKTIVIERT!");
@@ -154,7 +155,6 @@ function Player() {
         	 shield.scale.x = shield.scale.y = shield.scale.z = 1; 
         	 shield.position.set(ship.position.x,ship.position.y,ship.position.z); 
         	 scene.add(shield); 
-
         }
 
     };
