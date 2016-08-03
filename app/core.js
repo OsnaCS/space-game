@@ -23,6 +23,16 @@ var particleHandler;
 
 var collision;
 var stats;
+var network;
+var starfield;
+var world;
+
+// Moved here bc pretty much every file uses it
+var biggerSphereRadius = 5000;
+var biggerSphere = new THREE.Object3D(
+    new THREE.SphereGeometry(biggerSphereRadius, 200, 200),
+    new THREE.MeshBasicMaterial({transparent: true})
+    );
 
 // TODO: eigentlich in Interface
 var scoreValues = {
@@ -41,6 +51,7 @@ $(function () {
     // wird ausgeführt, wenn das Dokument geladen ist:
 
     // Module initialisieren
+    network = Network();
     fileLoader = FileLoader();
     LoadingScreen();
     interface = Interface();
@@ -91,16 +102,18 @@ function init() {
     player = Player();
     player.init();
 
-    var world = World();
-    world.init();
+/*    world = World();
+    world.init();*/
 
-    createStars();
-    createAsteroids();
+    starfield = new StarfieldParticleRenderer();
+
+    bot = Bot();
+    bot.initAI(1);
 
     movement = Movement();
     movement.init();
 
-    interfaceInit();
+    interface.init();
 
     crosshair = new Crosshairs();
     crosshair.init();
@@ -116,7 +129,7 @@ function init() {
 
     /********** Camera **********/
 
-    camera = new THREE.TargetCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
+    camera = new THREE.TargetCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
 
     camera.addTarget({
         name: 'Target',
@@ -135,7 +148,8 @@ function init() {
         stiffness: 1,
         matchRotation: true
     });
-    
+
+
     camera.addTarget({
         name: 'fTarget',
         targetObject: ship,
@@ -144,7 +158,7 @@ function init() {
         stiffness: 0.15,
         matchRotation: false
     });
-    
+
     var cam = Camera();
     cam.init();
 
@@ -156,6 +170,7 @@ function init() {
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.sortObjects = false;
 
     composer = new THREE.EffectComposer(renderer);
     composer.addPass(new THREE.RenderPass(scene, camera));
@@ -193,6 +208,7 @@ function cameraAnimate() {
         frames++;
         requestAnimationFrame(cameraAnimate);
     } else {
+        
         requestAnimationFrame(animate);
     }
 
@@ -232,20 +248,26 @@ function render() {
     stats.update();
     delta = clock.getDelta();
     if (!Pause) {
-        // animation code goes here
-
-        renderWeapons();
+        // animation code goes here:
+        
         movement.move(delta);
-        updateStars();
-        updateAsteroids();
+        
+        renderWeapons();
+        bot.updateAI(delta);
         updatePowerUps();
-
         handleCollision();
 
         // Partikeleffekte am Raumschiff updaten
         player.updateParticleValues();
+        
         // Explosionen updaten
         particleHandler.update();
+
+        // Sternenstaub bewegen
+        if (starfield !== undefined) starfield.update();
+
+        //play music
+        backgroundMusic.play();
     }
 
     camera.update();
