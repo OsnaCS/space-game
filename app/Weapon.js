@@ -626,57 +626,58 @@ function enemyShootLaser(laserShootingBot, laserShootingTarget) {
 	}
 
 	//Translate all projectiles and check for end of existance
-	for( var bul in projectiles){
+	for( var bul in projectiles) {
 
 		//calculate distance between projectile and spaceship
 		var dis = calculateDistanceToShip(projectiles[bul]);
 
 		//check name and proceed accordingly
 
-	   	//if projectile is a laser hitbox:
-		if(projectiles[bul].name == "Laser"){
+		//if projectile is a laser hitbox:
+		if (projectiles[bul].name == "Laser") {
 
 			//translate in mooving direction
-	    	projectiles[bul].translateY(-4000 * add);
+			projectiles[bul].translateY(-4000 * add);
 
-	    	//translate to hitbox belonging laser-beam
-	    	if (dis > biggerSphereRadius){
-    			successLaser(bul);
-    		}
-	    }
+			//translate to hitbox belonging laser-beam
+			if (dis > biggerSphereRadius) {
+				successLaser(bul);
+			}
+		}
 
-  		//if projectile is a rocket Hitbox:
-	    else if(projectiles[bul].name == "Rocket"){
-			  //translate in mooving direction (translateZ becouse of different orientation then laser)
-	    	projectiles[bul].translateZ(2000 * add);
+		//if projectile is a rocket Hitbox:
+		else if (projectiles[bul].name == "Rocket") {
+			//translate in mooving direction (translateZ becouse of different orientation then laser)
+			projectiles[bul].translateZ(2000 * add);
 
-	    	if (dis > 1500){
-    			successRocket(bul);
-    		}
-	    }
-	    //if projectile is an Explosion:
-	    else if(projectiles[bul].name == "Explosion"){
-	    	//Check if Explosion
-	    	if (explosionTime > 0.15){
-        		scene.remove(projectiles[bul]);
-        		projectiles.splice(bul, 1);
-    		}
-	    }
-	    else if (projectiles[bul].name == "MachineGun") {
-            //translate in mooving direction
-            projectiles[bul].translateZ(-1000 * add);
-
-            if (dis > 800) {
-               	successMachineGunBullet(bul);
-            }
-        }
-        else if (projectiles[bul].name == "Shockwave") {
+			if (dis > 1500) {
+				successRocket(bul);
+			}
+		}
+		//if projectile is an Explosion:
+		else if (projectiles[bul].name == "Explosion") {
 			//Check if Explosion
-	    	if (shockwaveTime > 0.15){
-        		scene.remove(projectiles[bul]);
-        		projectiles.splice(bul, 1);
-    		}
-        }
+			if (explosionTime > 0.15) {
+				scene.remove(projectiles[bul]);
+				projectiles.splice(bul, 1);
+			}
+		}
+		else if (projectiles[bul].name == "MachineGun") {
+			//translate in mooving direction
+			projectiles[bul].translateZ(-1000 * add);
+
+			if (dis > 800) {
+				successMachineGunBullet(bul);
+			}
+		}
+		else if (projectiles[bul].name == "Shockwave") {
+			//Check if Explosion
+			if (shockwaveTime > 0.15) {
+				scene.remove(projectiles[bul]);
+				projectiles.splice(bul, 1);
+			}
+		}
+	}
      //    else if(projectiles[bul].name == "GuidedMissile"){
 			  // //translate in mooving direction (translateZ becouse of different orientation then laser)
 	    // 	projectiles[bul].translateZ(2000 * add);
