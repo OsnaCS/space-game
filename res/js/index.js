@@ -5,6 +5,7 @@ var spaceshipGroup, sphere, planet;
 var rayParticleRenderer, rayStart, rayEnd;
 
 var fileLoader = FileLoader();
+var network = Network();
 
 
 
@@ -20,6 +21,7 @@ $(function () {
         if (fileLoader.isReady()) {
             console.log("done");
             clearInterval(loadingLoop);
+            loadHighscore();
             init();
             fadeOutLoadingOverlay();
             animate();
@@ -107,7 +109,7 @@ $(function () {
         scene.add(planet);
 
         // Spaceship Group (= space ship + particle ray)
-        var modelShip = fileLoader.get("HeroShipV5");
+        var modelShip = fileLoader.get("HeroShipV6");
         var textureShip = fileLoader.get("TextureHero");
         var spaceship = new THREE.Mesh(modelShip, new THREE.MeshPhongMaterial({map:textureShip}));
         spaceship.position.set(0, 0, 0);
@@ -135,12 +137,22 @@ $(function () {
         );
 
 
-        // Event-Listener für Resize
+        // Event-Listener
         window.addEventListener("resize", onWindowResize, false);
         window.addEventListener("mousemove", onMouseMove, false);
 
+        // Klick auf Spiel starten: player speichern
+        $("#formSubmit").on("click", function (e) {
+            localStorage.setItem("player", $("#player").val());
+        });
 
 
+        // Background Music
+        backgroundMusic = document.createElement('audio');
+        var backgroundMusicSource = document.createElement('source');
+        backgroundMusicSource.src = '../res/sounds/soundtrack.mp3';
+        backgroundMusic.appendChild(backgroundMusicSource);
+        backgroundMusic.play();
 
     }
     
@@ -164,6 +176,23 @@ $(function () {
             $("#overlay-menu").css("margin-left", 50-x*scaling+"px");
             $("#overlay-menu").css("padding-top", 50-y*scaling+"px");
         }
+    }
+
+    function loadHighscore() {
+        network.loadTop10(function (highscore) {
+            for (var i = 0; i < highscore.length; i++) {
+                var score = highscore[i];
+                var tableTag =
+                    "<div class='row highscore-body'>" +
+                        "<div class='col-md-2'>"+(i+1)+"</div>" +
+                        "<div class='col-md-4'>"+score.player+"</div>" +
+                        "<div class='col-md-2'>"+score.level+"</div>" +
+                        "<div class='col-md-3'>"+score.score+"</div>" +
+                    "</div>";
+                $("#overlay-highscore").html($("#overlay-highscore").html()+tableTag);
+                //console.log("append");
+            }
+        });
     }
 
 

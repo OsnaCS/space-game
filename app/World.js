@@ -1,7 +1,7 @@
-var sphere = new THREE.Object3D();
+/*var sphere = new THREE.Object3D();
 var biggerSphere = new THREE.Object3D();
 var stars = [];
-var asteroids = [];
+/*var asteroids = [];
 var asteroidsHP = [];
 var asteroidSpeedVecs = [];
 var asteroidRotVecs = [];
@@ -10,17 +10,19 @@ var smallSphereRadius = 1000;
 var biggerSphereRadius = 5000;
 var asteroidRadius = 3.5;
 var defaultAsteroidHP = 10;
+var destroyedAsteroids = 0; //für die milestones
+var asteroidRadius = 4.2;
+var defaultAsteroidHP = 10;*/
+
 
 //starStuff
-function createStars() {
+/*function createStars() {
 
     var star, material, alpha;
 
     for (var count = 0; count < 300; count++) {
 
         material = new THREE.MeshBasicMaterial({
-
-
             transparent: true,
             combine: THREE.MixOperation,
             blending: THREE.AdditiveBlending,
@@ -41,65 +43,64 @@ function createStars() {
         scene.add(star);
         stars.push(star);
     }
-}
+
+}*/
 
 
 //AsteroidStuff
-
+/*
 function createAsteroids() {
 
     var rndSpeedX, rndSpeedY, rndSpeedZ, rotSpeed, rndScale;
 
     var materialAst, astHitBox, hitGeometry;
-    var astTexture, astOriginal;
-
+    var astTexture, astOriginal;*/
+/*
     astGeometry = fileLoader.get("AsteroidV2");
     astTexture = fileLoader.get("AsteroidTex");
 
-    for (countAst = 0; countAst < 100; countAst++) {
+    for (countAst = 0; countAst < 150; countAst++) {*/
 
+/*        rndSpeedX = Math.random() * 15 - 11;
+        rndSpeedY = Math.random() * 15 - 11;
+        rndSpeedZ = Math.random() * 15 - 11;*/
+        /*rotSpeed = Math.random() * 0.05 - 0.01;*/
+        /*rndScale = Math.random() * 30;*/
+/*
+        var vecSpeed = new THREE.Vector3(rndSpeedX, rndSpeedY, rndSpeedZ);
+        var vecRot = new THREE.Vector3(rotSpeed * (Math.random() * (2 - 0) - 0), rotSpeed * (Math.random() * (2 - 0) - 0), rotSpeed * (Math.random() * 2 - 0));
+        asteroidSpeedVecs.push(vecSpeed);
+        asteroidRotVecs.push(vecRot);*/
 
-    rndSpeedX = Math.random()* 20 - 14;
-    rndSpeedY = Math.random()* 20 - 14;
-    rndSpeedZ = Math.random()* 20 - 14;
-    rotSpeed = Math.random () * 0.05 - 0.01;
-    rndScale = Math.random() * 30;
+  /*      astOriginal = new THREE.Mesh(astGeometry, new THREE.MeshPhongMaterial({ map: astTexture }));
+*/
+/*        astOriginal.position.x = ship.position.x + Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) - biggerSphereRadius);
+        astOriginal.position.y = ship.position.y + Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) - biggerSphereRadius);
+        astOriginal.position.z = ship.position.z + Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) - biggerSphereRadius);*/
 
-    var vecSpeed = new THREE.Vector3 (rndSpeedX ,rndSpeedY, rndSpeedZ);
-    var vecRot = new THREE.Vector3 (rotSpeed *(Math.random () * (2-0) - 0), rotSpeed * (Math.random() * (2 - 0) - 0 ), rotSpeed * (Math.random() *2 -0));
-    asteroidSpeedVecs.push(vecSpeed);
-    asteroidRotVecs.push(vecRot);
+/*        astOriginal.scale.x = astOriginal.scale.y = astOriginal.scale.z = rndScale;
+*//*        hitGeometry = new THREE.SphereGeometry(asteroidRadius * rndScale, 32, 32);
 
-    astOriginal = new THREE.Mesh(astGeometry, new THREE.MeshPhongMaterial({map: astTexture}));
+        var colSphereMaterial = new THREE.MeshBasicMaterial({
+            transparent: true,
+            opacity: 0.5,
+            color: 0xffffff
+        });*/
 
+/*        astHitBox = new THREE.Mesh(hitGeometry, colSphereMaterial);
+        astHitBox.position.set(astOriginal.position.x, astOriginal.position.y, astOriginal.position.z);
+*/
+/*        asteroidsHP.push(defaultAsteroidHP);
+        asteroids.push(astOriginal);
+        asteroidHitBoxes.push(astHitBox);
+        scene.add(astOriginal);*/
+ /*   }
 
-    astOriginal.position.x = ship.position.x + Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) -biggerSphereRadius);
-    astOriginal.position.y = ship.position.y + Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) -biggerSphereRadius );
-    astOriginal.position.z = ship.position.z + Math.floor(Math.random() * (biggerSphereRadius - (-biggerSphereRadius)) -biggerSphereRadius );
-
-    astOriginal.scale.x = astOriginal.scale.y = astOriginal.scale.z = rndScale;
-    hitGeometry =  new THREE.SphereGeometry(asteroidRadius * rndScale, 32, 32);
-
-    var colSphereMaterial = new THREE.MeshBasicMaterial({
-                    transparent: true,
-                    opacity: 0.5,
-                    color: 0xffffff
-                });
-
-                astHitBox = new THREE.Mesh(hitGeometry, colSphereMaterial);
-                astHitBox.position.set(astOriginal.position.x,astOriginal.position.y,astOriginal.position.z);
-
-    asteroidsHP.push(defaultAsteroidHP);
-    asteroids.push(astOriginal);
-    asteroidHitBoxes.push(astHitBox);
-    scene.add(astOriginal);
-  }
-
-}
+}*/
 
 
 //Update asteroid-position and their hitboxes with randomized speed and rotation;
-function updateAsteroids() {
+/*function updateAsteroids() {
 
     var tmpAsteroid, newVec, rndAngle2;
     var tmpHitBox;
@@ -107,20 +108,19 @@ function updateAsteroids() {
     for (countAst = 0; countAst < asteroids.length; countAst++) {
 
         tmpAsteroid = asteroids[countAst];
-        tmpHitBox = asteroidHitBoxes[countAst];
+        tmpHitBox = asteroidHitBoxes[countAst];*/
         //Update RotationValue
-        tmpAsteroid.rotation.x += asteroidRotVecs [countAst].x;
-        tmpAsteroid.rotation.y -= asteroidRotVecs [countAst].y;
-        tmpAsteroid.rotation.z -= asteroidRotVecs [countAst].z;
-
+/*        tmpAsteroid.rotation.x += asteroidRotVecs[countAst].x;
+        tmpAsteroid.rotation.y -= asteroidRotVecs[countAst].y;
+        tmpAsteroid.rotation.z -= asteroidRotVecs[countAst].z;
+*/
         //Update SpeedValue
-        tmpAsteroid.position.x += asteroidSpeedVecs[countAst].x;
+/*        tmpAsteroid.position.x += asteroidSpeedVecs[countAst].x;
         tmpAsteroid.position.y += asteroidSpeedVecs[countAst].y;
         tmpAsteroid.position.z += asteroidSpeedVecs[countAst].z;
-
-
+*/
         //Update SpeedValue Hitbox
-        tmpHitBox.position.x += asteroidSpeedVecs[countAst].x;
+/*        tmpHitBox.position.x += asteroidSpeedVecs[countAst].x;
         tmpHitBox.position.y += asteroidSpeedVecs[countAst].y;
         tmpHitBox.position.z += asteroidSpeedVecs[countAst].z;
 
@@ -135,7 +135,6 @@ function updateAsteroids() {
             rnd2 = Math.sign(Math.sign(Math.random() - 0.5) + 0.1);
             rnd3 = Math.sign(Math.sign(Math.random() - 0.5) + 0.1);
 
-            //console.log("new VEC : " + newVec.x + " " + newVec.y + " " + newVec.z );
             tmpAsteroid.position.x = ship.position.x + rnd1 * biggerSphereRadius * newVec.x;
             tmpAsteroid.position.y = ship.position.y + rnd2 * biggerSphereRadius * newVec.y;
             tmpAsteroid.position.z = ship.position.z + rnd3 * biggerSphereRadius * newVec.z;
@@ -143,25 +142,20 @@ function updateAsteroids() {
             tmpHitBox.position.x = ship.position.x + rnd1 * biggerSphereRadius * newVec.x;
             tmpHitBox.position.y = ship.position.y + rnd2 * biggerSphereRadius * newVec.y;
             tmpHitBox.position.z = ship.position.z + rnd3 * biggerSphereRadius * newVec.z;
+        }*/
+/*    }
 
-             //console.log("new VEK : " + tmpAsteroid.position.x + " " + tmpAsteroid.position.y + " " + tmpAsteroid.position.z );
-
-        }
-
-    }
-
-}
+}*/
 
 
 //Function to trigger if asteroids collide
-function asteroidCollision(ast1Index, ast2Index) {
+/*function asteroidCollision(ast1Index, ast2Index) {
 
     var ast1 = asteroids[ast1Index];
     var ast2 = asteroids[ast2Index];
     var ast1Dir = asteroidSpeedVecs[ast1Index];
     var ast2Dir = asteroidSpeedVecs[ast2Index];
 
-    //console.log(asteroidHitBoxes[ast1Index].geometry.parameters.radius);
     if (asteroidHitBoxes[ast1Index].geometry.parameters.radius > 55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius > 55) {
         var axis = ast2.position.clone();
         axis.sub(ast1.position);
@@ -177,71 +171,98 @@ function asteroidCollision(ast1Index, ast2Index) {
 
         asteroidSpeedVecs[ast1Index] = ast1Dir;
         asteroidSpeedVecs[ast2Index] = ast2Dir;
-
     }
 
     else if (asteroidHitBoxes[ast1Index].geometry.parameters.radius < 55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius > 55) {
-
-            destroyAsteroid(ast1Index, "AsteroidAsteroidCollision");
-
+        destroyAsteroid(ast1Index, "AsteroidAsteroidCollision");
     } else if (asteroidHitBoxes[ast1Index].geometry.parameters.radius > 55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius < 55) {
-
-            destroyAsteroid(ast2Index, "AsteroidAsteroidCollision");
-
-    } else if(asteroidHitBoxes[ast1Index].geometry.parameters.radius < 55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius < 55) {
-
-            destroyAsteroid(ast1Index, "AsteroidAsteroidCollision");
-            destroyAsteroid(ast2Index, "AsteroidAsteroidCollision");
-
+        destroyAsteroid(ast2Index, "AsteroidAsteroidCollision");
+    } else if (asteroidHitBoxes[ast1Index].geometry.parameters.radius < 55 && asteroidHitBoxes[ast2Index].geometry.parameters.radius < 55) {
+        destroyAsteroid(ast1Index, "AsteroidAsteroidCollision");
+        destroyAsteroid(ast2Index, "AsteroidAsteroidCollision");
     }
-}
+
+}*/
 
 
-function hitAsteroid(asteroidNumber, collisionType) {
+/*function hitAsteroid(asteroidNumber, collisionType) {
 
     switch (collisionType) {
 
-        case "Laser" :
-            //console.log("LASERHIT");
+        case "Laser":
             asteroidsHP[asteroidNumber] -= laserDamage;
+
+            // particleHandler.addShockwave(asteroids[asteroidNumber].position, 0xff6611);
+            particleHandler.addLittleExplosion(asteroids[asteroidNumber].position, 3, 0xff0000, 1, 1);
 
             break;
 
-        case "Rocket" :
+        case "Rocket":
 
             asteroidsHP[asteroidNumber] -= rocketDamage;
 
             break;
 
+        case "Explosion":
+
+          asteroidsHP[asteroidNumber] -= explosionDamage;
+          break;
+
+        case "MachineGun":
+
+            asteroidsHP[asteroidNumber] -= MGDamage;
+            break;
+
+
         default:
 
             break;
 
     }
 
-
     if (asteroidsHP[asteroidNumber] <= 0) {
-
         destroyAsteroid(asteroidNumber, collisionType);
-
     }
 
+}*/
 
-}
 
 
-//Function to trigger if Asteroid get destroyed
+/*function changeAsteroidDirection (asteroidNumber){
+
+  var newRotVal = Math.random() * (2 +1) - 1;
+
+   asteroidSpeedVecs[asteroidNumber] = asteroidSpeedVecs[asteroidNumber].multiplyScalar(-1) ;
+   asteroidSpeedVecs[asteroidNumber] = asteroidSpeedVecs[asteroidNumber].add(3) ;
+
+   asteroidRotVecs[asteroidNumber] = asteroidRotVecs[asteroidNumber].multiplyScalar(newRotVal);
+
+
+
+}*/
+
+
+/*//Function to trigger if Asteroid get destroyed
 function destroyAsteroid(asteroidNumber, collisionType) {
+
+	//für die Milestones
+	destroyedAsteroids++;
+	checkMilestones(); 
+	
+    asteroidAudio.play();
 
     // update Highscore
     switch (collisionType) {
 
-        case "Laser" :
-        case "Rocket" :
-        case "Explosion" :
+        case "Laser":
+        case "Rocket":
+        case "Explosion":
             changeScore(scoreValues["asteroidDestroyed"]);
+
             break;
+
         default:
+
             break;
 
     }
@@ -255,7 +276,7 @@ function destroyAsteroid(asteroidNumber, collisionType) {
     rnd2 = Math.sign(Math.sign(Math.random() - 0.5) + 0.1);
     rnd3 = Math.sign(Math.sign(Math.random() - 0.5) + 0.1);
 
-    particleHandler.addExplosion(asteroids[asteroidNumber].position, 5, 0xcccccc);
+    particleHandler.addExplosion(asteroids[asteroidNumber].position, 3, 0xcccccc, 1, asteroidHitBoxes[asteroidNumber].geometry.parameters.radius / 45);
 
     var newScale = Math.random() * 30;
 
@@ -270,8 +291,8 @@ function destroyAsteroid(asteroidNumber, collisionType) {
 
     asteroidsHP[asteroidNumber] = defaultAsteroidHP;
 
-}
-
+}*/
+/*
 //Function to create the Spheres around the player
 function World() {
 
@@ -292,16 +313,14 @@ function World() {
             sphere.position.set(0, 0, 0);
         }
     }
+
 }
 
 //Update stars- check if they are inside Sphere. Else randomize Position
 function updateStars() {
 
     // iterate through every star
-
     for (var i = 0; i < stars.length; i++) {
-
-
         star = stars[i];
 
         var temp = Math.sin(clock.getElapsedTime());
@@ -311,12 +330,9 @@ function updateStars() {
 
         if ((star.position.x < sphere.position.x - smallSphereRadius || star.position.x > sphere.position.x + smallSphereRadius || star.position.y < sphere.position.y - smallSphereRadius || star.position.y > sphere.position.y + smallSphereRadius || star.position.z < sphere.position.z - smallSphereRadius || star.position.z > sphere.position.z + smallSphereRadius)) {
 
-
             star.position.x = ship.position.x + Math.floor(Math.random() * (smallSphereRadius - (-smallSphereRadius)) - smallSphereRadius);
             star.position.y = ship.position.y + Math.floor(Math.random() * (smallSphereRadius - (-smallSphereRadius)) - smallSphereRadius);
             star.position.z = ship.position.z + Math.floor(Math.random() * (smallSphereRadius - (-smallSphereRadius)) - smallSphereRadius);
-
-
         }
 
     }
@@ -325,7 +341,6 @@ function updateStars() {
 //function to get the directionVector of a Mesh
 function getMeshDirection(mesh) {
 
-
     //Default Front-Facing
     var dir = new THREE.Vector3(0, 0, 1);
     //Apply rotation of Mesh
@@ -333,5 +348,4 @@ function getMeshDirection(mesh) {
 
     return dir;
 
-
-}
+}*/

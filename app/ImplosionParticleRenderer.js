@@ -1,5 +1,5 @@
 function ImplosionParticleRenderer(particleColor, nParticles, particleTexture, startVector, size) {
-    
+
     this.startVector = startVector;
     this.particleCount = nParticles;
     this.color = particleColor;
@@ -27,29 +27,30 @@ function ImplosionParticleRenderer(particleColor, nParticles, particleTexture, s
             startVector.z
         );
 
-        particle.x += Math.random()-0.5;
-        particle.y += Math.random()-0.5;
-        particle.z += Math.random()-0.5;
+        var radius = 10;
+        var lambda = Math.PI * 2 * Math.random();
+        var angle = Math.PI * 2 * Math.random();
 
+        particle.x += Math.cos(angle) * Math.cos(lambda) * radius;
+        particle.y += Math.cos(angle) * Math.sin(lambda) * radius;
+        particle.z += Math.sin(angle) * radius;
 
         particle.velocity = particle.clone().sub(startVector.clone());
+        particle.velocity.x += Math.random();
+        particle.velocity.y += Math.random();
+        particle.velocity.z += Math.random();
 
         this.particles.vertices.push(particle);
     }
 
-    this.particleSystem = new THREE.Points(this.particles, this.material);
+    this.particleimploSystem = new THREE.Points(this.particles, this.material);
 
     this.currentMovement = 1;
 
     // zur Szene hinzufügen
-    scene.add(this.particleSystem);
-
-
+    scene.add(this.particleimploSystem);
 
     this.update = function () {
-        // this.particleSystem.rotateX(0.5);
-        // this.particleSystem.rotateY(0.5);
-        // this.particleSystem.rotateZ(0.5);
 
         if (this.running) {
 
@@ -58,14 +59,11 @@ function ImplosionParticleRenderer(particleColor, nParticles, particleTexture, s
             while (pCount--) {
                 var particle = this.particles.vertices[pCount];
 
+                particle.x += particle.velocity.x * this.currentMovement * 4;
+                particle.y += particle.velocity.y * this.currentMovement * 4;
+                particle.z += particle.velocity.z * this.currentMovement * 4;
 
-                particle.x += particle.velocity.x*this.currentMovement*0.5;
-                particle.y += particle.velocity.y*this.currentMovement*0.5;
-                particle.z += particle.velocity.z*this.currentMovement*0.5;
-
-                // particle.addScaledVector(particle.velocity, this.currentMovement*0.2);
-
-                this.particleSystem.geometry.__dirtyVertices = true;
+                this.particleimploSystem.geometry.__dirtyVertices = true;
             }
 
             if (this.currentMovement > -1) {
@@ -75,18 +73,12 @@ function ImplosionParticleRenderer(particleColor, nParticles, particleTexture, s
             }
 
             this.particles.verticesNeedUpdate = true;
-            
+
             return true; // weitermachen
-            
         } else {
-            
-            scene.remove(this.particleSystem);
+            scene.remove(this.particleimploSystem);
             return false; //aufhören
-            
         }
     };
-
-
-
 
 }

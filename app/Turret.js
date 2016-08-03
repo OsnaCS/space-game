@@ -9,6 +9,8 @@ var right = false;
 var weaponTurret;
 var refPoint;
 
+var rotX = 1;
+var rotY = 1;
 
 function Turret(){
 
@@ -16,7 +18,7 @@ function Turret(){
 
         init:function(){
             var tur = new THREE.BoxGeometry(2,5,2);
-            tur.translate(0,-5,0);
+            tur.translate(0,-7,0);
             var material = new THREE.MeshBasicMaterial({color: 0xffffff});
             weaponTurret = new THREE.Mesh(tur,material);
             weaponTurret.position.set(0,0,0);
@@ -100,19 +102,19 @@ function Turret(){
                 leftrgt += 0.5;
             }
             
-            if (weaponTurret.rotation.x < 1.4 && weaponTurret.rotation.x > -1.4) {
+            if (weaponTurret.rotation.x < rotX && weaponTurret.rotation.x > -rotX) {
                 weaponTurret.rotateX(rotupdn / 30);
-            }else if(weaponTurret.rotation.x <= -1.4 && rotupdn > 0){
+            }else if(weaponTurret.rotation.x <= -rotX && rotupdn > 0){
                 weaponTurret.rotateX(rotupdn / 30);
-            }else if(weaponTurret.rotation.x >= 1.4 && rotupdn < 0){
+            }else if(weaponTurret.rotation.x >= rotX && rotupdn < 0){
                 weaponTurret.rotateX(rotupdn / 30);
             }
             
-            if (weaponTurret.rotation.z < 1.4 && weaponTurret.rotation.z > -1.4) {
+            if (weaponTurret.rotation.z < rotY && weaponTurret.rotation.z > -rotY) {
                 weaponTurret.rotateZ(leftrgt / 30);
-            }else if(weaponTurret.rotation.z <= -1.4 && leftrgt > 0){
+            }else if(weaponTurret.rotation.z <= -rotY && leftrgt > 0){
                 weaponTurret.rotateZ(leftrgt / 30);
-            }else if(weaponTurret.rotation.z >= 1.4 && leftrgt < 0){
+            }else if(weaponTurret.rotation.z >= rotY && leftrgt < 0){
                 weaponTurret.rotateZ(leftrgt / 30);
             }
             weaponTurret.rotation.set(weaponTurret.rotation.x,0,weaponTurret.rotation.z);
