@@ -147,7 +147,7 @@ function MGShoot() {
 
 //called by EventListener when mouse clicked: leftclick: e.button == 0; rightclick e.button = 2 (ZWEI)
 function shoot(e){
-    
+
 	if(e.button == 0){
 		shootLaser();
 		shoott();
