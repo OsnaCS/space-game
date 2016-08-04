@@ -14,7 +14,7 @@ var SMALL1 = 3;
 var SMALL2 = 4;
 
 var enemies, enemy, asteroid,
-    radius, i, bezierPoints, geometryB, textureB, MATH, bot;
+    radius, i, bezierPoints, geometryB, textureB, bot;
 
 // Enemyklasse
 // Hier nichts direkt aufrufen, Aufrufe werden ueber Bot.js geregelt
@@ -62,7 +62,7 @@ function Enemy(location, speed, level, typ, index) {
 
     this.scale.set(1,1,1);
 
-    MATH = MATHX();
+    //MATH = MATHX();
 
     this.speed      = speed;
     this.position.set(location.x,location.y,location.z);
@@ -77,22 +77,16 @@ function Enemy(location, speed, level, typ, index) {
     // Initialen Ausrichtungsvektor
     this.lookAt(ship.position);
     // .. und direction
-    this.direction  = MATH.clone(ship.position);
+    this.direction  = ship.position.clone();
     this.direction.sub(this.position);
     this.direction.normalize();
 
-    this.oldDir = MATH.clone(this.direction);
+    this.oldDir = this.direction.clone();
 
     // Spieler-Richtung
     this.playerDirection = new THREE.Vector3(0,0,0);
-    this.oldPlayerLocation = MATH.clone(ship.position);
-    this.oldPlayerDir = MATH.clone(ship.position);
-
-
-    //this.position.set(2,2,2);
-
-    // HitBox
-    // this.hitBox = this.getHitBox();
+    this.oldPlayerLocation = ship.position.clone();
+    this.oldPlayerDir = ship.position.clone();
 
 }
 
@@ -120,7 +114,7 @@ Enemy.prototype.move = function(delta, index) {
         // urspruenglichen Richtung gedreht hat
         var renew = false;
         // Falls Spieler umgedreht (im Vergleich zum initialisieren), neu machen
-        if(MATH.dot(this.oldPlayerDir,this.playerDirection) < 0) {
+        if(this.oldPlayerDir.dot(this.playerDirection) < 0) {
             //console.log("please renew");
             renew = true;
         }
@@ -139,14 +133,14 @@ Enemy.prototype.move = function(delta, index) {
     } else {
 
         // 1. Schritt: Gehe in Richtung Spieler (Idealrichtung)
-        var directionToPlayer = MATH.clone(ship.position);
+        var directionToPlayer = ship.position.clone();
         directionToPlayer.sub(this.position);
 
         var distanceToNext = directionToPlayer.length();
 
         directionToPlayer.normalize();
 
-        optimalDir = MATH.clone(directionToPlayer);
+        optimalDir = directionToPlayer.clone();
 
         // 2. Schritt: Ueberpruefe, ob dem Spieler zu nahe geraten
         if(distanceToNext < minDistanceToPlayer){
@@ -219,7 +213,7 @@ Enemy.prototype.move = function(delta, index) {
 		// do nothing
     } else {
 	    dir.normalize();
-	    var viewDir = MATH.clone(this.position);
+	    var viewDir = this.position.clone();
 	    dir.multiplyScalar(10 * this.speed)
 	    viewDir.add(dir);
 	    this.lookAt(viewDir);
@@ -232,7 +226,7 @@ Enemy.prototype.move = function(delta, index) {
 
     // 8. Schritt: Speichern
     dir.normalize();
-    this.oldDir = MATH.clone(dir);
+    this.oldDir = dir.clone();
 
     //this.hitBox.position.set(this.position);
 
@@ -253,13 +247,13 @@ Enemy.prototype.moveCurve = function(renew, delta) {
 
         var distanceToPlayer = this.position.distanceTo(ship.position);
         // Vektor zum Spieler
-        var N = MATH.clone(ship.position);
+        var N = ship.position.clone();
         N.sub(this.position);
 
         // orthogonale Vektoren, um Plane aufzuspannen
-        var U = MATH.clone(N);
+        var U = N.clone();
         U.cross(new THREE.Vector3(0,1,0));
-        var V = MATH.clone(U);
+        var V = U.clone();
         V.cross(N);
 
         U.normalize();
@@ -273,8 +267,8 @@ Enemy.prototype.moveCurve = function(renew, delta) {
 
         // vor dem Spieler
         // TODO: Punkte im gleichen Abstand waehlen
-        if(MATH.dot(this.direction,this.playerDirection) <= 0) {
-            p1 = MATH.clone(ship.position);
+        if(this.direction.dot(this.playerDirection) <= 0) {
+            p1 = ship.position.clone();
             p1.add(U.multiplyScalar(2*(shipSize + Math.random() * shipSize)));
             p1.add(V.multiplyScalar(2*(shipSize + Math.random() * shipSize)));
 
@@ -284,7 +278,7 @@ Enemy.prototype.moveCurve = function(renew, delta) {
 
             U.normalize();
             V.normalize();
-            p2 = MATH.clone(ship.position);
+            p2 = ship.position.clone();
             p2.add(N.multiplyScalar(1.5));
             p2.add(U.multiplyScalar(Math.random() * 2 * (shipSize + Math.random() * shipSize)));
             p2.add(V.multiplyScalar(Math.random() * 2 * (shipSize + Math.random() * shipSize)));
@@ -293,7 +287,7 @@ Enemy.prototype.moveCurve = function(renew, delta) {
             V.normalize();
             N.multiplyScalar(2/3);
         } else { // hinter dem Spieler
-            p1 = MATH.clone(this.position);
+            p1 = this.position.clone();
             p1.add(N.multiplyScalar(2/3));
             p1.add(U.multiplyScalar(2 * (shipSize + Math.random() * shipSize)));
             p1.add(V.multiplyScalar(2 * (shipSize + Math.random() * shipSize)));
@@ -302,7 +296,7 @@ Enemy.prototype.moveCurve = function(renew, delta) {
             V.normalize();
             N.multiplyScalar(3/2);
 
-            p2 = MATH.clone(this.position);
+            p2 = this.position.clone();
             p2.add(N.multiplyScalar(-2/3));
             p2.add(U.multiplyScalar(2 * (shipSize + Math.random() * shipSize)));
             p2.add(V.multiplyScalar(2 * (shipSize + Math.random() * shipSize)));
@@ -359,12 +353,12 @@ Enemy.prototype.collectObstacles = function(optimalDir, delta) {
 
     // Setze, da Abstand nach vorne wichtiger, Schiff voruebergehend auf die
     // Position mit idealer Flugrichtung im naechsten Frame
-    var shipPosition = MATH.clone(this.position);
+    var shipPosition = this.position.clone();
     optimalDir.multiplyScalar(delta*this.speed);
     shipPosition.add(optimalDir);
     optimalDir.normalize();
 
-    var directionToPlayer = MATH.clone(ship.position);
+    var directionToPlayer = ship.position.clone();
     directionToPlayer.sub(this.position);
     var distanceToNext = directionToPlayer.length();
 
@@ -415,7 +409,7 @@ Enemy.prototype.checkDirection = function(direction, objects) {
 
     for(obj of objects) {
         // Berechne t (Minimierer des Abstands)
-        var t = MATH.clone(obj.position);
+        var t = obj.position.clone();
         t.sub(this.position);
         t.dot(direction);
         t.divideScalar(direction.lengthSq());
@@ -441,7 +435,6 @@ Enemy.prototype.shoot = function(aimPos, delta) {
 
     var raycaster = new THREE.Raycaster(this.position,this.direction,0,maxShootDistance);
     var intersects = raycaster.intersectObjects([aimSphere]);
-    //console.log(intersects.length);
 
     if(intersects.length > 0) {
         // Ueberpruefe, ob geschossen werden darf
@@ -477,7 +470,7 @@ Enemy.prototype.shoot = function(aimPos, delta) {
 Enemy.prototype.avoidObstacle = function(optimalDir, obstacles, delta) {
     var avoidDir, dir;
     var obstacle = obstacles[0];
-    var flightAngle = MATH.dot(obstacle.direction,this.direction);
+    var flightAngle = obstacle.direction.dot(this.direction);
     // = cos , da direction immer normiert
 
     var UVN = this.getUVN(optimalDir);
@@ -490,10 +483,10 @@ Enemy.prototype.avoidObstacle = function(optimalDir, obstacles, delta) {
         //  Normale zum Schnittpunkt mit Hindernis
 
         // weiche aus in Richtung der Normalen des Schnittpunkts
-        dir = MATH.clone(optimalDir);
+        dir = optimalDir.clone();
 
         // Berechne t (Minimierer des Abstands)
-        var t = MATH.clone(obstacle.position);
+        var t = obstacle.position.clone();
         t.sub(this.position);
         t.dot(dir);
         t.divideScalar(dir.lengthSq());
@@ -522,9 +515,9 @@ Enemy.prototype.avoidObstacle = function(optimalDir, obstacles, delta) {
 
         // weiche orthogonal aus
         if(this.checkDirection(U, obstacle) == 0) {
-            avoidDir = MATH.clone(U);
+            avoidDir = U.clone();
         } else {
-            avoidDir = MATH.negated(U);
+            avoidDir = U.negate();
             //console.log("this.checkDirection(U, obstacle) = "+ this.checkDirection(U, obstacle));
         }
     }
@@ -535,7 +528,7 @@ Enemy.prototype.avoidObstacle = function(optimalDir, obstacles, delta) {
 
     avoidDir.multiplyScalar(avoidImpact);
 
-    dir = MATH.clone(optimalDir);
+    dir = optimalDir.clone();
     dir.multiplyScalar(bestImpact);
     dir.add(avoidDir);
 
@@ -565,7 +558,7 @@ Enemy.prototype.avoidObstacles = function(optimalDir, obstacles, delta) {
     V.multiplyScalar(checkingDistance);
 
     for(i = 0; i < 4; i++) {
-        avoidDir = MATH.clone(optimalDir);
+        avoidDir = optimalDir.clone();
         switch(i) {
             case 0: avoidDir = avoidDir.add(U).add(V); break;
             case 1: avoidDir = avoidDir.add(U).sub(V); break;
@@ -590,7 +583,7 @@ Enemy.prototype.avoidObstacles = function(optimalDir, obstacles, delta) {
     do {
         // 4.1.4a Bestimme Richtung mit minimaler Kollisionsanzahl
         if(!directionFound) { // obsolet
-            dir = avoidDirs[MATH.getMinIndex(collisions)];
+            dir = avoidDirs[collisions.getMinIndex()];
         }
 
         // loesche alte Ausweichrichtungen
@@ -604,12 +597,12 @@ Enemy.prototype.avoidObstacles = function(optimalDir, obstacles, delta) {
         V.multiplyScalar(2/3*checkingDistance*scalar);
 
         // verschiebe um ein kleines Stueck (V Hochachse)
-        translate = MATH.clone(U);
-        var Vt = MATH.clone(V);
+        translate = U.clone();
+        var Vt = V.clone();
         translate.multiplyScalar(0.5);
         Vt.multiplyScalar(0.5);
 
-        switch(MATH.getMinIndex(collisions)) {
+        switch(collisions.getMinIndex()) {
             case 0: // oben rechts
                 translate = translate.add(Vt); break;
             case 1: // unten rechts
@@ -623,7 +616,7 @@ Enemy.prototype.avoidObstacles = function(optimalDir, obstacles, delta) {
 
         // 4.1.4b Betrachte die Eckpunkte in der Umgebung
         for(var i = 0; i < 4; i++) {
-            avoidDir = MATH.clone(optimalDir);
+            avoidDir = optimalDir.clone();
             avoidDir.add(translate);
 
             switch(i) {
@@ -654,12 +647,12 @@ Enemy.prototype.avoidObstacles = function(optimalDir, obstacles, delta) {
             V.multiplyScalar(2/3 * checkingDistance * scalar);
 
             // verschiebe um ein kleines Stueck (V Hochachse)
-            translate = MATH.clone(U);
-            Vt = MATH.clone(V);
+            translate = U.clone();
+            Vt = V.clone();
             translate.multiplyScalar(0.5);
             Vt.multiplyScalar(0.5);
 
-            switch(MATH.getMinIndex(collisions)) {
+            switch(collisions.getMinIndex()) {
                 case 0: // oben rechts
                     translate = translate.add(Vt);
                 case 1: // unten rechts
@@ -673,7 +666,7 @@ Enemy.prototype.avoidObstacles = function(optimalDir, obstacles, delta) {
             }
 
             for(var i = 0; i < 4; i++) {
-                avoidDir = MATH.clone(dir);
+                avoidDir = dir.clone();
                 avoidDir.add(translate);
                 switch(i) {
                     case 0: avoidDir = avoidDir.add(U).add(V);break;
@@ -721,7 +714,7 @@ Enemy.prototype.searchDirectionRandom = function(optimalDir, obstacles, delta) {
 
     for(var i = 0; i < 9; i++) {
         // "rate" neue Richtung
-        avoidDir = MATH.clone(U);
+        avoidDir = U.clone();
         // |U|,|V| € [-1,1]
         U.multiplyScalar(2*Math.random() - 1);
         V.multiplyScalar(2*Math.random() - 1);
@@ -730,7 +723,7 @@ Enemy.prototype.searchDirectionRandom = function(optimalDir, obstacles, delta) {
         U.normalize();
         avoidDir.normalize();
 
-        var directionToPlayer = MATH.clone(ship.position);
+        var directionToPlayer = ship.position.clone();
         directionToPlayer.sub(this.position);
         var distanceToNext = directionToPlayer.length();
 
@@ -739,7 +732,7 @@ Enemy.prototype.searchDirectionRandom = function(optimalDir, obstacles, delta) {
 
         if(i < 5) {
             // suche in Plane
-            dir = MATH.clone(optimalDir);
+            dir = optimalDir.clone();
         } else {
             // suche orthogonal zur bevorzugten Richtung
             dir = new THREE.Vector3(0,0,0);
@@ -784,7 +777,7 @@ Enemy.prototype.searchDirectionAtEdge = function(optimalDir, obstacles, delta) {
     var j = 0;
     while(!directionFound) {
 
-        dir = MATH.clone(optimalDir);
+        dir = optimalDir.clone();
 
         switch(j) {
             case 0:
@@ -828,7 +821,7 @@ Enemy.prototype.searchDirectionOrthogonal = function(optimalDir, obstacles) {
     var directionFound = false;
 
     for(var i = 0; i < 6; i++) {
-        dir = MATH.clone(optimalDir);
+        dir = optimalDir.clone();
         switch(i) {
             case 0:
                 dir.cross(new THREE.Vector3(1,0,0));
@@ -865,8 +858,8 @@ Enemy.prototype.searchDirectionOrthogonal = function(optimalDir, obstacles) {
 
 // Falls eingekesselt, mache dies
 Enemy.prototype.handleNoDirection = function(delta) {
-    var aim = MATH.clone(this.position);
-    var shootDir = MATH.clone(this.direction);
+    var aim = this.position.clone();
+    var shootDir = this.direction.clone();
     shootDir.normalize();
     aim.add(shootDir.multiplyScalar(minObstacleDistance));
     this.shoot(aim);
@@ -878,13 +871,13 @@ Enemy.prototype.getUVN = function(dir) {
     // Konstruiere Richtungsplane
     var upVector = new THREE.Vector3(0,1,0);
     //upVector.add(shipPosition);
-    var N = MATH.clone(dir);
+    var N = dir.clone();
 
-    var U = MATH.clone(N);
+    var U = N.clone();
     U.cross(N);
     U.cross(N);
 
-    var V = MATH.clone(N);
+    var V = N.clone();
     V.cross(U);
 
     N.normalize();
@@ -895,7 +888,7 @@ Enemy.prototype.getUVN = function(dir) {
 }
 
 Enemy.prototype.updatePlayerDirection = function() {
-    var dir = MATH.clone(ship.position);
+    var dir = ship.position.clone();
     dir.sub(this.oldPlayerLocation);
     dir.normalize();
 
@@ -980,12 +973,13 @@ Enemy.prototype.getHitBoxes = function() {
 
     mesh1 = new THREE.Mesh(geometry1, material);
     mesh2 = new THREE.Mesh(geometry2, material);
-    //scene.add(mesh1);
-    //scene.add(mesh2);
+    scene.add(mesh1);
+    scene.add(mesh2);
     // mesh.position.set(this.position);
 
     hitBoxes.push(mesh1);
     hitBoxes.push(mesh2);
+
 
     return hitBoxes;
 }
@@ -1018,7 +1012,7 @@ Enemy.prototype.collide = function(type, index, otherIndex) {
             this.HP -= shockWaveDamage;
             break;
         default: console.log("Error: Collision with unknown: " + type);
-        console.log(type);
+        //console.log(type);
         break;
     }
 
@@ -1050,6 +1044,7 @@ Enemy.prototype.destroy = function(collisionType) {
             break;
 
     }
+
 
     this.geometry.dispose();
     this.material.dispose();

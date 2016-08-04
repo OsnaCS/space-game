@@ -332,16 +332,6 @@ var Collision = function () {
     function intersectPointShipHitBox(point, box) {
         var globalPoint = new THREE.Vector3(point.matrixWorld.elements[12], point.matrixWorld.elements[13], point.matrixWorld.elements[14]);
 
-        // console.log(minXship(box));
-        // console.log(maxXship(box));
-        // console.log(minYship(box));
-        // console.log(maxYship(box));
-        // console.log(minZship(box));
-        // console.log(maxZship(box));
-
-        // console.log(globalPoint);
-
-
         return (globalPoint.x <= maxXship(box) && globalPoint.x >= minXship(box) &&
             (globalPoint.y <= maxYship(box) && globalPoint.y >= minYship(box)) &&
             (globalPoint.z <= maxZship(box) && globalPoint.z >= minZship(box)));
@@ -350,6 +340,14 @@ var Collision = function () {
     // Checks if there is an intersection between a point and box
     function intersectPointEnemyHitBox(point, box, i) {
         var globalPoint = new THREE.Vector3(point.matrixWorld.elements[12], point.matrixWorld.elements[13], point.matrixWorld.elements[14]);
+
+        // console.log(globalPoint);
+        // console.log(minXenemy(box, i));
+        // console.log(maxXenemy(box, i));
+        // console.log(minYenemy(box, i));
+        // console.log(maxYenemy(box, i));
+        // console.log(minZenemy(box, i));
+        // console.log(maxZenemy(box, i));
 
         return (globalPoint.x <= maxXenemy(box, i) && globalPoint.x >= minXenemy(box, i) &&
             (globalPoint.y <= maxYenemy(box, i) && globalPoint.y >= minYenemy(box, i)) &&
@@ -416,7 +414,7 @@ var Collision = function () {
         }
         else {
             if (intersects[0].distance < 500) {
-                console.log(intersects[0]);
+                //console.log(intersects[0]);
                 return true;
             }
             else {
