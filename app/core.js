@@ -89,10 +89,6 @@ function init() {
     light.position.set(0, 1, 0);
     scene.add(light);
 
-    object = new THREE.AxisHelper(100);
-    object.position.set(0, 0, 0);
-    scene.add(object);
-
     /********** Module laden **********/
 
     player = Player();
