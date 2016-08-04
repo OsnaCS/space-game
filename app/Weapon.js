@@ -28,7 +28,7 @@ var guidedMissileReloadTime = 2;
 var rocketDamage = 50;
 var laserDamage = 2;
 var enemyLaserDamage = 10;
-var explosionDamage = 15;
+var explosionDamage = 100;
 
 var explosionRadius = 500;
 var shockwaveRadius = 500;
