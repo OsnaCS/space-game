@@ -438,11 +438,6 @@ Enemy.prototype.shoot = function(aimPos, delta) {
 
 	var coolDownTime;
     var aimPosition = aimPos.clone();
-    var geometry = new THREE.SphereGeometry(1.5 * shootAccuracy, 32, 32);
-    var material = new THREE.MeshBasicMaterial({color: 0xffffff});
-
-    var aimSphere = new THREE.Mesh(geometry, material);
-    aimSphere.position.set(aimPosition.x,aimPosition.y,aimPosition.z);
 
     var raycaster = new THREE.Raycaster(this.position,this.direction,0,maxShootDistance);
     var intersects = raycaster.intersectObjects([aimSphere]);
@@ -998,6 +993,44 @@ Enemy.prototype.getHitBoxes = function() {
 // TODO: spezifizieren
 Enemy.prototype.collide = function(type, index, otherIndex) {
     switch(type) {
+        case "ASTEROID": case "asteroid": case "Asteroid":
+
+            break;
+        case "SHIP": case "ship": case "Ship":
+
+            break;
+        case "PLAYER": case "player": case "Player":
+
+            break;
+        case "LASER": case "laser": case "Laser":
+            enemyHP[this.index] -= laserDamage;
+            break;
+        case "ROCKET": case "rocket": case "Rocket":
+            enemyHP[this.index] -= rocketDamage;
+            break;
+        case "EXPLOSION": case "explosion": case "Explosion":
+
+            break;
+        case "MACHINEGUN": case "machinegun": case "MachineGun":
+            this.HP -= MGDamage;
+            break;
+        case "SHOCKWAVE": case "shockwave": case "ShockWave": case "shockWave": case "Shockwave":
+            this.HP -= shockWaveDamage;
+            break;
+        default: console.log("Error: Collision with unknown: " + type);
+        console.log(type);
+        break;
+    }
+
+    if(enemyHP[this.index] <= 0) {
+        this.isAlive = false;
+		destroyedEnemies++;
+    }
+}
+
+// TODO: spezifizieren
+Enemy.prototype.destroy = function(collisionType) {
+    switch(collisionType) {
         case "ASTEROID": case "asteroid": case "Asteroid":
 
             break;
