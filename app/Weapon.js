@@ -828,7 +828,6 @@ function renderWeapons() {
 	}
 }
 function inRange(rkt, enemy) {
-    console.log(enemy);
     if (rkt.position.x < enemy.position.x + 5
         && rkt.position.x > enemy.position.x - 5
         && rkt.position.y < enemy.position.y + 5

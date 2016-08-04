@@ -689,6 +689,13 @@ function showOptions() {
 	menuSetColor('optionsBox');
 }
 
+function showChat() {
+	menuHideAll();
+	$('#chat').show();
+	menuResetColors();
+	menuSetColor('chatBox');
+}
+
 /* Resets previously highlighted tabs */
 function menuResetColors() {
     var temp = $('.pauseButton');

@@ -18,6 +18,10 @@ io.on('connection',function(socket){
     socket.on('connecton', function(){
        console.log('Wow');
     });
+    socket.on('chat message',function(msg){
+        console.log(msg);
+        socket.emit('chat message', msg);
+    });
 });
 
 http.listen(3000, function(){

@@ -570,3 +570,11 @@ input[type=range]::-moz-range-track {
 /**
  * End of gameover screen
  */
+#form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+#form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+#messages { list-style-type: none;
+    padding: 0;
+    margin: 0 0 16%;
+}
+#messages li { padding: 5px; }
+#messages li:nth-child(odd) { background: #eee; }
