@@ -161,7 +161,7 @@ function handleProjectiles() {
                             if (laserBol) {
                                 successLaser(i);
                                 enemies[j].collide("Laser", j, i);
-                                console.log("enemy hit by laser");
+                                //console.log("enemy hit by laser");
                                 break;
                             }
                         }
@@ -182,7 +182,7 @@ function handleProjectiles() {
                         if (laserBol) {
                             successLaser(i);
                             player.playerHitByLaser();
-                            console.log("enemy hit by laser");
+                            //console.log("enemy hit by laser");
                             break;
                         }
                     }

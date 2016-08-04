@@ -834,12 +834,13 @@ function renderWeapons() {
 	}
 
 function inRange(rkt, enemy) {
-    if (rkt.position.x < enemy.position.x + 5
-        && rkt.position.x > enemy.position.x - 5
-        && rkt.position.y < enemy.position.y + 5
-        && rkt.position.y > enemy.position.x - 5
-        && rkt.position.z < enemy.position.z + 5
-        && rkt.position.x > enemy.position.x - 5) {
+    //console.log(enemy);
+    if (rkt.position.x < enemy.position.x + 10
+        && rkt.position.x > enemy.position.x - 10
+        && rkt.position.y < enemy.position.y + 10
+        && rkt.position.y > enemy.position.x - 10
+        && rkt.position.z < enemy.position.z + 10
+        && rkt.position.x > enemy.position.x - 10) {
 
         return true;
     }
