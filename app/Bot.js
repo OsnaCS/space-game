@@ -234,20 +234,10 @@ function Bot() {
         // erst ab bestimmter Distanz d_max ausweichen priorisieren
         // ab d_min auf jeden Fall ausweichen
         for (var i = enemies.length - 1; i >= 0; i--) {
-            if (enemyHP[i] <= 0) {
-                scene.remove(enemies[i]);
-                enemies.splice(i, 1);
-                enemyHitBoxes.splice(i, 1);
-                enemyHP.splice(i, 1);
-            } else {
-                enemies[i].move(delta, i);
-                for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
-                    enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
-                }
+            enemies[i].move(delta, i);
+            for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
+                enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
             }
-        }
-
-        for (var i = 0; i < enemies.length; i++) {
             enemiesClone[i] = enemies[i];
         }
 
