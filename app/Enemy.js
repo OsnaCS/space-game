@@ -1042,7 +1042,7 @@ Enemy.prototype.destroy = function(collisionType) {
             changeScore(scoreValues["enemyDestroyed"]);
 			destroyedEnemies += 1;
 
-			checkMilestones();
+		    checkEnemiesMilestones();
             break;
 
         default:

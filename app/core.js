@@ -33,8 +33,8 @@ var biggerSphere = new THREE.Object3D(
 // TODO: eigentlich in Interface
 var scoreValues = {
     "itemCollected": 10,
-    "enemyDestroyed": 50,
-    "asteroidDestroyed": 20
+    "enemyDestroyed": 100,
+    "asteroidDestroyed": 25
 };
 
 // Postprocessing
