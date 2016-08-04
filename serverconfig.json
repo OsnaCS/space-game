@@ -2,5 +2,5 @@
     "db_host": "localhost",
     "db_name": "spacegame",
     "db_user": "root",
-    "db_pass": "root"   // Oder doch: "db_pass": "Ernie0110"
+    "db_pass": "root"
 }
