@@ -80,7 +80,7 @@ var FileLoader = function (full) {
         "../res/textures/TextureEnemyShipOne.png",
         "../res/textures/TextureHero.png",
         "../res/textures/VengeanceMaterial.png",
-        "../res/img/nebula_red.jpeg",
+       /* "../res/img/nebula_red.jpeg",*/
 
         /************************* Meshes *************************/
         "../res/meshes/AsteroidV2.json",
@@ -111,7 +111,7 @@ var FileLoader = function (full) {
         "../res/meshes/PowerUpRocket8.json",
         "../res/meshes/PowerUpShield.json",
         "../res/meshes/RocketV2.json",
-        "../res/meshes/spacenebula_red_3D.json",
+        /*"../res/meshes/spacenebula_red_3D.json",*/
         "../res/meshes/PowerUpRocketDamage.json",
         "../res/meshes/PowerUp_Shockwave.json",
         "../res/meshes/PowerUp_ShockwaveDamageUp.json"
