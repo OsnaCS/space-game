@@ -526,7 +526,7 @@ function gameOver() {
 	network.postNewScore({'player':localStorage.getItem('player'), 'score': getScore(), 'level': level});
   	Pause = true;
   	PauseScreen = true;
-    Movement().unlockPointer();
+    movement.unlockPointer();
 }
 
 /**

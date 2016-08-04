@@ -209,15 +209,9 @@ function Movement() {
                         stop();
                         break;
                     case 80:
-                        if (Pause) {
-                            PauseScreen = false;
+                        if(!Pause) {
                             interface.toggleMenuOverlay();
-                            Movement().lockPointer();
-
-                        } else {
-
-                            interface.toggleMenuOverlay();
-                            Movement().unlockPointer();
+                            movement.unlockPointer();
                             PauseScreen = true;
                         }
                         break;
@@ -291,7 +285,7 @@ function Movement() {
             	animation();
             }
 
-            lat = Math.max(-180, Math.min(180, lat));
+            lat = Math.max(-85, Math.min(70, lat));
             phi = THREE.Math.degToRad(90 - lat);
             theta = THREE.Math.degToRad(lon);
             cameraWatcher();
