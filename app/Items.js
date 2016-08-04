@@ -276,7 +276,7 @@ function collected(itemNumber) {
 			break;
 
         default:
-s
+
             particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x6495ED, 1, 1);
 
 			break;
