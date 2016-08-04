@@ -37,7 +37,7 @@ var Collision = function () {
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             var localVertex = box.geometry.vertices[vertexIndex].clone();
             var globalVertex = localVertex.applyMatrix4(box.matrix);
-            globalXs.push(globalVertex.x);
+            globalMXs.push(globalVertex.x);
         }
         return Math.max.apply(Math, globalMXs);
     }
@@ -61,7 +61,7 @@ var Collision = function () {
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             var localVertex = box.geometry.vertices[vertexIndex].clone();
             var globalVertex = localVertex.applyMatrix4(box.matrix);
-            globalYs.push(globalVertex.y);
+            globalMYs.push(globalVertex.y);
         }
         return Math.max.apply(Math, globalMYs);
     }
@@ -85,7 +85,7 @@ var Collision = function () {
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             var localVertex = box.geometry.vertices[vertexIndex].clone();
             var globalVertex = localVertex.applyMatrix4(box.matrix);
-            globalZs.push(globalVertex.z);
+            globalMZs.push(globalVertex.z);
         }
         return Math.max.apply(Math, globalMZs);
     }
@@ -108,7 +108,7 @@ var Collision = function () {
 
         globalMXs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalXs.push(box.geometry.vertices[vertexIndex].x + ship.position.x);
+            globalMXs.push(box.geometry.vertices[vertexIndex].x + ship.position.x);
         }
         return Math.max.apply(Math, globalMXs);
     }
@@ -128,7 +128,7 @@ var Collision = function () {
 
         globalMYs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalYs.push(box.geometry.vertices[vertexIndex].y + ship.position.y);
+            globalMYs.push(box.geometry.vertices[vertexIndex].y + ship.position.y);
         }
         return Math.max.apply(Math, globalMYs);
     }
@@ -148,7 +148,7 @@ var Collision = function () {
 
         globalMZs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalZs.push(box.geometry.vertices[vertexIndex].z + ship.position.z);
+            globalMZs.push(box.geometry.vertices[vertexIndex].z + ship.position.z);
         }
         return Math.max.apply(Math, globalMZs);
     }
@@ -172,7 +172,7 @@ var Collision = function () {
 
         globalMXs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalXs.push(box.geometry.vertices[vertexIndex].x + enemies[i].position.x);
+            globalMXs.push(box.geometry.vertices[vertexIndex].x + enemies[i].position.x);
         }
         return Math.max.apply(Math, globalMXs);
     }
@@ -192,7 +192,7 @@ var Collision = function () {
 
         globalYs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalYs.push(box.geometry.vertices[vertexIndex].y + enemies[i].position.y);
+            globalMYs.push(box.geometry.vertices[vertexIndex].y + enemies[i].position.y);
         }
         return Math.max.apply(Math, globalMYs);
     }
@@ -212,7 +212,7 @@ var Collision = function () {
 
         globalMZs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalZs.push(box.geometry.vertices[vertexIndex].z + enemies[i].position.z);
+            globalMZs.push(box.geometry.vertices[vertexIndex].z + enemies[i].position.z);
         }
         return Math.max.apply(Math, globalMZs);
     }
