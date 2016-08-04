@@ -47,6 +47,7 @@ function StarfieldParticleRenderer() {
         if (distance > this.fieldSize/3) {
             startVector = ship.position.clone();
 
+            this.particleSystem = undefined;
             scene.remove(this.particleSystem);
             this.particles = new THREE.Geometry();
             for (var p = 0; p < this.particleCount; p++) {
