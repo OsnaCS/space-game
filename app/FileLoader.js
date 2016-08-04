@@ -81,6 +81,10 @@ var FileLoader = function (full) {
         "../res/textures/TextureHero.png",
         "../res/textures/VengeanceMaterial.png",
         "../res/img/nebula_red.jpeg",
+        "../res/textures/PowerUpRocketDamageTex.png",
+        
+
+
 
         /************************* Meshes *************************/
         "../res/meshes/AsteroidV2.json",

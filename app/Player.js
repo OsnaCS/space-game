@@ -366,7 +366,7 @@ function Player() {
 
 };
 
-function doubleMgDmg(value){
+function doubleDmg(value){
 	
 	var oldDamage;
 	var bonus;
