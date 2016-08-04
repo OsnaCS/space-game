@@ -34,7 +34,7 @@ var Network = function() {
     
     function postNewScore(score) {
         if (OFFLINE_TEST_MODE) {
-            console.log("network: posting new score is not available in offline test mode");
+            //console.log("network: posting new score is not available in offline test mode");
         } else {
             $.ajax({
                 type: "POST",

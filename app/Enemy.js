@@ -1018,7 +1018,7 @@ Enemy.prototype.collide = function(type, index, otherIndex) {
             this.HP -= shockWaveDamage;
             break;
         default: console.log("Error: Collision with unknown: " + type);
-        console.log(type);
+        //console.log(type);
         break;
     }
 
