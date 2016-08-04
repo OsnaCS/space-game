@@ -44,9 +44,11 @@ app.get('/', function(req, res){
 });
 
 app.get('/api/1/highscore', function(req, res) {
-    connection.query("SELECT * FROM highscore;", function (err, rows, fields) {
+    connection.query("SELECT * FROM highscore", function (err, rows, fields) {
         if (err) throw err;
-        res.json(rows);
+
+        var result = rows.sortOn("player");
+        res.json(result);
     });
 });
 
@@ -73,3 +75,19 @@ io.on('connection',function(socket){
 http.listen(3000, function(){
     console.log('server started on Port 3000');
 });
+
+
+
+/****************** util ******************/
+
+Array.prototype.sortOn = function(key, asc){
+    this.sort(function(a, b){
+        if(a[key] < b[key]){
+            return -1;
+        }else if(a[key] > b[key]){
+            return 1;
+        }
+        return 0;
+    });
+    this.reverse();
+};
