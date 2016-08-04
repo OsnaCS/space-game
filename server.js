@@ -1,15 +1,6 @@
-/****************** config ******************/
-
-// lokale DB mit diesen Infos hier muss zum Start des Servers da sein!
-var DB_URL = "localhost";
-var DB_USER = "root";
-var DB_PASS = "root";
-var DB_NAME = "spacegame";
-
-
-
 /****************** initialize ******************/
 
+var config = require('./serverconfig.json');
 var express = require('express');
 var app = express();
 app.use('/', express.static(__dirname + '/'));
@@ -21,10 +12,10 @@ var io = require('socket.io')(http);
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-    host     : DB_URL,
-    user     : DB_USER,
-    password : DB_PASS,
-    database : DB_NAME
+    host     : config.db_host,
+    user     : config.db_user,
+    password : config.db_pass,
+    database : config.db_name
 });
 
 connection.query(
