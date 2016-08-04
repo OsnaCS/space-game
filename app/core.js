@@ -16,7 +16,7 @@ var crosshair;
 var ship;
 var player;
 var movement;
-var turret;
+//var turret;
 var explosionParticleHandler;
 var frames = 0;
 var particleHandler;
@@ -118,8 +118,8 @@ function init() {
     crosshair = new Crosshairs();
     crosshair.init();
 
-    turret = new Turret();
-    turret.init();
+    //turret = new Turret();
+    //turret.init();
 
     initializeWeapons();
 

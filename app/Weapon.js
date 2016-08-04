@@ -227,7 +227,7 @@ function shoot(e) {
     if (weaponsActive == true){
         if (e.button === 0) {
             shootLaser();
-			shoott();
+			//shoott();
             //enemyShootLaser(dummyEnemy, ship.position);
         }
         else if (activeSecWeapon == 0) {
