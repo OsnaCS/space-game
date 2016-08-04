@@ -168,8 +168,8 @@ function Crosshairs() {
             cross16.scale.set(6.0, 6.0, 1.0);
             cross16.visible = false;
             crosses.push(cross16);
-			
-			mapA = fileLoader.get("Crosshair17");
+
+            mapA = fileLoader.get("Crosshair17");
 
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
@@ -210,14 +210,14 @@ function Crosshairs() {
 
 }
 
-function switchCross(neuPos){
-      old=pos;
-      pos=neuPos;
+function switchCross(neuPos) {
+    old = pos;
+    pos = neuPos;
 
-      crosses[pos].position.set(0,10,-40);
-      crosses[old].visible = false;
-      ship.remove(crosses[old]);
-      ship.add(crosses[pos]);
-      crosses[pos].visible = true;
-      checkActiveCross();
+    crosses[pos].position.set(0, 10, -40);
+    crosses[old].visible = false;
+    ship.remove(crosses[old]);
+    ship.add(crosses[pos]);
+    crosses[pos].visible = true;
+    checkActiveCross();
 }

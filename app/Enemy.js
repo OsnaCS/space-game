@@ -345,7 +345,6 @@ Enemy.prototype.collectObstacles = function(optimalDir, delta) {
     var possibleObstacle = false;
     var obstacles = [];
 
-    var bot = Bot();
     var asteroids = bot.getAsteroids();
     //console.log("Asteroids:" + asteroids.length);
     var enemies   = bot.getEnemies();
@@ -365,7 +364,8 @@ Enemy.prototype.collectObstacles = function(optimalDir, delta) {
     var shipDistance = distanceToNext + delta * this.speed;
 
     // Kontrolliere, ob sich im guardingRadius andere Gegenstaende befinden
-    for(asteroid of asteroids) { // Asteroiden schon geupdatet
+    for(var i = 0; i < asteroids.length; i++) { // Asteroiden schon geupdatet
+        asteroid = asteroids[i];
         d = Math.abs(shipDistance - asteroid.position.distanceTo(ship.position));
 
         // Teste, ob im richtigen Ring um den Spieler
@@ -383,7 +383,8 @@ Enemy.prototype.collectObstacles = function(optimalDir, delta) {
 
     }
 
-    for(enemy of enemies) {
+    for(var i = 0; i < enemies.length; i++) {
+        enemy = enemies[i];
         d =  enemy.position.distanceTo(ship.position) - shipDistance;
         if(d <= 0 && d <= minObstacleDistance) { // nahe und vor einem
             distanceToShip = enemy.position.distanceTo(shipPosition);
@@ -973,8 +974,10 @@ Enemy.prototype.getHitBoxes = function() {
 
     mesh1 = new THREE.Mesh(geometry1, material);
     mesh2 = new THREE.Mesh(geometry2, material);
-    scene.add(mesh1);
-    scene.add(mesh2);
+
+    //scene.add(mesh1);
+    //scene.add(mesh2);
+    
     // mesh.position.set(this.position);
 
     hitBoxes.push(mesh1);

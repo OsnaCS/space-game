@@ -13,7 +13,7 @@ function StarfieldParticleRenderer() {
     this.particleCount = 5000;
     this.fieldSize = 2000;
     this.particles = new THREE.Geometry();
-
+/*
     nebulaGeometry = fileLoader.get("spacenebula_red_3D");
     nebulaTexture = fileLoader.get("nebula_red");
     nebula = new THREE.Mesh(nebulaGeometry,   new THREE.MeshBasicMaterial({ map: nebulaTexture, culling: THREE.DoubleSide }));
@@ -27,7 +27,7 @@ function StarfieldParticleRenderer() {
 
     nebulas.push (nebula); 
     scene.add(nebula); 
-
+*/
     for (var p = 0; p < this.particleCount; p++) {
         var particle = new THREE.Vector3(
             startVector.x+(Math.random()-0.5)*this.fieldSize,
@@ -46,6 +46,9 @@ function StarfieldParticleRenderer() {
         var distance = startVector.distanceTo(ship.position);
         if (distance > this.fieldSize/3) {
             startVector = ship.position.clone();
+
+            this.particleSystem.geometry.dispose();
+            this.particleSystem.material.dispose();
 
             this.particleSystem = undefined;
             scene.remove(this.particleSystem);

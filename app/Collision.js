@@ -1,16 +1,20 @@
 var Collision = function () {
 
-
+    var x,y,z;
+    var globalXs = [];
+    var globalYs = [];
+    var globalZs = [];
+    var globalMXs = [];
+    var globalMYs = [];
+    var globalMZs = [];
 
     /************************* MIN AND MAX FUNCTIONS *************************/
-
-
 
     // Calculates the min x value of the vertices of a box
     function minX(box) {
 
         // array for x values
-        var globalXs = [];
+        globalXs = [];
         // get the position of each vertex
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             // get the local position of the vertex
@@ -27,19 +31,19 @@ var Collision = function () {
     // Calculates the max X value of the vertices of a box
     function maxX(box) {
 
-        var globalXs = [];
+        globalMXs  = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             var localVertex = box.geometry.vertices[vertexIndex].clone();
             var globalVertex = localVertex.applyMatrix4(box.matrix);
-            globalXs.push(globalVertex.x);
+            globalMXs .push(globalVertex.x);
         }
-        return Math.max.apply(Math, globalXs);
+        return Math.max.apply(Math, globalMXs );
     }
 
     // Calculates the min Y value of the vertices of a box
     function minY(box) {
 
-        var globalYs = [];
+        globalYs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             var localVertex = box.geometry.vertices[vertexIndex].clone();
             var globalVertex = localVertex.applyMatrix4(box.matrix);
@@ -51,19 +55,19 @@ var Collision = function () {
     // Calculates the max Y value of the vertices of a box
     function maxY(box) {
 
-        var globalYs = [];
+        globalMYs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             var localVertex = box.geometry.vertices[vertexIndex].clone();
             var globalVertex = localVertex.applyMatrix4(box.matrix);
-            globalYs.push(globalVertex.y);
+            globalMYs.push(globalVertex.y);
         }
-        return Math.max.apply(Math, globalYs);
+        return Math.max.apply(Math, globalMYs);
     }
 
     // Calculates the min Z value of the vertices of a box
     function minZ(box) {
 
-        var globalZs = [];
+        globalZs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             var localVertex = box.geometry.vertices[vertexIndex].clone();
             var globalVertex = localVertex.applyMatrix4(box.matrix);
@@ -75,20 +79,20 @@ var Collision = function () {
     // Calculates the max Z value of the vertices of a box
     function maxZ(box) {
 
-        var globalZs = [];
+        globalMZs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             var localVertex = box.geometry.vertices[vertexIndex].clone();
             var globalVertex = localVertex.applyMatrix4(box.matrix);
-            globalZs.push(globalVertex.z);
+            globalMZs.push(globalVertex.z);
         }
-        return Math.max.apply(Math, globalZs);
+        return Math.max.apply(Math, globalMZs);
     }
 
     // Calculates the min x value of the vertices of a box
     function minXship(box) {
 
         // array for x values
-        var globalXs = [];
+        globalXs = [];
         // get the position of each vertex
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             globalXs.push(box.geometry.vertices[vertexIndex].x + ship.position.x);
@@ -100,17 +104,17 @@ var Collision = function () {
     // Calculates the max X value of the vertices of a box
     function maxXship(box) {
 
-        var globalXs = [];
+        globalMXs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalXs.push(box.geometry.vertices[vertexIndex].x + ship.position.x);
+            globalMXs.push(box.geometry.vertices[vertexIndex].x + ship.position.x);
         }
-        return Math.max.apply(Math, globalXs);
+        return Math.max.apply(Math, globalMXs);
     }
 
     // Calculates the min Y value of the vertices of a box
     function minYship(box) {
 
-        var globalYs = [];
+        globalYs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             globalYs.push(box.geometry.vertices[vertexIndex].y + ship.position.y);
         }
@@ -120,17 +124,17 @@ var Collision = function () {
     // Calculates the max Y value of the vertices of a box
     function maxYship(box) {
 
-        var globalYs = [];
+        globalMYs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalYs.push(box.geometry.vertices[vertexIndex].y + ship.position.y);
+            globalMYs.push(box.geometry.vertices[vertexIndex].y + ship.position.y);
         }
-        return Math.max.apply(Math, globalYs);
+        return Math.max.apply(Math, globalMYs);
     }
 
     // Calculates the min Z value of the vertices of a box
     function minZship(box) {
 
-        var globalZs = [];
+        globalZs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             globalZs.push(box.geometry.vertices[vertexIndex].z + ship.position.z);
         }
@@ -140,11 +144,11 @@ var Collision = function () {
     // Calculates the max Z value of the vertices of a box
     function maxZship(box) {
 
-        var globalZs = [];
+        globalMZs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalZs.push(box.geometry.vertices[vertexIndex].z + ship.position.z);
+            globalMZs.push(box.geometry.vertices[vertexIndex].z + ship.position.z);
         }
-        return Math.max.apply(Math, globalZs);
+        return Math.max.apply(Math, globalMZs);
     }
 
 
@@ -152,7 +156,7 @@ var Collision = function () {
     function minXenemy(box, i) {
 
         // array for x values
-        var globalXs = [];
+        globalXs = [];
         // get the position of each vertex
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             globalXs.push(box.geometry.vertices[vertexIndex].x + enemies[i].position.x);
@@ -164,17 +168,17 @@ var Collision = function () {
     // Calculates the max X value of the vertices of a box
     function maxXenemy(box, i) {
 
-        var globalXs = [];
+        globalMXs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalXs.push(box.geometry.vertices[vertexIndex].x + enemies[i].position.x);
+            globalMXs.push(box.geometry.vertices[vertexIndex].x + enemies[i].position.x);
         }
-        return Math.max.apply(Math, globalXs);
+        return Math.max.apply(Math, globalMXs);
     }
 
     // Calculates the min Y value of the vertices of a box
     function minYenemy(box, i) {
 
-        var globalYs = [];
+        globalYs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             globalYs.push(box.geometry.vertices[vertexIndex].y + enemies[i].position.y);
         }
@@ -184,17 +188,17 @@ var Collision = function () {
     // Calculates the max Y value of the vertices of a box
     function maxYenemy(box, i) {
 
-        var globalYs = [];
+        globalMYs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalYs.push(box.geometry.vertices[vertexIndex].y + enemies[i].position.y);
+            globalMYs.push(box.geometry.vertices[vertexIndex].y + enemies[i].position.y);
         }
-        return Math.max.apply(Math, globalYs);
+        return Math.max.apply(Math, globalMYs);
     }
 
     // Calculates the min Z value of the vertices of a box
     function minZenemy(box, i) {
 
-        var globalZs = [];
+        globalZs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
             globalZs.push(box.geometry.vertices[vertexIndex].z + enemies[i].position.z);
         }
@@ -204,11 +208,11 @@ var Collision = function () {
     // Calculates the max Z value of the vertices of a box
     function maxZenemy(box, i) {
 
-        var globalZs = [];
+        globalMZs = [];
         for (var vertexIndex = 0; vertexIndex < box.geometry.vertices.length; vertexIndex++) {
-            globalZs.push(box.geometry.vertices[vertexIndex].z + enemies[i].position.z);
+            globalMZs.push(box.geometry.vertices[vertexIndex].z + enemies[i].position.z);
         }
-        return Math.max.apply(Math, globalZs);
+        return Math.max.apply(Math, globalMZs);
     }
 
     /************************* INTERSECTION FUNCTIONS *************************/
@@ -239,9 +243,9 @@ var Collision = function () {
     // Checks if there is an intersection between  a sphere and a box
     function intersectSphereBox(sphere, box) {
         // get box closest point to sphere center by clamping
-        var x = Math.max(minX(box), Math.min(sphere.position.x, maxX(box)));
-        var y = Math.max(minY(box), Math.min(sphere.position.y, maxY(box)));
-        var z = Math.max(minZ(box), Math.min(sphere.position.z, maxZ(box)));
+        x = Math.max(minX(box), Math.min(sphere.position.x, maxX(box)));
+        y = Math.max(minY(box), Math.min(sphere.position.y, maxY(box)));
+        z = Math.max(minZ(box), Math.min(sphere.position.z, maxZ(box)));
 
         // distance between the sphere and the closest box-point to the spehere
         var distance = Math.sqrt((x - sphere.position.x) * (x - sphere.position.x) +
@@ -285,9 +289,9 @@ var Collision = function () {
     function cylinderAsBox(cylinder) {
 
         // parameters for the box
-        var x = cylinder.geometry.parameters.radiusTop * 2;
-        var y = cylinder.geometry.parameters.height;
-        var z = cylinder.geometry.parameters.radiusTop * 2;
+        x = cylinder.geometry.parameters.radiusTop * 2;
+        y = cylinder.geometry.parameters.height;
+        z = cylinder.geometry.parameters.radiusTop * 2;
 
         // initialize box
         var boxGeometry = new THREE.BoxGeometry(x, y, z);
@@ -322,10 +326,16 @@ var Collision = function () {
 
     // Checks if there is an intersection between a ShipHitbox and another box
     function intersectShipHitBoxBox(a, b) {
+        var x1Pruef = minXship(a) <= maxX(b);
+        var x2Pruef = maxXship(a) >= minX(b);
+        var y1Pruef = minYship(a) <= maxY(b);
+        var y2Pruef = maxYship(a) >= minY(b);
+        var z1Pruef = minZship(a) <= maxZ(b);
+        var z2Pruef = maxZship(a) >= minZ(b);
         // if there is an intersection in every dimension the two boxes intersect
-        return (minXship(a) <= maxX(b) && maxXship(a) >= minX(b) &&
-            (minYship(a) <= maxY(b) && maxYship(a) >= minY(b)) &&
-            (minZship(a) <= maxZ(b) && maxZship(a) >= minZ(b)));
+        return (x1Pruef && x2Pruef &&
+            (y1Pruef && y2Pruef) &&
+(z1Pruef && z2Pruef));
     }
 
     // Checks if there is an intersection between a point and box

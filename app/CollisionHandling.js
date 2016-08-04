@@ -167,7 +167,7 @@ function handleProjectiles() {
                                 if (laserBol) {
                                     successLaser(i);
                                     enemies[j].collide("Laser", j, i);
-                                    console.log("enemy hit by laser");
+                                    //console.log("enemy hit by laser");
                                     break;
                                 }
                             }
@@ -188,7 +188,7 @@ function handleProjectiles() {
                             if (laserBol) {
                                 successLaser(i);
                                 player.playerHitByLaser();
-                                console.log("player hit by laser");
+                                //console.log("player hit by laser");
                                 break;
                             }
                         }
@@ -227,7 +227,7 @@ function handleProjectiles() {
 
                                 for (var l = 0; l <= projectiles[i].children.length - 1; l++) {
                                     if (collision.intersectPointEnemyHitBox(projectiles[i].children[l], enemyHitBoxes[j][k], j)) {
-                                        console.log("enemy hit by Rocket");
+                                        //console.log("enemy hit by Rocket");
                                         rocketBol = true;
                                         break;
                                     }
@@ -263,7 +263,7 @@ function handleProjectiles() {
                         for (var k = 0; k < enemyHitBoxes[j].length; k++) {
                             if (collision.intersectSphereBox(projectiles[i], enemyHitBoxes[j][k])) {
                                 enemies[j].collide("Explosion", j, i);
-                                console.log("enemy hit by Explosion");
+                                //console.log("enemy hit by Explosion");
                                 break;
                             }
                         }
@@ -279,8 +279,10 @@ function handleProjectiles() {
                             if (collision.intersectPointEnemyHitBox(projectiles[i].getObjectByName("BoxPoint"), enemyHitBoxes[j][k], j)) {
                                 MGbol = true;
                                 successMachineGunBullet(i);
+
                                 
                                 console.log("enemy hit by MachineGun");
+
                                 break;
                             }
                         }
@@ -298,7 +300,7 @@ function handleProjectiles() {
                         for (var k = 0; k < enemyHitBoxes[j].length; k++) {
                             if (collision.intersectSphereBox(projectiles[i], enemyHitBoxes[j][k])) {
                                 enemies[j].collide("Shockwave", j, i);
-                                console.log("enemy hit by Shockwave");
+                                //console.log("enemy hit by Shockwave");
                                 break;
                             }
                         }

@@ -16,6 +16,8 @@ var crosshair;
 var ship;
 var player;
 var movement;
+var explosionParticleHandler;
+var frames = 0;
 var particleHandler;
 var collision;
 var stats;
