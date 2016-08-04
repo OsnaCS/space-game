@@ -38,8 +38,8 @@ function levelDesign(level){
 		bot.createlevel(1, 0, 0, 0);
 			break;
 	}
-	
 	*/
+	
 	setLevelTimer(levelTimes[level-1]);
 	displayLevel(level);
 }
@@ -382,9 +382,11 @@ function reduceShield(hpTick) {
 	var restTick = 0;
 	currentShield += hpTick;
 	
-	if(currentShield < 0) {
+	if(currentShield <= 0) {
 		restTick = currentShield;
 		currentShield = 0;
+		//player.deactivateShield();
+		scene.remove(shield);
 	}
 	
 	displayedShield = parseInt(currentShield + 0.5);
@@ -394,13 +396,14 @@ function reduceShield(hpTick) {
 
 /* Recharges shield to full capacity */
 function rechargeShield() {
-	var i = 0;
-	
 	var tempID = setInterval(function() {
 		if(displayedShield < maxShield) {
 			if(!Pause) {
 				currentShield = ++displayedShield;
 				updateShieldDisplay();
+
+				if(displayedShield == 50)
+					player.activateShield();
 			}
 		} else clearInterval(tempID);
 	}, 10);
@@ -421,6 +424,9 @@ function passiveShieldRegen() {
 			if((displayedShield < maxShield) && !Pause) {
 				currentShield = ++displayedShield;
 				updateShieldDisplay();
+
+				if(displayedShield == 50)
+					player.activateShield();
 			}
 		}, 1000);
 	}, 5000);
@@ -602,7 +608,7 @@ function setLevelTimer(seconds) {
 
 /* Starts the timer */
 function startLevelTimer() {
-	var levelTimer = setInterval(function() {
+	setInterval(function() {
 		if(!Pause) {
 			if(sec == 0 && min > 0) {
 				min--;
@@ -658,13 +664,13 @@ function setSpeed(newSpeed) {
 		tempRef.innerHTML = parseInt(maxSpeed * speedFactor * 10);
 
 	// Soll der aufhören upzudaten wenn das Achievement erreicht wurde?
-	if(parseInt(tempRef.innerHTML) > reachedMaxSpeed){
+	if(parseInt(tempRef.innerHTML) > reachedMaxSpeed) {
 		reachedMaxSpeed = parseInt(tempRef.innerHTML);
 		checkMilestones();
 	}
 
 	if(parseInt(tempRef.innerHTML) < 10)
-		tempRef.innerHTML = 00;
+		tempRef.innerHTML = 0;
 }
 
 /* Sets maxSpeed to @newMaxSpeed */
@@ -1142,7 +1148,8 @@ function loadMenuHighscore() {
                         "<td class='col-md-3'>" + score.player + "</td>" +
                         "<td class='col-md-4'>" + score.score + "</td>" +
                     "</tr>";
-                $("#menuHighscore").html($("#menuHighscore").html() + tableTag);
+				var temp = $("#menuHighscore");
+               temp.html(temp.html() + tableTag);
             }
         });
 		highscoreShowed = true;
@@ -1164,9 +1171,9 @@ function showFPS() {
 }
 
 function saveGame() {
-	var temp = "Control123" + " \"" + /*playername +*/ "\" " + currentLevel + " " + 
-		maxHP + " " + currentHP + " " + maxShield + " " + currentShield + " " + 
-		currentScore + " " + currentMoney + " " + MGAmmo + " " + MaxMGAmmo + " " + 
+	var temp = "Control123" + " \"" + /*playername +*/ "\" " + level + " " +
+		getMaxHP() + " " + getHP() + " " + getShield() + " " + getMaxShield() + " " +
+		getScore() + " " + getMoney() + " " + MGAmmo + " " + MaxMGAmmo + " " +
 		rocketAmmo + " " + MaxRocketAmmo + " " /*+ sw + lr */ ;
 	// encrypt and write
 }
@@ -1177,7 +1184,7 @@ function loadGame(save) {
 	if(temp[0] != "Control123")
 		return false; //Invalid savefile
 	//playername = temp[1];
-	currentLevel = parseInt(temp[2]);
+	level = parseInt(temp[2]);
 	setMaxHP(Number(temp[3]));
 	setHP(Number(temp[4]));
 	setMaxShield(Number(temp[5]));
@@ -1195,7 +1202,6 @@ function loadGame(save) {
 	document.getElementById('invertedMouse').checked = true;
 	document.getElementById('hideScrollbars').checked = true;
 	document.getElementById('invertedShieldBar').checked = false;
-	spaceAudio.play();
 	levelDesign(level);
 	startLevelTimer();
 }
