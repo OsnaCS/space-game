@@ -571,6 +571,8 @@ function gameOver() {
 	glitchScreen(500);
 	document.getElementById('gameOverText3').innerHTML = getScore();
 	$('#gameOverBox').animate({top: '20%'}, 500);
+	
+	network.postNewScore({'player':localStorage.getItem('player'), 'score': getScore(), 'level': level});
   	Pause = true;
   	PauseScreen = true;
     movement.unlockPointer();

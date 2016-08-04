@@ -16,7 +16,11 @@ var crosshair;
 var ship;
 var player;
 var movement;
+//var turret;
+var explosionParticleHandler;
+var frames = 0;
 var particleHandler;
+
 var collision;
 var stats;
 var network;
@@ -79,7 +83,7 @@ function init() {
     scene = new THREE.Scene();
 
     clock = new THREE.Clock();
-
+    
     /********** Szene füllen **********/
 
     var light, object;
@@ -107,6 +111,9 @@ function init() {
     crosshair = new Crosshairs();
     crosshair.init();
 
+    //turret = new Turret();
+    //turret.init();
+
     initializeWeapons();
 
     stats = new Stats();
@@ -121,7 +128,7 @@ function init() {
         cameraPosition: new THREE.Vector3(0, 15, 30),
         fixed: false,
         stiffness: 0.15,
-        matchRotation: false
+        matchRotation: true
     });
 
     camera.addTarget({
@@ -132,6 +139,7 @@ function init() {
         stiffness: 1,
         matchRotation: true
     });
+
 
     camera.addTarget({
         name: 'fTarget',
@@ -150,7 +158,6 @@ function init() {
         stiffness: 0.001,
         matchRotation: false
     });
-
 
     var cam = Camera();
     cam.init();
@@ -201,7 +208,6 @@ function cameraAnimate() {
         frames++;
         requestAnimationFrame(cameraAnimate);
     } else {
-
         requestAnimationFrame(animate);
     }
 
@@ -266,7 +272,7 @@ function render() {
     camera.update();
 
     if (glitchPassEnabled) {
-        composer.render();
+       composer.render();
     } else {
         renderer.render(scene, camera);
     }

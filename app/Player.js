@@ -338,7 +338,7 @@ function Player() {
 
     }
 
-};
+}
 
 function doubleMgDmg(value){
 	

@@ -159,9 +159,10 @@ function Crosshairs() {
             cross15.visible = false;
             crosses.push(cross15);
 
+
             mapA = fileLoader.get("Crosshair16");
 
-            materialA = new THREE.SpriteMaterial({ map: mapA });
+            materialA = new THREE.SpriteMaterial({map: mapA});
 
             cross16 = new THREE.Sprite(materialA);
             cross16.position.set(0, 10, -40);

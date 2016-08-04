@@ -209,13 +209,7 @@ function Movement() {
                         stop();
                         break;
                     case 80:
-                        if (Pause) {
-                            PauseScreen = false;
-                            interface.toggleMenuOverlay();
-                            movement.lockPointer();
-
-                        } else {
-
+                        if(!Pause) {
                             interface.toggleMenuOverlay();
                             movement.unlockPointer();
                             PauseScreen = true;
@@ -295,6 +289,7 @@ function Movement() {
             lat = Math.max(-85, Math.min(70, lat));
             phi = THREE.Math.degToRad(90 - lat);
             theta = THREE.Math.degToRad(lon);
+            cameraWatcher();
 
             cameraWatcher(); 
 
@@ -305,6 +300,7 @@ function Movement() {
             targetPosition.y = position.y + 100 * Math.cos(phi);
             targetPosition.z = position.z + 100 * Math.sin(phi) * Math.sin(theta);
             ship.lookAt(targetPosition);
+            //turret.move();
 
             // Animation vom Raumschiff
 		function animation(){
@@ -395,7 +391,7 @@ function changeCam() {
 function stop() {
 
     xAxis = 0.0;
-    yAxis = -0.0;
+    yAxis = 0.0;
     zAxis = 0.0;
     setSpeed(-yAxis);
     mouseX = 0.0;
@@ -424,16 +420,16 @@ function cameraWatcher (){
 	if(!isFirstPerson){
 		if(lat> 57 && yAxis ==0){
 
-			camera.setTarget('fTarget'); 
+			//camera.setTarget('fTarget');
 
 		}else if(lat>65 &&yAxis ==-1){
 
-			camera.setTarget ('fTarget');
+			//camera.setTarget ('fTarget');
 
 
 		}else {
 
-			camera.setTarget('Target');
+			//camera.setTarget('Target');
 
 
 		}	
