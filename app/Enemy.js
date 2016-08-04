@@ -435,7 +435,6 @@ Enemy.prototype.shoot = function(aimPos, delta) {
 
     var raycaster = new THREE.Raycaster(this.position,this.direction,0,maxShootDistance);
     var intersects = raycaster.intersectObjects([aimSphere]);
-    //console.log(intersects.length);
 
     if(intersects.length > 0) {
         // Ueberpruefe, ob geschossen werden darf
@@ -974,12 +973,13 @@ Enemy.prototype.getHitBoxes = function() {
 
     mesh1 = new THREE.Mesh(geometry1, material);
     mesh2 = new THREE.Mesh(geometry2, material);
-    //scene.add(mesh1);
-    //scene.add(mesh2);
+    scene.add(mesh1);
+    scene.add(mesh2);
     // mesh.position.set(this.position);
 
     hitBoxes.push(mesh1);
     hitBoxes.push(mesh2);
+
 
     return hitBoxes;
 }
@@ -1044,6 +1044,7 @@ Enemy.prototype.destroy = function(collisionType) {
             break;
 
     }
+
 
     this.geometry.dispose();
     this.material.dispose();
