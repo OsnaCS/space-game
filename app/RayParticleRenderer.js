@@ -61,6 +61,9 @@ function RayParticleRenderer(particleColor, nParticles, particleTexture, startVe
 
     this.reset = function () {
         
+
+        this.particleSystem.geometry.dispose();
+        this.particleSystem.material.dispose();
         scene.remove(this.particleSystem);
         this.particleSystem = undefined;
 

@@ -62,6 +62,9 @@ function ShockwaveParticleRenderer(particleColor, nParticles, particleTexture, l
 
             if (time > lifetime) {
                 // aufhören
+
+                this.particleSystem.geometry.dispose();
+                this.particleSystem.material.dispose();
                 scene.remove(this.particleSystem);
                 this.particleSystem = undefined;
                 this.running = false;
