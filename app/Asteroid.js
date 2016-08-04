@@ -30,7 +30,7 @@ function Asteroid(level, astIndex) {
     this.scale.x = this.scale.y = this.scale.z = rndScale;
 
     this.level = level;
-    this.speed = (this.level > 15) ? this.level : 15;
+    this.speed = (this.level > 11) ? this.level : 11;
 
     rndSpeedX = Math.random() * (this.speed + 11) - 11;
     rndSpeedY = Math.random() * (this.speed + 11) - 11;
@@ -99,12 +99,12 @@ Asteroid.prototype.collide = function (other, type, index, otherIndex) {
                 if (this.radius > other.radius) {
                     asteroidHP[otherIndex] = 0;
                     other.destroy(type);
-                    asteroidLowAudio.play();
+                    // asteroidLowAudio.play();
                     return;
                 } else {
                     asteroidHP[index] = 0;
                     this.destroy(type);
-                    asteroidLowAudio.play();
+                    // asteroidLowAudio.play();
                     return;
                 }
             }
@@ -113,7 +113,7 @@ Asteroid.prototype.collide = function (other, type, index, otherIndex) {
             // TODO
             break;
         case "PLAYER": case "player": case "Player":
-             this.reflectPlayer(ship); 
+             this.reflectPlayer(ship);
             break;
         case "LASER": case "laser": case "Laser":
             asteroidHP[index] -= laserDamage;
@@ -128,11 +128,10 @@ Asteroid.prototype.collide = function (other, type, index, otherIndex) {
         case "MACHINEGUN": case "machinegun": case "MachineGun":
             asteroidHP[index] -= MGDamage;
             break;
-        
-        case "SHOCKWAVE": case "shockwave": case "ShockWave":
+        case "SHOCKWAVE": case "shockwave": case "ShockWave": case "shockWave": case "Shockwave":
             asteroidHP[index] -= shockWaveDamage;
             break;
-        default: console.log("Error: Collision with unknown");
+        default: console.log("Error: Collision with unknown: " + type);
     }
 
     if (asteroidHP[index] <= 0) {
@@ -155,6 +154,7 @@ Asteroid.prototype.destroy = function (collisionType) {
         case "EXPLOSION": case "explosion": case "Explosion":
         case "MACHINEGUN": case "machinegun": case "Machinegun":
         case "PLAYER": case "player": case "Player":
+        case "SHOCKWAVE": case "shockwave": case "ShockWave": case "shockWave": case "Shockwave":
             changeScore(scoreValues["asteroidDestroyed"]);
             spawnPowerUp(asteroids[this.astIndex].position.x, asteroids[this.astIndex].position.y, asteroids[this.astIndex].position.z);
 			destroyedAsteroids += 1;
@@ -258,15 +258,13 @@ Asteroid.prototype.reflectPlayer = function (player) {
     playerDir.add(negAxis.multiplyScalar(factor));
 
     asteroidSpeedVecs[this.astIndex] = thisDir;
-    this.position.add(asteroidSpeedVecs[this.astIndex].multiplyScalar(3)); 
+    this.position.add(asteroidSpeedVecs[this.astIndex].multiplyScalar(3));
     ship.position.add(playerDir.multiplyScalar(3));
    // asteroidSpeedVecs[other.astIndex] = playerDir;
     this.direction = thisDir.clone();
     player.direction = playerDir.clone();
 
 }
-
-
 
 Asteroid.prototype.getHitBox = function () {
     var mesh, geometry, material;

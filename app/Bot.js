@@ -9,7 +9,7 @@ var destroyedAsteroids = 0; //f�r die milestones
 // - init()
 // - update(delta)
 var asteroids = [], enemies = [], asteroidHitBoxes = [], enemyHitBoxes = [],
-    asteroidHP = [], enemyHP = [], enemy, worldRadius, gameLevel, numOfAsteroids = 100,
+    asteroidHP = [], enemyHP = [], enemy, worldRadius, gameLevel, numOfAsteroids = 50,
     asteroidSpeedVecs = [], asteroidRotVecs = [];
 var asteroidsClone = [], enemiesClone = [];
 
@@ -128,18 +128,26 @@ function Bot() {
             enemyPosition.multiplyScalar(radius);
             enemyPosition.add(ship.position);
         } while (!farAway(enemyPosition, maxShipSize));
-        // TODO: speed abhaengig von Level
-        var speed = 15;
-        // TODO: weapon
+
         switch (art) {
-            case 0: typ = "SMALL1"; break;
-            case 1: typ = "SMALL2"; break;
-            case 2: typ = "BOSS1"; break;
-            case 3: typ = "BOSS2"; break;
-            default: typ = "BOSS1"; // hardest weapon
+            case 0: typ = "BOSS1"; 
+                    speed = 12;
+                    break;
+            case 1: typ = "BOSS2"; 
+                    speed = 13;
+                    break;
+            case 2: typ = "SMALL1"; 
+                    speed = 15;
+                    break;
+            case 3: case 4:
+                    typ = "SMALL2"; 
+                    speed = 17;
+                    break;
+            default: typ = "SMALL2";
+                    speed = 17;
         }
 
-        speed += Math.round((level + 5) * Math.random());
+        speed += Math.round(5 * Math.random());
 
         enemy = new Enemy(enemyPosition, speed, level, typ, index, art);
 
@@ -264,35 +272,11 @@ function Bot() {
 
 
         // Initialisierer der Bots je Level
-        initAI: function (level) {
+        initAsteroids: function () {
             // setzen unserer externen Faktoren
             worldRadius = 5000;
-            gameLevel = level;
-
-            // erstelle Asteroiden nur in Level 1
-            // TODO: asteroiden wie loeschen
-            if (level == 1) {
-                asteroids = [];
-
-                for (var i = 0; i < numOfAsteroids; i++) {
-                    var asteroid = createAsteroid(level, i);
-                }
-            }
-
-            // erstelle Gegner
-            if (level == 1) {
-                enemies = [];
-            }
-
-            for (var i = 0; i < 1 * level; i++) {
-                enemy = createEnemy(level, i);
-                enemyHP.push(10);
-                enemies.push(enemy);
-                enemyHitBoxes.push(enemy.getHitBoxes());
-                for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
-                    enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
-                }
-                scene.add(enemy);
+            for (var i = 0; i < numOfAsteroids; i++) {
+                var asteroid = createAsteroid(level, i);
             }
         },
 
