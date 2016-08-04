@@ -109,7 +109,7 @@ function init() {
 
     bot = Bot();
     bot.initAI(1);
-
+    bot.createlevel();
     movement = Movement();
     movement.init();
 
@@ -124,8 +124,6 @@ function init() {
     initializeWeapons();
 
     stats = new Stats();
-    container.appendChild(stats.dom);
-
 
     /********** Camera **********/
 
