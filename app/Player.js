@@ -4,8 +4,6 @@ var playerHitBoxes = [];
 
 var cross;
 
-
-
 frontVector = new THREE.Vector3(0, 0, 0);
 
 backVector = new THREE.Vector3(0, 0, 0);
@@ -17,7 +15,6 @@ var barrelRoll;
 var action = {};
 var leftWingRot;
 var rightWingRot;
-
 
 function Player() {
 
@@ -295,6 +292,17 @@ function Player() {
 
         },
 
+        deactivateShield: function () {
+
+            if (shield !== undefined) {
+                scene.remove(shield);
+                shield = undefined;
+            }
+
+            
+
+        },
+
         doABarrelRoll: function(){
 
             if(barrelRoll == true) {
@@ -322,3 +330,63 @@ function Player() {
 };
 
 };
+
+function doubleMgDmg(value){
+	
+	var oldDamage;
+	var bonus;
+	switch(value){
+		case 1:
+			setPowerUp(1,1);
+			oldDamage = MGDamage;
+			bonus = MGDamage;
+			MGDamage+=bonus;
+			var levelTimer = setInterval(function() {
+			var i = 0;
+			if(!Pause){
+				i++;
+			}
+			if(i>=30){
+				setPowerUp(1,0);
+				MGDamage-=bonus;
+				clearInterval(Interval)
+			}
+		}, 1000);
+			break;
+		case 2:
+			setPowerUp(2,1);
+			oldDamage = laserDamage;
+			bonus = laserDamage;
+			laserDamage+=bonus;
+			var levelTimer = setInterval(function() {
+			var i = 0;
+			if(!Pause){
+				i++;
+			}
+			if(i>=30){
+				setPowerUp(2,0);
+				laserDamage-=bonus;
+				clearInterval(Interval)
+			}
+		}, 1000);
+			break;
+		case 3:
+			setPowerUp(3,1);
+			oldDamage = rocketDamage;
+			bonus = rocketDamage;
+			rocketDamage+=bonus;
+			var levelTimer = setInterval(function() {
+			var i = 0;
+			if(!Pause){
+				i++;
+			}
+			if(i>=30){
+				setPowerUp(3,0);
+				rocketDamage-=bonus;
+				clearInterval(Interval)
+			}
+		}, 1000);
+			break;
+
+	}
+}

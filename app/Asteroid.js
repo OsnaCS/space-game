@@ -158,6 +158,7 @@ Asteroid.prototype.destroy = function (collisionType) {
             changeScore(scoreValues["asteroidDestroyed"]);
             spawnPowerUp(asteroids[this.astIndex].position.x, asteroids[this.astIndex].position.y, asteroids[this.astIndex].position.z);
 			destroyedAsteroids += 1;
+			changeMoney(2);
 
 			checkMilestones();
             break;
