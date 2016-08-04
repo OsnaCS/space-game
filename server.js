@@ -1,6 +1,8 @@
 var config = require('./serverconfig.json');
 var express = require('express');
 var app = express();
+var bodyparser = require('body-parser');
+app.use(bodyparser.json());
 app.use('/', express.static(__dirname + '/'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -24,7 +26,7 @@ connection.query(
     +'score LONG,'
     +'level INT DEFAULT 1,'
     +'PRIMARY KEY (id));');
-
+/*
 connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [1, "Superstar McAwesome", 10, 10000], function(err, result) {if (err) throw err;});
 connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [2, "Irgendwas", 9, 8750], function(err, result) {if (err) throw err;});
 connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [3, "Sombra, Emperor of the Galaxy", 7, 5400], function(err, result) {if (err) throw err;});
@@ -35,7 +37,7 @@ connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [7, "Blinky", 2,
 connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [8, "Henry", 2, 980], function(err, result) {if (err) throw err;});
 connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [9, "Kosmonaut Anton", 1, 340], function(err, result) {if (err) throw err;});
 connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [10, "Bob", 1, 100], function(err, result) {if (err) throw err;});
-
+*/
 
 
 
@@ -45,7 +47,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/api/1/highscore', function(req, res) {
-    connection.query("SELECT * FROM highscore;", function (err, rows, fields) {
+    connection.query("SELECT * FROM highscore ORDER by score DESC LIMIT 10;", function (err, rows, fields) {
         if (err) throw err;
         res.json(rows);
     });

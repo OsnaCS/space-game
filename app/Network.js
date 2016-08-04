@@ -1,6 +1,6 @@
-var HIGHSCORE_SERVER_BASE_URL = "http://localhost:8000";
+var HIGHSCORE_SERVER_BASE_URL = "http://localhost:3000";
 
-var OFFLINE_TEST_MODE = true; // TODO
+var OFFLINE_TEST_MODE = false; // TODO
 
 var Network = function() {
     var data = [
@@ -40,7 +40,7 @@ var Network = function() {
                 type: "POST",
                 url: HIGHSCORE_SERVER_BASE_URL + "/api/1/highscore",
                 contentType: "application/json; charset=utf-8",
-                data: score,
+                data: JSON.stringify(score),
                 dataType: "json",
                 success: function(data) {
                     // TODO
