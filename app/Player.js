@@ -151,6 +151,32 @@ function Player() {
 
             },
 
+             increaseDamage: function (weaponType) {
+
+
+             	switch (weaponType){
+
+
+             		case "MINIGUN": 
+
+             		break; 
+             		case "LASER" : 
+
+
+             		break; 
+
+             		case "ROCKET": 
+
+
+
+             		break; 
+
+
+
+             	}
+
+            },
+
             init: function () {
 
                 // Ship erstellen

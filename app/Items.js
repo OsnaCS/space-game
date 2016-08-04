@@ -372,6 +372,7 @@ function collected(itemNumber) {
 
 		case "MINIGUNDAMAGE":
 
+			
 			break;
 
 		case "LASERDAMAGE":
