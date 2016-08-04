@@ -4,7 +4,7 @@ var container;
 // THREE.js & Grafik
 var camera, scene, renderer, clock, delta;
 var frames = 0;
-var fps = 60;
+var fps = 30;
 var now;
 var then = Date.now();
 var interval = 1000 / fps;
