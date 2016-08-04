@@ -375,7 +375,7 @@ function shoott() {
 }
 
 //Firering main-laser
-function enemyShootLaser(laserShootingBotPosition, laserShootingTarget) {
+function enemyShootLaser(laserShootingBot, laserShootingTarget) {
 
 	//play lazer-sound
 	laserAudio.play();
@@ -387,9 +387,9 @@ function enemyShootLaser(laserShootingBotPosition, laserShootingTarget) {
 	laser.name = "Laser";
 
     //translate bullet to ship position
-    laser.position.x = laserShootingBotPosition.x;
-    laser.position.y = laserShootingBotPosition.y;
-    laser.position.z = laserShootingBotPosition.z;
+    laser.position.x = laserShootingBot.position.x;
+    laser.position.y = laserShootingBot.position.y;
+    laser.position.z = laserShootingBot.position.z;
 
 	//set orientation of the bullet according to ship orientation
 	laser.lookAt(laserShootingTarget);

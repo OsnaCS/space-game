@@ -1,5 +1,5 @@
 // Botklasse
-var destroyedAsteroids = 0; //fï¿½r die milestones
+var destroyedAsteroids = 0; //für die milestones
 
 // Fuer Kollision:
 // asteroids und enemies sind nach Abstand zum Spieler sortiert
@@ -11,8 +11,6 @@ var destroyedAsteroids = 0; //fï¿½r die milestones
 var asteroids = [], enemies = [], asteroidHitBoxes = [], enemyHitBoxes = [],
     asteroidHP = [], enemyHP = [], enemy, worldRadius, gameLevel, numOfAsteroids = 100,
     asteroidSpeedVecs = [], asteroidRotVecs = [];
-var asteroidsClone = [], enemiesClone = [];
-
 
 function Bot() {
 
@@ -21,11 +19,11 @@ function Bot() {
     var minAsteroidSize = 10;
     var maxAsteroidSize = 30;
     var guardingRadius = 50;
-    var destroyedAsteroids = 0;
+    var destroyedAsteroids=0; 
     var SHOT = 1;
     var ASTEROID = 2;
     var SHIP = 3;
-    Asteroid
+
     // Sortierfunktion fuer Bots (Enemies und Asteroids)
     // je naeher am Schiff, desto niedriger der Indize
     function compare(a, b) {
@@ -108,13 +106,13 @@ function Bot() {
     }
 
     // Erschaffe Enemy
-    function createEnemy(art, index) {
+    function createEnemy(level, index) {
         var direction, alpha, beta, enemyPosition, radius,
-            typ, speed;
+            typ;
         //console.log("Enter Create Enemy");
         // Welt als Kugel -> Setze an den aeusseren 1/2 Rand
         // TODO: spawnRadius setzen
-        var spawnRadius = 500;
+        var spawnRadius = 300;
         radius = spawnRadius / 2 * (1 + Math.random());
 
         // zufaellig an den Rand positionieren
@@ -128,70 +126,23 @@ function Bot() {
             enemyPosition.multiplyScalar(radius);
             enemyPosition.add(ship.position);
         } while (!farAway(enemyPosition, maxShipSize));
+
         // TODO: speed abhaengig von Level
         var speed = 15;
+
         // TODO: weapon
-        switch (art) {
-            case 0: typ = "SMALL1"; break;
-            case 1: typ = "SMALL2"; break;
-            case 2: typ = "BOSS1"; break;
-            case 3: typ = "BOSS2"; break;
+        switch (Math.round(level * Math.random())) {
+            case 0: typ = "BOSS1"; break;
+            case 1: typ = "BOSS2"; break;
+            case 2: typ = "SMALL1"; break;
+            case 3: typ = "SMALL2"; break;
             default: typ = "BOSS1"; // hardest weapon
         }
 
-        speed += Math.round((level + 5) * Math.random());
-
-        enemy = new Enemy(enemyPosition, speed, level, typ, index, art);
+        //console.log("Finally Create Enemy");
+        enemy = new Enemy(enemyPosition, speed, level, typ, index);
 
         return enemy;
-    }
-
-    //Level generieren, wuhu
-    function createlevel(enemy1anzahl, enemy2anzahl, boss1anzahl, boss2anzahl) {
-
-        for (var i = 0; i < enemy1anzahl; i++) {
-            enemy = createEnemy(0, i);
-            enemies.push(enemy);
-            enemyHitBoxes.push(enemy.getHitBoxes());
-            for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
-                enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
-            }
-            scene.add(enemy);
-        }
-
-        var gegner2 = enemy2anzahl + enemy1anzahl;
-
-        for (var i = enemy1anzahl; i < gegner2; i++) {
-            enemy = createEnemy(1, i);
-            enemies.push(enemy);
-            enemyHitBoxes.push(enemy.getHitBoxes());
-            for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
-                enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
-            }
-            scene.add(enemy);
-        }
-
-        var gegner3 = gegner2 + boss1anzahl;
-        for (var i = gegner2; i < gegner3; i++) {
-            enemy = createEnemy(2, i);
-            enemies.push(enemy);
-            enemyHitBoxes.push(enemy.getHitBoxes());
-            for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
-                enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
-            }
-            scene.add(enemy);
-        }
-
-        var gegner4 = gegner3 + boss2anzahl;
-        for (var i = gegner3; i < gegner4; i++) {
-            enemy = createEnemy(3, i);
-            enemies.push(enemy);
-            enemyHitBoxes.push(enemy.getHitBoxes());
-            for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
-                enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
-            }
-            scene.add(enemy);
-        }
     }
 
 
@@ -201,49 +152,48 @@ function Bot() {
 
         //console.log(asteroids[49].position.distanceTo(ship.position));
 
+        // 1. Schritt: Gegner sortieren (siehe 2. Schritt)
+        enemies.sort(compare);
 
-        // Ausweichen
+        // 2. Schritt: Ausweichen
         // Asteroiden haben keine Intelligenz -> Bewegung behalten
         // Gegner sind intelligent -> allen vor sie liegenden Asteroiden ausweichen
         //                         -> allen vor sie liegenden Gegnern ausweichen
         // -> vordere updaten und Richtung des naechsten anhand der neuen Position
         //    ausrechnen
 
+        var asteroidsClone = [], asteroidHitBoxesClone = [];
 
         // Asteroiden: Bewegung updaten
         for (var i = asteroids.length - 1; i >= 0; i--) {
-
+            //console.log("HP of "+i+" "+asteroidHP[i]);
             var asteroid = asteroids[i];
             asteroid.move(delta);
             asteroidHitBoxes[i].position.set(asteroid.position.x, asteroid.position.y, asteroid.position.z);
-
+            //console.log("Asteroid wird bewegt")
             asteroidsClone[i] = asteroids[i];
+            asteroidHitBoxesClone[i] = asteroidHitBoxes[i];
         }
 
         asteroidsClone.sort(compare);
+        asteroidHitBoxesClone.sort(compare);
 
         // Enemies bewegen
         // erst ab bestimmter Distanz d_max ausweichen priorisieren
         // ab d_min auf jeden Fall ausweichen
         for (var i = enemies.length - 1; i >= 0; i--) {
             if (enemyHP[i] <= 0) {
-                scene.remove(enemies[i]);
                 enemies.splice(i, 1);
                 enemyHitBoxes.splice(i, 1);
                 enemyHP.splice(i, 1);
             } else {
-                enemies[i].move(delta, i);
+                enemies[i].move(delta, asteroidsClone, asteroidHitBoxesClone, i);
                 for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
                     enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
                 }
             }
+            //console.log("Enemy wird bewegt")
         }
-
-        for (var i = 0; i < enemies.length; i++) {
-            enemiesClone[i] = enemies[i];
-        }
-
-        enemiesClone.sort(compare);
 
     }
 
@@ -265,18 +215,20 @@ function Bot() {
 
         // Initialisierer der Bots je Level
         initAI: function (level) {
+            //console.log("Start initAI");
             // setzen unserer externen Faktoren
             worldRadius = 5000;
             gameLevel = level;
 
-            // erstelle Asteroiden nur in Level 1
+            // erstelle Asteroiden
             // TODO: asteroiden wie loeschen
             if (level == 1) {
                 asteroids = [];
+            }
 
-                for (var i = 0; i < numOfAsteroids; i++) {
-                    var asteroid = createAsteroid(level, i);
-                }
+            // TODO: Levelabhaengigkeit klaeren
+            for (var i = 0; i < numOfAsteroids; i++) {
+                var asteroid = createAsteroid(level, i);
             }
 
             // erstelle Gegner
@@ -285,6 +237,7 @@ function Bot() {
             }
 
             for (var i = 0; i < 1 * level; i++) {
+                //console.log("Hello");
                 enemy = createEnemy(level, i);
                 enemyHP.push(10);
                 enemies.push(enemy);
@@ -292,18 +245,18 @@ function Bot() {
                 for (var j = enemyHitBoxes[i].length - 1; j >= 0; j--) {
                     enemyHitBoxes[i][j].position.set(enemies[i].position.x, enemies[i].position.y, enemies[i].position.z);
                 }
+                //console.log(enemies.length);
                 scene.add(enemy);
             }
         },
 
         getAsteroids: function () {
-            return asteroidsClone;
+            return asteroids;
         },
 
         getEnemies: function () {
-            return enemiesClone;
-        },
+            return enemies;
+        }
 
-        createlevel: createlevel
     }
 }
