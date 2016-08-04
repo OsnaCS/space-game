@@ -371,16 +371,16 @@ Enemy.prototype.collectObstacles = function(optimalDir, delta) {
     var shipDistance = distanceToNext + delta * this.speed;
 
     // Kontrolliere, ob sich im guardingRadius andere Gegenstaende befinden
-    for(var i = 0; i<asteroids.length-1; i++) { // Asteroiden schon geupdatet
-        d = Math.abs(shipDistance - asteroids[i].position.distanceTo(ship.position));
+    for(asteroid of asteroids) { // Asteroiden schon geupdatet
+        d = Math.abs(shipDistance - asteroid.position.distanceTo(ship.position));
 
         // Teste, ob im richtigen Ring um den Spieler
         // possibleObstacle um die Sortierung zu nutzen -> Doppelter switch
         if(d <= minObstacleDistance) { // nahe (in Bezug auf Distanz zum Player)
             possibleObstacle = true;
-            distanceToShip = asteroids[i].position.distanceTo(shipPosition);
+            distanceToShip = asteroid.position.distanceTo(shipPosition);
             if(distanceToShip <= minObstacleDistance) { // nahe an this
-                obstacles.push(asteroids[i]);
+                obstacles.push(asteroid);
             }
         } else if(possibleObstacle && d > minObstacleDistance) {
             possibleObstacle = false;
@@ -389,12 +389,12 @@ Enemy.prototype.collectObstacles = function(optimalDir, delta) {
 
     }
 
-    for(var i = 0; i<enemies.length-1; i++) {
-        d =  enemies[i].position.distanceTo(ship.position) - shipDistance;
+    for(enemy of enemies) {
+        d =  enemy.position.distanceTo(ship.position) - shipDistance;
         if(d <= 0 && d <= minObstacleDistance) { // nahe und vor einem
-            distanceToShip = enemies[i].position.distanceTo(shipPosition);
-            if(distanceToShip <= minObstacleDistance && enemies[i]!=this) { // nahe an this
-                obstacles.push(enemies[i]);
+            distanceToShip = enemy.position.distanceTo(shipPosition);
+            if(distanceToShip <= minObstacleDistance && enemy!=this) { // nahe an this
+                obstacles.push(enemy);
             }
         } else if(possibleObstacle && d > minObstacleDistance) {
             // nach Sortierung wieder zu weit entfernt oder hinter enemy
@@ -994,13 +994,13 @@ Enemy.prototype.getHitBoxes = function() {
 Enemy.prototype.collide = function(type, index, otherIndex) {
     switch(type) {
         case "ASTEROID": case "asteroid": case "Asteroid":
-            enemyHP[this.index] -= 5;
+
             break;
         case "SHIP": case "ship": case "Ship":
-            enemyHP[this.index] -= 5;
+
             break;
         case "PLAYER": case "player": case "Player":
-            enemyHP[this.index] -= 5;
+
             break;
         case "LASER": case "laser": case "Laser":
             enemyHP[this.index] -= laserDamage;
@@ -1009,13 +1009,13 @@ Enemy.prototype.collide = function(type, index, otherIndex) {
             enemyHP[this.index] -= rocketDamage;
             break;
         case "EXPLOSION": case "explosion": case "Explosion":
-            enemyHP[index] -= explosionDamage;
+
             break;
         case "MACHINEGUN": case "machinegun": case "MachineGun":
-            enemyHP[this.index] -= MGDamage;
+            this.HP -= MGDamage;
             break;
         case "SHOCKWAVE": case "shockwave": case "ShockWave": case "shockWave": case "Shockwave":
-            enemyHP[this.index] -= shockWaveDamage;
+            this.HP -= shockWaveDamage;
             break;
         default: console.log("Error: Collision with unknown: " + type);
         console.log(type);
@@ -1054,7 +1054,6 @@ Enemy.prototype.destroy = function(collisionType) {
     this.geometry.dispose();
     this.material.dispose();
 
-    particleHandler.addLittleExplosion(enemies[i].position, 2, 0x0000ff, 1, 1);
     enemies.splice(this.index, 1);
     enemyHitBoxes.splice(this.index, 1);
     enemyHP.splice(this.index, 1);
