@@ -1,4 +1,3 @@
-
 var targetPosition;
 var moveForward;
 var moveBackward;
@@ -292,7 +291,7 @@ function Movement() {
             	animation();
             }
 
-            lat = Math.max(-85, Math.min(70, lat));
+            lat = Math.max(-180, Math.min(180, lat));
             phi = THREE.Math.degToRad(90 - lat);
             theta = THREE.Math.degToRad(lon);
             cameraWatcher();
@@ -426,16 +425,16 @@ function cameraWatcher (){
 	if(!isFirstPerson){
 		if(lat> 57 && yAxis ==0){
 
-			camera.setTarget('fTarget'); 
+			//camera.setTarget('fTarget');
 
 		}else if(lat>65 &&yAxis ==-1){
 
-			camera.setTarget ('fTarget');
+			//camera.setTarget ('fTarget');
 
 
 		}else {
 
-			camera.setTarget('Target');
+			//camera.setTarget('Target');
 
 
 		}	

@@ -1,5 +1,4 @@
 /****************** initialize ******************/
-
 var config = require('./serverconfig.json');
 var express = require('express');
 var app = express();
@@ -39,6 +38,37 @@ connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [10, "Astronaut"
 
 /****************** routes ******************/
 
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+    host     : config.db_host,
+    user     : config.db_user,
+    password : config.db_pass,
+    database : config.db_name
+});
+
+connection.query(
+    'CREATE TABLE IF NOT EXISTS highscore ('
+    +'id INT NOT NULL AUTO_INCREMENT,'
+    +'player VARCHAR(255) NOT NULL,'
+    +'score LONG,'
+    +'level INT DEFAULT 1,'
+    +'PRIMARY KEY (id));');
+
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [1, "Superstar McAwesome", 10, 10000], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [2, "Irgendwas", 9, 8750], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [3, "Sombra, Emperor of the Galaxy", 7, 5400], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [4, "Tarkan", 5, 3100], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [5, "Dönerblitz", 4, 2400], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [6, "Space Cowboy", 3, 1900], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [7, "Blinky", 2, 1100], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [8, "Henry", 2, 980], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [9, "Kosmonaut Anton", 1, 340], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [10, "Bob", 1, 100], function(err, result) {if (err) throw err;});
+
+
+
+
+
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
@@ -61,12 +91,15 @@ app.post("/api/1/highscore", function(req, res) {
     })
 });
 
-
 /****************** io & listen ******************/
 
 io.on('connection',function(socket){
     socket.on('connecton', function(){
        console.log('Wow');
+    });
+    socket.on('chat message',function(msg){
+        console.log(msg);
+        socket.emit('chat message', msg);
     });
 });
 

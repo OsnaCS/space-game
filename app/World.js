@@ -1,11 +1,13 @@
 /*var sphere = new THREE.Object3D();
 var biggerSphere = new THREE.Object3D();
 var stars = [];
+
 /*var asteroids = [];
+>>>>>>> 106e7f639ff0f7197b7976b29414f702ecf4f6fb
 var asteroidsHP = [];
 var asteroidSpeedVecs = [];
 var asteroidRotVecs = [];
-var asteroidHitBoxes = [];
+//var asteroidHitBoxes = [];
 var smallSphereRadius = 1000;
 var biggerSphereRadius = 5000;
 var asteroidRadius = 3.5;
@@ -213,6 +215,10 @@ function createAsteroids() {
             asteroidsHP[asteroidNumber] -= MGDamage;
             break;
 
+        case "ShockWave":
+
+            asteroidsHP[asteroidNumber] -= shockWaveDamage;
+            break;
 
         default:
 
