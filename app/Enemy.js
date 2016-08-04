@@ -438,11 +438,6 @@ Enemy.prototype.shoot = function(aimPos, delta) {
 
 	var coolDownTime;
     var aimPosition = aimPos.clone();
-    var geometry = new THREE.SphereGeometry(1.5 * shootAccuracy, 32, 32);
-    var material = new THREE.MeshBasicMaterial({color: 0xffffff});
-
-    var aimSphere = new THREE.Mesh(geometry, material);
-    aimSphere.position.set(aimPosition.x,aimPosition.y,aimPosition.z);
 
     var raycaster = new THREE.Raycaster(this.position,this.direction,0,maxShootDistance);
     var intersects = raycaster.intersectObjects([aimSphere]);
