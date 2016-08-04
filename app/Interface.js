@@ -46,6 +46,7 @@ function Interface() {
 			setHP(100);
 			setMaxShield(100);
 			setShield(0);
+			shieldActive = false;
 			updateWeaponInterface();
 			document.getElementById('invertedMouse').checked = true;
 			document.getElementById('hideScrollbars').checked = true;
