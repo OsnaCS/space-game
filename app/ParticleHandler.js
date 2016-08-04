@@ -45,7 +45,7 @@ var ParticleHandler = function () {
     }
 
     function addHalo(position, lifetime, color) {
-        var halo = new HaloParticleRenderer(color, 10000, fileLoader.get("particle_grey"), lifetime, position, 1, 30);
+        var halo = new HaloParticleRenderer(color, 5000, fileLoader.get("particle_grey"), lifetime, position, 1, 30);
         currentHalos.push(halo);
     }
 
@@ -85,7 +85,7 @@ var ParticleHandler = function () {
                 var successful = implosion.update();
                 if (!successful) {
                     // Explosion starten
-                    addExplosion(implosion.startVector, 1, implosion.color, 2, 2);
+                    addExplosion(implosion.startVector, 1, implosion.color, 1, 2);
                     addHalo(implosion.startVector, 2, implosion.color);
 
                     // Implosion löschen
