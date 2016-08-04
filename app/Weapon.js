@@ -27,6 +27,7 @@ var guidedMissileReloadTime = 2;
 //Weapondamage
 var rocketDamage = 50;
 var laserDamage = 2;
+var enemyLaserDamage = 10;
 var explosionDamage = 100;
 
 var explosionRadius = 500;
@@ -257,6 +258,8 @@ function sendShockWave() {
     if (timeSinceShockwave > shockwaveReloadTime && shockwaveAmmo > 0) {
         shockwaveAudio.play();
 
+        shockwaveAmmo -= 1;
+
         particleHandler.addShockwave(ship.position, 0xFF11AA);
 
         var shockWave = new THREE.Mesh(shockGeometry, shootMaterial);
@@ -272,9 +275,12 @@ function sendShockWave() {
         //add bullet to scene
         scene.add(shockWave);
 
+        // console.log(projectiles.length);
         //add laser to projectiles list so it will be moved
         projectiles.push(shockWave);
+        // console.log(projectiles.length);
 
+        shockwaveTime = 0;
         timeSinceShockwave = 0;
     }
 }
@@ -300,14 +306,15 @@ function shootLaser() {
         laser.position.y = ship.position.y;
         laser.position.z = ship.position.z;
 
+        //rotate: HitBox would start behind spaceship otherwise
         //set orientation of the bullet according to ship orientation
         laser.lookAt(targetPosition);
 
         //rotate: laser beam would be pointing up otherwise
         laser.rotateX(1.57);
 
-        //rotate: HitBox would start behind spaceship otherwise
-        laser.translateY(-100);
+        laser.translateY(-200);
+        laser.translateZ(20);
 
         var numberDummyDots = 100;
         for (var i = 0; i <= numberDummyDots; i++) {
@@ -397,7 +404,6 @@ function enemyShootLaser(laserShootingBotPosition, laserShootingTarget) {
 	//rotate: laser beam would be pointing up otherwise
 	laser.rotateX(-1.57);
 
-
     var numberDummyDots = 100;
     for (var i = 0; i <= numberDummyDots; i++) {
         var dummyDot = new THREE.Object3D();
@@ -442,6 +448,7 @@ function successLaser(projectileIndex) {
     //remove laser from projectiles
     projectiles.splice(projectileIndex, 1);
 }
+
 function successRocket(projectileIndex){
 
   for(var i = 0; i<=projectiles[projectileIndex].children.length; i++){

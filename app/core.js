@@ -108,8 +108,8 @@ function init() {
     starfield = new StarfieldParticleRenderer();
 
     bot = Bot();
-    bot.initAI(1);
-    bot.createlevel();
+    bot.initAsteroids();
+    
     movement = Movement();
     movement.init();
 
