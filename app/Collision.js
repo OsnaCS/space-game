@@ -328,10 +328,16 @@ var Collision = function () {
 
     // Checks if there is an intersection between a ShipHitbox and another box
     function intersectShipHitBoxBox(a, b) {
+        var x1Pruef = minXship(a) <= maxX(b);
+        var x2Pruef = maxXship(a) >= minX(b);
+        var y1Pruef = minYship(a) <= maxY(b);
+        var y2Pruef = maxYship(a) >= minY(b);
+        var z1Pruef = minZship(a) <= maxZ(b);
+        var z2Pruef = maxZship(a) >= minZ(b);
         // if there is an intersection in every dimension the two boxes intersect
-        return (minXship(a) <= maxX(b) && maxXship(a) >= minX(b) &&
-            (minYship(a) <= maxY(b) && maxYship(a) >= minY(b)) &&
-            (minZship(a) <= maxZ(b) && maxZship(a) >= minZ(b)));
+        return (x1Pruef && x2Pruef &&
+            (y1Pruef && y2Pruef) &&
+            (z1Pruef && z2Pruef));
     }
 
     // Checks if there is an intersection between a point and box

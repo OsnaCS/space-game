@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel, HtmlFormInputWithoutLabel -->
 <html lang="en">
 
 <head>
@@ -12,7 +13,7 @@
 
 </head>
 
-<body scroll="no">
+<body>
 	
 	<!-- Loading Screen -->
 	
@@ -54,7 +55,7 @@
                             <td>
                                 <div class="shopItemDesc">
                                 	<div>Increases your maximum HP by 10</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade0" class="costUpgrade">0</div>
                                 </div>
                             </td>
@@ -68,7 +69,7 @@
                             <td>
                                 <div class="shopItemDesc" >
                                 	<div>Slowly recharge your HP</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade1" class="costUpgrade">0</div>
                                 </div>
                             </td>
@@ -82,7 +83,7 @@
                             <td>
                                 <div class="shopItemDesc" >
                                 	<div>Increases your Shield by 10</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade2" class="costUpgrade">0</div>
                                 </div>
                             </td>
@@ -96,7 +97,7 @@
                             <td>
                                 <div class="shopItemDesc" >
                                 	<div> Increases the maximum flight speed by ~40 </div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade3" class="costUpgrade">0</div>
                                 </div>
                             </td>
@@ -104,13 +105,13 @@
 
                         <tr id="shopItem4">
                             <td class="shopTableTd1">
-                                <img class="shopItemPic" src="../res/textures/IconRocketDamage.png" onClick="buyUpgrade(4)">
+                                <img class="shopItemPic" src="../res/textures/Icon_Rocket.png" onClick="buyUpgrade(4)">
                             </td>
 							
                             <td>
                                 <div class="shopItemDesc" >
                                 	<div>Increases your maximum rocket ammo by 2</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade4" class="costUpgrade">0</div>
                                 </div>
                             </td>
@@ -118,13 +119,13 @@
 						
 						<tr id="shopItem5">
                             <td class="shopTableTd1">
-                                <img class="shopItemPic" src="../res/textures/Icon_RocketDamage.png" onClick="buyUpgrade(5)">
+                                <img class="shopItemPic" src="../res/textures/IconRocketDamage.png" onClick="buyUpgrade(5)">
                             </td>
 							
                             <td>
                                 <div class="shopItemDesc" >
-                                	<div>Increase rocket damage by 1</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div>Increases rocket damage by 5</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade5" class="costUpgrade">0</div>
 								</div>
 							</td>
@@ -138,7 +139,7 @@
                             <td>
                                 <div class="shopItemDesc" >
                                 	<div>Increases your maximum minigun ammo by 50</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade6" class="costUpgrade">0</div>
                                 </div>
                             </td>
@@ -146,13 +147,13 @@
 						
 						<tr id="shopItem7">
                             <td class="shopTableTd1">
-                                <img class="shopItemPic" src="../res/textures/GUIspeedShopItem.png" onClick="buyUpgrade(7)">
+                                <img class="shopItemPic" src="../res/textures/IconMinigunDamage.png" onClick="buyUpgrade(7)">
                             </td>
 							
                             <td>
                                 <div class="shopItemDesc" >
                                 	<div>Increase your minigun damage by 1</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade7" class="costUpgrade">0</div>
                                 </div>
                             </td>
@@ -166,7 +167,7 @@
                             <td>
                                 <div class="shopItemDesc" >
                                 	<div>Increases your maximum shockwave ammo by 5</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade8" class="costUpgrade">0</div>
                                 </div>
                             </td>
@@ -180,13 +181,11 @@
                             <td>
                                 <div class="shopItemDesc" >
                                 	<div>Increase your shockwave damage by 2</div>
-                                	<div id="costSign" class="costUpgrade">€</div>
+                                	<div class="costUpgrade">€</div>
                              		<div id="costUpgrade9" class="costUpgrade">0</div>
                                 </div>
                             </td>
                         </tr>
-                         
-					
                     </table>
                 </div>
 
@@ -574,7 +573,7 @@
 
 				<div id="options" hidden>
 					<div id=optionContainer>
-						<div id="optionsHeader">--- Game Options ---</div>
+						<div class="optionsHeader">--- Game Options ---</div>
 						<div id="gameOptions">
 							<table>
 								<tr>
@@ -599,7 +598,7 @@
 							</table>
 						</div>
 						
-						<div id="optionsHeader">--- Sound Options ---</div>
+						<div class="optionsHeader">--- Sound Options ---</div>
 						
                         <div id="soundOptions">
                         
@@ -652,7 +651,7 @@
 
     					</div>
 
-						<div id="optionsHeader">--- Crosshair Options ---</div>
+						<div class="optionsHeader">--- Crosshair Options ---</div>
 						<div id="crossOptions">
 							<div id="crossContainer">
 								<img class="crossPic" id="crossPic0" onmouseover="buttonHover()" src="../res/textures/Crosshair1.png" onClick="switchCross(0)">
@@ -715,10 +714,9 @@
 
 	<div id="powerUps"> 
 		<div id="powerUpIcons">
-			<img src="../res/textures/GUIpowerUp.png" id="powerUp1" class="inactive" /> 
-			<img src="../res/textures/GUIpowerUp.png" id="powerUp2" class="inactive" /> 
-			<img src="../res/textures/GUIpowerUp.png" id="powerUp3" class="inactive" /> 
-			<img src="../res/textures/GUIpowerUp.png" id="powerUp4" class="inactive" /> 
+			<img src="../res/textures/Icon2xMinigun.png" id="powerUp1" class="inactive" /> 
+			<img src="../res/textures/Icon2xLaser.png" id="powerUp2" class="inactive" /> 
+			<img src="../res/textures/Icon2xRocket.png" id="powerUp3" class="inactive" /> 
 		</div>
 	</div>
 		

@@ -351,7 +351,6 @@ Enemy.prototype.collectObstacles = function(optimalDir, delta) {
     var possibleObstacle = false;
     var obstacles = [];
 
-    var bot = Bot();
     var asteroids = bot.getAsteroids();
     //console.log("Asteroids:" + asteroids.length);
     var enemies   = bot.getEnemies();
@@ -1044,7 +1043,7 @@ Enemy.prototype.destroy = function(collisionType) {
             changeScore(scoreValues["enemyDestroyed"]);
 			destroyedEnemies += 1;
 
-			checkMilestones();
+		    checkEnemiesMilestones();
             break;
 
         default:
@@ -1056,4 +1055,8 @@ Enemy.prototype.destroy = function(collisionType) {
     this.geometry.dispose();
     this.material.dispose();
 
+    enemies.splice(this.index, 1);
+    enemyHitBoxes.splice(this.index, 1);
+    enemyHP.splice(this.index, 1);
+    scene.remove(this);
 }
