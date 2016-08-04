@@ -423,13 +423,7 @@ function collected(itemNumber) {
 
 			break;
 
-	}
-
-	if (rocketAmmo > MaxRocketAmmo) {
-
-		rocketAmmo = MaxRocketAmmo;
-
-	}
+	
 
 	updateWeaponInterface();
 	collectedPowerups++;
