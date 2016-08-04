@@ -18,6 +18,10 @@ var action = {};
 var leftWingRot;
 var rightWingRot;
 
+var geometry = new THREE.SphereGeometry(1.5 * shootAccuracy, 32, 32);
+var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+
+var aimSphere = new THREE.Mesh(geometry, material);
 
 function Player() {
 
