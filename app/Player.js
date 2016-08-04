@@ -52,7 +52,7 @@ function Player() {
 
                     //CenterBox
                     case 0:
-                    console.log("CenterWing");
+                    //console.log("CenterWing");
                     if (yAxis < 0 && yAxis >= -6) {
 
 
@@ -86,7 +86,7 @@ function Player() {
 
                     //LeftWing
                     case 1:
-                    console.log("LinkerWing");
+                    //console.log("LinkerWing");
                     if (yAxis < 0 && yAxis >= -6) {
 
                         changeHP(-1);
@@ -121,7 +121,7 @@ function Player() {
 
                     //rightWing
                     case 2:
-                    console.log("RechterWing");
+                    //console.log("RechterWing");
                     if (yAxis < 0 && yAxis >= -6) {
 
 

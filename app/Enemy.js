@@ -1054,4 +1054,8 @@ Enemy.prototype.destroy = function(collisionType) {
     this.geometry.dispose();
     this.material.dispose();
 
+    enemies.splice(this.index, 1);
+    enemyHitBoxes.splice(this.index, 1);
+    enemyHP.splice(this.index, 1);
+    scene.remove(this);
 }
