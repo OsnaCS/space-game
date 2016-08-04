@@ -849,7 +849,7 @@ function buyUpgrade(i) {
 			MaxRocketAmmo += 2;
 			break;
 		case 5:
-			rocketDamage++;
+			rocketDamage+=5;
 			break;
 		case 6:
 			MaxMGAmmo += 50;
