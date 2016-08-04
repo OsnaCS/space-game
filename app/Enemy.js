@@ -973,8 +973,10 @@ Enemy.prototype.getHitBoxes = function() {
 
     mesh1 = new THREE.Mesh(geometry1, material);
     mesh2 = new THREE.Mesh(geometry2, material);
-    scene.add(mesh1);
-    scene.add(mesh2);
+
+    //scene.add(mesh1);
+    //scene.add(mesh2);
+    
     // mesh.position.set(this.position);
 
     hitBoxes.push(mesh1);
