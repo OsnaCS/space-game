@@ -135,7 +135,6 @@ function Bot() {
                     break;
             case 1: typ = "BOSS2"; 
                     speed = 13;
-
                     break;
             case 2: typ = "SMALL1"; 
                     speed = 15;
@@ -152,9 +151,6 @@ function Bot() {
 
         enemy = new Enemy(enemyPosition, speed, level, typ, index, art);
 
-
-        //console.log("Finally Create Enemy");
-        enemy = new Enemy(enemyPosition, speed, level, typ, index);
         return enemy;
     }
 
@@ -239,9 +235,7 @@ function Bot() {
         // ab d_min auf jeden Fall ausweichen
         for (var i = enemies.length - 1; i >= 0; i--) {
             if (enemyHP[i] <= 0) {
-                particleHandler.addLittleExplosion(enemies[i].position, 2, 0x0000ff, 1, 1);
-                var toRemove = enemies[i];
-                scene.remove(toRemove);
+                scene.remove(enemies[i]);
                 enemies.splice(i, 1);
                 enemyHitBoxes.splice(i, 1);
                 enemyHP.splice(i, 1);
@@ -291,13 +285,9 @@ function Bot() {
         },
 
         getEnemies: function () {
-
             return enemiesClone;
         },
 
         createlevel: createlevel
-
-        }
     }
 }
-
