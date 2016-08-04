@@ -722,6 +722,7 @@ function menuHideAll() {
 	$('#highscore').hide();
 	$('#milestones').hide();
 	$('#options').hide();
+	$('#chat').hide();
 }
 
 /* Closes the menu */

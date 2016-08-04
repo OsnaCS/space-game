@@ -137,7 +137,7 @@ function init() {
         cameraPosition: new THREE.Vector3(0, 15, 30),
         fixed: false,
         stiffness: 0.15,
-        matchRotation: false
+        matchRotation: true
     });
 
     camera.addTarget({
