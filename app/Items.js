@@ -337,8 +337,7 @@ function collected(itemNumber) {
 		case "SHIELD":
 
             particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x0023FF);
-			shieldActive = true;
-			player.activateShield();
+			rechargeShield();
 
 			pickUpPowerUpNote("Activate Shield!");
 
@@ -347,34 +346,35 @@ function collected(itemNumber) {
 		case "SHIELDBAD":
 
             particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x0023FF);
-			shieldActive = true;
-			player.activateShield();
+			setShield(0);
+			shieldActive = false;
+			player.deactivateShield();
 			pickUpPowerUpNote("Deactivate Shield!");
 
 			break;
 
 		case "COIN":
-			changeMoney(50);
+			changeMoney(100);
 			particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x8E0067);
 
-			pickUpPowerUpNote("Money +50");
+			pickUpPowerUpNote("Money +100");
 
 			break;
 
 		case "COIN3":
-			changeMoney(150);
+			changeMoney(300);
 			particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x8E0067);
 
-			pickUpPowerUpNote("Money +150");
+			pickUpPowerUpNote("Money +300");
 
 			break;
 
 		case "MONEY":
 
-			changeMoney(400);
+			changeMoney(800);
 			particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x8E0067);
 
-			pickUpPowerUpNote("Money +400€");
+			pickUpPowerUpNote("Money +800");
 
 			break;
 
