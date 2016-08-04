@@ -423,8 +423,9 @@ function collected(itemNumber) {
 
 			break;
 
-	
+	}
 
+	
 	updateWeaponInterface();
 	collectedPowerups++;
 	checkMilestones();
