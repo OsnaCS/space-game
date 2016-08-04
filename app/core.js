@@ -98,9 +98,6 @@ function init() {
     player = Player();
     player.init();
 
-/*    world = World();
-    world.init();*/
-
     starfield = new StarfieldParticleRenderer();
 
     bot = Bot();
