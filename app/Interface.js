@@ -554,7 +554,7 @@ function gameOver() {
 		"player": localStorage.getItem("player"),
 		"level": 1
 	};
-	postNewScore(score);
+	network.postNewScore(score);
 	glitchScreen(500);
 	document.getElementById('gameOverText3').innerHTML = getScore();
 	$('#gameOverBox').animate({top: '20%'}, 500);
