@@ -414,7 +414,7 @@ var Collision = function () {
         }
         else {
             if (intersects[0].distance < 500) {
-                console.log(intersects[0]);
+                //console.log(intersects[0]);
                 return true;
             }
             else {

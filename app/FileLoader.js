@@ -17,7 +17,7 @@ var FileLoader = function (full) {
 
     if (full === undefined) full = true;
 
-    console.log("FileLoader running ...");
+    //console.log("FileLoader running ...");
 
     /************************* Get all files to load *************************/
 
@@ -153,7 +153,7 @@ var FileLoader = function (full) {
             function () { },
             // on error
             function () {
-                console.log("FileLoader couldn't find file " + file);
+                //console.log("FileLoader couldn't find file " + file);
             }
         );
     }
@@ -173,7 +173,7 @@ var FileLoader = function (full) {
             function () { },
             // on error
             function () {
-                console.log("FileLoader couldn't find file " + file);
+                //console.log("FileLoader couldn't find file " + file);
             }
 
         );
@@ -201,7 +201,7 @@ var FileLoader = function (full) {
                 loadImage(file, name);
                 break;
             default:
-                console.log("Error: unknown file format: " + file);
+                //console.log("Error: unknown file format: " + file);
         }
     }
 
@@ -317,7 +317,7 @@ var FileLoader = function (full) {
     }
     );
 
-    console.log("FileLoader done.");
+    //console.log("FileLoader done.");
 
     function isReady() {
         // gibt true zurück, wenn alle Files geladen wurden
@@ -336,7 +336,7 @@ var FileLoader = function (full) {
         get: function (name) {
             var result = isReady() ? loadedFiles[name] : undefined;
             if (result == undefined) {
-                console.log("FileLoader could not find texture '" + name + "'");
+                //console.log("FileLoader could not find texture '" + name + "'");
             }
             return result;
         }

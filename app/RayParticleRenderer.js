@@ -60,8 +60,9 @@ function RayParticleRenderer(particleColor, nParticles, particleTexture, startVe
     };
 
     this.reset = function () {
-
+        
         scene.remove(this.particleSystem);
+        this.particleSystem = undefined;
 
     };
 

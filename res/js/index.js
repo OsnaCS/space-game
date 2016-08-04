@@ -25,9 +25,9 @@ $(function () {
     // start
     setTimeout(function() {
         var loadingLoop = setInterval(function() {
-            console.log("loading");
+            //console.log("loading");
             if (fileLoader.isReady()) {
-                console.log("done");
+                //console.log("done");
                 clearInterval(loadingLoop);
                 loadHighscore();
                 init();

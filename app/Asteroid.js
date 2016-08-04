@@ -152,14 +152,15 @@ Asteroid.prototype.destroy = function (collisionType) {
         case "LASER": case "laser": case "Laser":
         case "ROCKET": case "rocket": case "Rocket":
         case "EXPLOSION": case "explosion": case "Explosion":
-        case "MACHINEGUN": case "machinegun": case "Machinegun":
+        case "MACHINEGUN": case "machinegun": case "MachineGun":
         case "PLAYER": case "player": case "Player":
         case "SHOCKWAVE": case "shockwave": case "ShockWave": case "shockWave": case "Shockwave":
             changeScore(scoreValues["asteroidDestroyed"]);
             spawnPowerUp(asteroids[this.astIndex].position.x, asteroids[this.astIndex].position.y, asteroids[this.astIndex].position.z);
 			destroyedAsteroids += 1;
+			changeMoney(5);
 
-			checkMilestones();
+			checkAstMilestones();
             break;
 
         default:

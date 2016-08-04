@@ -1018,50 +1018,48 @@ Enemy.prototype.collide = function(type, index, otherIndex) {
             this.HP -= shockWaveDamage;
             break;
         default: console.log("Error: Collision with unknown: " + type);
-        console.log(type);
+        //console.log(type);
         break;
     }
 
     if(enemyHP[this.index] <= 0) {
-        this.isAlive = false;
-		destroyedEnemies++;
+        this.destroy();
     }
 }
 
 // TODO: spezifizieren
 Enemy.prototype.destroy = function(collisionType) {
-    switch(collisionType) {
-        case "ASTEROID": case "asteroid": case "Asteroid":
 
-            break;
-        case "SHIP": case "ship": case "Ship":
+    // update Highscore
+    switch (collisionType) {
 
-            break;
-        case "PLAYER": case "player": case "Player":
-
-            break;
         case "LASER": case "laser": case "Laser":
-            enemyHP[this.index] -= laserDamage;
-            break;
         case "ROCKET": case "rocket": case "Rocket":
-            enemyHP[this.index] -= rocketDamage;
-            break;
         case "EXPLOSION": case "explosion": case "Explosion":
-
-            break;
         case "MACHINEGUN": case "machinegun": case "MachineGun":
-            this.HP -= MGDamage;
-            break;
+        case "PLAYER": case "player": case "Player":
         case "SHOCKWAVE": case "shockwave": case "ShockWave": case "shockWave": case "Shockwave":
-            this.HP -= shockWaveDamage;
+            changeScore(scoreValues["enemyDestroyed"]);
+			destroyedEnemies += 1;
+
+		    checkEnemiesMilestones();
             break;
-        default: console.log("Error: Collision with unknown: " + type);
-        console.log(type);
-        break;
+
+        default:
+
+            break;
+
     }
 
-    if(enemyHP[this.index] <= 0) {
-        this.isAlive = false;
-		destroyedEnemies++;
-    }
+
+    this.geometry.dispose();
+    this.material.dispose();
+
+    enemyHitBoxes[this.index].geometry.dispose();
+    enemyHitBoxes[this.index].material.dispose();
+
+    enemies.splice(this.index, 1);
+    enemyHitBoxes.splice(this.index, 1);
+    enemyHP.splice(this.index, 1);
+    scene.remove(this);
 }
