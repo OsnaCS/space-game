@@ -22,7 +22,7 @@ function spawnPowerUp(x, y, z, type) {
 
 		if (rndCase <= 0.125) {
 			//Bad and good Health 
-			if (rndBadorGood < 0.5) {
+			if (rndBadorGood < 0.3) {
 
 				itemGeometry = fileLoader.get("PowerUpHealth");
 				healthTex = fileLoader.get("PowerUpHealthBadTex");
@@ -39,10 +39,10 @@ function spawnPowerUp(x, y, z, type) {
 
 			}
 
-		} else if (rndCase > 0.125 && rndCase <= 0.375) {
+		} else if (rndCase > 0.125 && rndCase <= 0.25) {
 
 			//Bad and Good Single Rocket
-			if (rndBadorGood < 0.5) {
+			if (rndBadorGood < 0.4) {
 
 				itemGeometry = fileLoader.get("PowerUpRocket");
 				rocketTex = fileLoader.get("PowerUpRocketBadTex");
@@ -58,7 +58,7 @@ function spawnPowerUp(x, y, z, type) {
 
 			}
 
-		} else if (rndCase > 0.375 && rndCase <= 0.5) {
+		} else if (rndCase > 0.25 && rndCase <= 0.5) {
 			//Single or Triple Coin
 			if (scndRandom < 0.5) {
 				itemGeometry = fileLoader.get("Coin");
@@ -127,7 +127,7 @@ function spawnPowerUp(x, y, z, type) {
 		} else if (rndCase > 0.6875 && rndCase <= 0.75) {
 
 			//Bad GeldSack or good Geldsack
-			if (rndBadorGood < 0.5) {
+			if (rndBadorGood < 0.25) {
 				itemGeometry = fileLoader.get("Geldsack");
 				moneyTex = fileLoader.get("GeldsackFacePalmTex");
 				item = new THREE.Mesh(itemGeometry, new THREE.MeshPhongMaterial({ map: moneyTex }));
@@ -251,7 +251,8 @@ function collected(itemNumber) {
 
             particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x00FF00, 1, 1);
 
-			changeHP(-30);
+			changeHP(-25);
+			pickUpPowerUpNote("HP -25");
 
 			break;
 
@@ -275,6 +276,7 @@ function collected(itemNumber) {
 
                 rocketAmmo = 0;
             }
+			pickUpPowerUpNote("Rocketammo -1");
 
 			break;
 
@@ -300,6 +302,7 @@ function collected(itemNumber) {
                 rocketAmmo = 0;
             }
 
+			pickUpPowerUpNote("Rocketammo -2");
 
 			break;
 
@@ -326,7 +329,8 @@ function collected(itemNumber) {
 
                 rocketAmmo = 0;
             }
-
+			
+			pickUpPowerUpNote("Rocketammo -4");
 
 			break;
 
@@ -345,6 +349,7 @@ function collected(itemNumber) {
             particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x0023FF);
 			shieldActive = true;
 			player.activateShield();
+			pickUpPowerUpNote("Deactivate Shield!");
 
 			break;
 
@@ -381,18 +386,19 @@ function collected(itemNumber) {
 			break;
 
 		case "MINIGUNDAMAGE":
-
+			pickUpPowerUpNote("DOUBLE DAMAGE MINIGUN!!! 30sec");
+			doubleDmg(1);
 			break;
 
 		case "LASERDAMAGE":
-
+			pickUpPowerUpNote("DOUBLE DAMAGE LAZOOOR!!! 30sec");
+			doubleDmg(2);
 			break;
-
 
 		case "ROCKETDAMAGE":
-
+			pickUpPowerUpNote("DOUBLE ROCKET DAMAGE!!! 30sec");
+			doubleDmg(3);
 			break;
-
 
 		case "MINIGUN200":
 
@@ -409,15 +415,16 @@ function collected(itemNumber) {
 
 			MGAmmo += 400;
 
-			if (rocketAmmo > MaxRocketAmmo) {
+			if (MGAmmo > MaxMGAmmo) {
 				MGAmmo = MaxMGAmmo;
 			}
+			
+			pickUpPowerUpNote("MGAmmo +400");
 
 			break;
 
 
         default:
-			s
             particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x6495ED, 1, 1);
 
 			break;
@@ -432,7 +439,7 @@ function collected(itemNumber) {
 
 	updateWeaponInterface();
 	collectedPowerups++;
-	checkMilestones();
+	checkPowerupMilestones();
     scene.remove(powerUps[itemNumber]);
     scene.remove(itemHitBoxes[itemNumber]);
 

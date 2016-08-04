@@ -1022,6 +1022,8 @@ Enemy.prototype.collide = function(type, index, otherIndex) {
 
     if(enemyHP[this.index] <= 0) {
         this.isAlive = false;
+		changeScore(scoreValues["enemyDestroyed"]);
 		destroyedEnemies++;
+		checkEnemyMilestones();
     }
 }
