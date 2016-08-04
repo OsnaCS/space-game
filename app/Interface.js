@@ -15,31 +15,7 @@ levelTimes = [
 
 //level design
 // wird vom Timer aufgerufen
-function levelDesign(level){
-	
-	/**
-	switch (level){
-		case 5:	
-		bot.createlevel(0,0,1,0);
-		// spawn stuff
-			break;
-		case 10:	
-		bot.createlevel(0,0,0,1);
-		//spawn stuff
-			break;
-		case 15:
-		bot.createlevel(0,0,1,1);
-		//spawn stuff
-			break;
-		case 20:
-		bot.createlevel(0,0,2,1);
-
-		default:
-		bot.createlevel(1, 0, 0, 0);
-			break;
-	}
-	*/
-	
+function levelDesign(level){	
 	setLevelTimer(levelTimes[level-1]);
 	displayLevel(level);
 }
@@ -231,7 +207,7 @@ function changeMoney(value) {
 
     if (currentMoney > reachedMoney) {
     	reachedMoney = currentMoney;
-		checkMilestones();
+		checkMoneyMilestones();
     }
 }
 
@@ -670,7 +646,7 @@ function setSpeed(newSpeed) {
 	// Soll der aufhören upzudaten wenn das Achievement erreicht wurde?
 	if(parseInt(tempRef.innerHTML) > reachedMaxSpeed) {
 		reachedMaxSpeed = parseInt(tempRef.innerHTML);
-		checkMilestones();
+		checkSpeedMilestones();
 	}
 
 	if(parseInt(tempRef.innerHTML) < 10)
@@ -738,6 +714,7 @@ function showOptions() {
 	menuSetColor('optionsBox');
 }
 
+/* Opens the Chat tab */
 function showChat() {
 	menuHideAll();
 	$('#chat').show();
@@ -768,6 +745,7 @@ function menuHideAll() {
 	$('#highscore').hide();
 	$('#milestones').hide();
 	$('#options').hide();
+	$('#chat').hide();
 }
 
 /* Closes the menu */
@@ -879,20 +857,22 @@ function buyUpgrade(i) {
 			return;
 	}
 	
-	switch(buySound){
+	switch(buySound) {
 		case 1:
 			cachingAudio1.play();
-		break;
+			break;
 		case 2:
 			cachingAudio2.play();
-		break;
+			break;
 		case 3:
 			cachingAudio3.play();
-		break;
+			break;
+		default:
+			break;
 	}
 	
-	if(buySound>=3){
-		buySound=1;
+	if(buySound >= 3) {
+		buySound = 1;
 	}else{
 		buySound++;
 	}
@@ -902,6 +882,7 @@ function buyUpgrade(i) {
 	costUpgrade[i] = parseInt(costUpgrade[i] * costUpgradeFactor[i]);
 	checkBuyable();
 	updateWeaponInterface();
+	checkMoneySpentMilestones();
 }
 
 function pickUpPowerUpNote(value){
@@ -985,21 +966,45 @@ var milestonesHighscore = [
 ];
 
 function showDescription(number) {
-    $('#description'+number).toggle();
+    $('#description' + number).toggle();
 }
 
-function checkMilestones(){
-	changeMilestoneProgress(1, reachedMaxSpeed, 600);
-	changeMilestoneProgress(2, reachedMaxSpeed, 1000);
-	changeMilestoneProgress(3, collectedPowerups, 15);
-	changeMilestoneProgress(4, reachedMoney, 5000);
-	changeMilestoneProgress(5, reachedMoney, 15000);
-	changeMilestoneProgress(6, moneySpentInShop, 10000);
-	changeMilestoneProgress(7, moneySpentInShop, 20000);
+function checkMilestones() {
+	checkEnemiesMilestones();
+	checkAstMilestones();
+	checkPowerupMilestones();
+	checkSpeedMilestones();
+	checkMoneyMilestones();
+	checkMoneySpentMilestones();
+}
+
+function checkEnemiesMilestones() {
 	changeMilestoneProgress(8, destroyedEnemies, 20);
 	changeMilestoneProgress(9, destroyedEnemies, 50);
+}
+
+function checkAstMilestones() {
 	changeMilestoneProgress(10, destroyedAsteroids, 20);
 	changeMilestoneProgress(11, destroyedAsteroids, 50);
+}
+
+function checkPowerupMilestones() {
+	changeMilestoneProgress(3, collectedPowerups, 15);
+}
+
+function checkSpeedMilestones() {
+	changeMilestoneProgress(1, reachedMaxSpeed, 600);
+	changeMilestoneProgress(2, reachedMaxSpeed, 1000);
+}
+
+function checkMoneyMilestones() {
+	changeMilestoneProgress(4, reachedMoney, 5000);
+	changeMilestoneProgress(5, reachedMoney, 15000);
+}
+
+function checkMoneySpentMilestones() {
+	changeMilestoneProgress(6, moneySpentInShop, 10000);
+	changeMilestoneProgress(7, moneySpentInShop, 20000);
 }
 
 var percentage;
