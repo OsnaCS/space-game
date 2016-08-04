@@ -129,7 +129,7 @@ function init() {
 
     /********** Camera **********/
 
-    camera = new THREE.TargetCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
+    camera = new THREE.TargetCamera(75, window.innerWidth / window.innerHeight, 1, biggerSphereRadius);
 
     camera.addTarget({
         name: 'Target',
@@ -137,7 +137,7 @@ function init() {
         cameraPosition: new THREE.Vector3(0, 15, 30),
         fixed: false,
         stiffness: 0.15,
-        matchRotation: false
+        matchRotation: true
     });
 
     camera.addTarget({
@@ -217,7 +217,6 @@ function cameraAnimate() {
         frames++;
         requestAnimationFrame(cameraAnimate);
     } else {
-        
         requestAnimationFrame(animate);
     }
 
@@ -258,9 +257,9 @@ function render() {
     delta = clock.getDelta();
     if (!Pause) {
         // animation code goes here:
-        
+
         movement.move(delta);
-        
+
         renderWeapons();
         bot.updateAI(delta);
         updatePowerUps();
@@ -268,7 +267,7 @@ function render() {
 
         // Partikeleffekte am Raumschiff updaten
         player.updateParticleValues();
-        
+
         // Explosionen updaten
         particleHandler.update();
 
