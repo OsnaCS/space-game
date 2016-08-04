@@ -21,7 +21,7 @@ function spawnPowerUp(x, y, z, type) {
 		rndBadorGood = Math.random();
 
 		if (rndCase <= 0.125) {
-			//Bad and good Health 
+			//Bad and good Health
 			if (rndBadorGood < 0.5) {
 
 				itemGeometry = fileLoader.get("PowerUpHealth");
@@ -118,7 +118,7 @@ function spawnPowerUp(x, y, z, type) {
 
 		} else if (rndCase > 0.625 && rndCase <= 0.6875) {
 
-			//Shockwave 
+			//Shockwave
 			itemGeometry = fileLoader.get("PowerUp_Shockwave");
 			shockwaveTex = fileLoader.get("PowerUpRocket4Tex");
 			item = new THREE.Mesh(itemGeometry, new THREE.MeshPhongMaterial({ map: shockwaveTex }));
@@ -417,7 +417,6 @@ function collected(itemNumber) {
 
 
         default:
-			s
             particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x6495ED, 1, 1);
 
 			break;

@@ -212,12 +212,12 @@ function Movement() {
                         if (Pause) {
                             PauseScreen = false;
                             interface.toggleMenuOverlay();
-                            Movement().lockPointer();
+                            movement.lockPointer();
 
                         } else {
 
                             interface.toggleMenuOverlay();
-                            Movement().unlockPointer();
+                            movement.unlockPointer();
                             PauseScreen = true;
                         }
                         break;
@@ -278,6 +278,7 @@ function Movement() {
 
             //sphere.position.set(ship.position.x, ship.position.y, ship.position.z);
             biggerSphere.position.set(ship.position.x, ship.position.y, ship.position.z);
+            aimSphere.position.set(ship.x,ship.y,ship.z);
 			
             if (shieldActive)
                 shield.position.set(ship.position.x, ship.position.y, ship.position.z);

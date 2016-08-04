@@ -123,7 +123,7 @@ function handleProjectiles() {
             case "Shockwave":
                 for (var j = 0; j <= asteroidHitBoxes.length - 1; j++) {
                     if (collision.intersectSphereOther(projectiles[i], asteroidHitBoxes[j])){
-                        hitAsteroid(j, "ShockWave");
+                        asteroids[j].collide(projectiles[i], "ShockWave", j);
                     }
                 }
                 break;
@@ -207,11 +207,11 @@ function handleProjectiles() {
 
                     for (var j = 0; j <= itemHitBoxes.length - 1; j++) {
 
-                        if (collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint1"), itemHitBoxes[j]) ||
-                               collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint2"), itemHitBoxes[j]) ||
-                               collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint3"), itemHitBoxes[j]) ||
-                               collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint4"), itemHitBoxes[j]) ||
-                               collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint5"), itemHitBoxes[j])) {
+                        if (collision.intersectPointBox(projectiles[i].children(projectiles[i].length - 1), itemHitBoxes[j]) ||
+                               collision.intersectPointBox(projectiles[i].children(0), itemHitBoxes[j]) ||
+                               collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint25"), itemHitBoxes[j]) ||
+                               collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint50"), itemHitBoxes[j]) ||
+                               collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint75"), itemHitBoxes[j])) {
 
                             rocketBol = true;
                             collected(j);
@@ -221,15 +221,13 @@ function handleProjectiles() {
 
                     if (rocketBol === false) {
 
-                        var enemyHitByRocketBol = false;
-
                         for (var j = 0; j < enemies.length; j++) {
 
                             for (var k = 0; k < enemyHitBoxes[j].length; k++) {
 
                                 for (var l = 0; l <= projectiles[i].children.length - 1; l++) {
-                                    if (collision.intersectPointBox(projectiles[i].children[l], enemyHitBoxes[j][k])) {
-                                        //console.log("Collision detected");
+                                    if (collision.intersectPointEnemyHitBox(projectiles[i].children[l], enemyHitBoxes[j][k], j)) {
+                                        console.log("enemy hit by Rocket");
                                         rocketBol = true;
                                         break;
                                     }
@@ -237,14 +235,13 @@ function handleProjectiles() {
 
                                 if (rocketBol) {
                                     successRocket(i);
-                                    enemyHitByRocketBol = true;
                                     enemies[j].collide("Rocket", j, i);
                                     break;
                                 }
 
                             }
 
-                            if (enemyHitByRocketBol) {
+                            if (rocketBol) {
                                 break;
                             }
 
@@ -261,11 +258,12 @@ function handleProjectiles() {
                         }
                     }
 
-                    for (var j = 0; j < enemies.length; j++) {
+                    for (var j = 0; j <= enemies.length - 1; j++) {
 
                         for (var k = 0; k < enemyHitBoxes[j].length; k++) {
                             if (collision.intersectSphereBox(projectiles[i], enemyHitBoxes[j][k])) {
                                 enemies[j].collide("Explosion", j, i);
+                                console.log("enemy hit by Explosion");
                                 break;
                             }
                         }
@@ -275,13 +273,37 @@ function handleProjectiles() {
 
 
                 case "MachineGun":
-                    for (var j = 0; j <= itemHitBoxes.length - 1; j++) {
-                        if (collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint"), itemHitBoxes[j])) {
-                            successMachineGunBullet(i);
-                            collected(j);
+                    var MGbol = false
+                    for (var j = 0; j <= enemies.length - 1; j++) {
+                        for (var k = 0; k <= enemyHitBoxes[j].length - 1; k++) {
+                            if (collision.intersectPointEnemyHitBox(projectiles[i].getObjectByName("BoxPoint"), enemyHitBoxes[j][k], j)) {
+                                MGbol = true;
+                                successMachineGunBullet(i);
+                                collected(j);
+                                console.log("enemy hit by MachineGun");
+                                break;
+                            }
+                        }
+                        if (MGbol) {
                             break;
                         }
                     }
+                    break;
+
+
+                case "Shockwave":
+
+                    for (var j = 0; j <= enemies.length - 1; j++) {
+
+                        for (var k = 0; k < enemyHitBoxes[j].length; k++) {
+                            if (collision.intersectSphereBox(projectiles[i], enemyHitBoxes[j][k])) {
+                                enemies[j].collide("Shockwave", j, i);
+                                console.log("enemy hit by Shockwave");
+                                break;
+                            }
+                        }
+                    }
+
                     break;
 
             }

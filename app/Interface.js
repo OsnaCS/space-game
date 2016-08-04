@@ -16,14 +16,13 @@ levelTimes = [
 //level design
 // wird vom Timer aufgerufen
 function levelDesign(level){
-	
-	/**
+
 	switch (level){
-		case 5:	
+		case 5:
 		bot.createlevel(0,0,1,0);
 		// spawn stuff
 			break;
-		case 10:	
+		case 10:
 		bot.createlevel(0,0,0,1);
 		//spawn stuff
 			break;
@@ -38,8 +37,7 @@ function levelDesign(level){
 		bot.createlevel(1, 0, 0, 0);
 			break;
 	}
-	
-	*/
+
 	setLevelTimer(levelTimes[level-1]);
 	displayLevel(level);
 }
@@ -77,11 +75,11 @@ function Interface() {
 			document.getElementById('showFPS').checked = false;
 			document.getElementById('volumeBar').value = 1;
 			changeVolume(1, 1);
-			
+
 			levelDesign(level);
 			startLevelTimer();
 		},
-		
+
 		/* Toggles the pause menu */
         toggleMenuOverlay: function() {
             if (menuVisible) {
@@ -225,7 +223,7 @@ var currentMoney = 0;
 var moneyReference = document.getElementById('money');
 
 /* Changes the amount of currentMoney by @value */
-function changeMoney(value) {   
+function changeMoney(value) {
 	currentMoney += parseInt(value);
     moneyReference.innerHTML = currentMoney;
 
@@ -239,7 +237,7 @@ function changeMoney(value) {
 function setMoney(value) {
 	currentMoney = parseInt(value + 0.5);
     moneyReference.innerHTML = currentMoney;
-	
+
 	if (currentMoney > reachedMoney) {
     	reachedMoney = currentMoney;
 		checkMilestones();
@@ -335,7 +333,7 @@ function changeHP(value) {
 	// Amount of HP per tick
 	var hpTick = value / ticks;
 	var tempID = setInterval(frame, 1);
-	
+
 	if(value < 0)
 		// Restart the passive shield regen
 		passiveShieldRegen();
@@ -344,14 +342,14 @@ function changeHP(value) {
 		if(i < ticks) {
 			if (!Pause) {
 				temp = hpTick;
-				
+
 				if(hpTick < 0)
 					// Reduce shield first
 					hpTick = reduceShield(hpTick);
-				
+
 				displayedHP += hpTick;
 				hpTick = temp;
-				
+
 				if (displayedHP > maxHP) {
 					clearInterval(tempID);
 					displayedHP = maxHP;
@@ -381,12 +379,12 @@ function changeHP(value) {
 function reduceShield(hpTick) {
 	var restTick = 0;
 	currentShield += hpTick;
-	
+
 	if(currentShield < 0) {
 		restTick = currentShield;
 		currentShield = 0;
 	}
-	
+
 	displayedShield = parseInt(currentShield + 0.5);
 	updateShieldDisplay();
 	return restTick;
@@ -395,7 +393,7 @@ function reduceShield(hpTick) {
 /* Recharges shield to full capacity */
 function rechargeShield() {
 	var i = 0;
-	
+
 	var tempID = setInterval(function() {
 		if(displayedShield < maxShield) {
 			if(!Pause) {
@@ -404,7 +402,7 @@ function rechargeShield() {
 			}
 		} else clearInterval(tempID);
 	}, 10);
-	
+
 	updateShieldDisplay();
 }
 
@@ -415,7 +413,7 @@ var shieldRegenID;
 function passiveShieldRegen() {
 	clearTimeout(shieldID);
 	clearInterval(shieldRegenID);
-	
+
 	shieldID = setTimeout(function() {
 		shieldRegenID = setInterval(function() {
 			if((displayedShield < maxShield) && !Pause) {
@@ -429,12 +427,12 @@ function passiveShieldRegen() {
 /* Sets HP to @value */
 function setHP(value) {
 	value = parseInt(value + 0.5);
-	
+
 	if(value <= 0) {
 		gameOver();
 		return;
 	}
-	
+
 	if(value > maxHP)
 		value = maxHP;
 
@@ -446,13 +444,13 @@ function setHP(value) {
 /* Sets shield to @value */
 function setShield(value) {
 	value = parseInt(value + 0.5);
-	
+
 	if(value < 0)
 		value = 0;
-	
+
 	if(value > maxShield)
 		value = maxShield;
-	
+
 	currentShield = value;
 	displayedShield = value;
 	updateShieldDisplay();
@@ -523,7 +521,7 @@ function updateShieldDisplay() {
 /* Sets the HP bar to a calculated color-gradient. */
 function hpUpdateColor() {
     var temp;
-    
+
 	if(displayedHP <= (maxHP / 2)) {
 		// Color gradient in hex from 0% to 50%
 		temp = parseInt((510 * displayedHP / maxHP) + 0.5);
@@ -534,13 +532,13 @@ function hpUpdateColor() {
 		hpBoxCurrent.style.background = '#' + padHex(temp.toString(16)) + 'FF00';
 	}
 }
- 
+
 /* Pads @hex if it is shorter than 2 digits */
 function padHex(hex) {
 	while(hex.length < 2) {
 		hex = '0' + hex;
 	}
-	
+
 	return hex;
 }
 
@@ -550,7 +548,7 @@ function padHex(hex) {
 
 /* Initiates the gameOver sequences */
 function gameOver() {
-	
+
 	var score = {
 		"score": getScore(),
 		"player": localStorage.getItem("player"),
@@ -562,7 +560,7 @@ function gameOver() {
 	$('#gameOverBox').animate({top: '20%'}, 500);
   	Pause = true;
   	PauseScreen = true;
-    Movement().unlockPointer();
+    movement.unlockPointer();
 }
 
 /**
@@ -804,7 +802,7 @@ costUpgradeFactor = [
 function checkBuyable() {
 	for(var i = 0; i < costUpgrade.length; i++) {
 		document.getElementById('costUpgrade' + i).innerHTML = '' + costUpgrade[i];
-		
+
 		if(currentMoney < costUpgrade[i])
 			document.getElementById('shopItem' + i).style.opacity = '0.5';
 		else
@@ -816,14 +814,14 @@ var buySound = 1;
 function buyUpgrade(i) {
 	if(currentMoney < costUpgrade[i])
 		return;
-	
+
 	switch(i) {
 		case 0:		// + 10 maxHP
 			setMaxHP(getMaxHP() + 10);
 			break;
 		case 1:		// passive HP regen
 			clearInterval(passiveHPID);
-			passiveHPID = setInterval(function() {		
+			passiveHPID = setInterval(function() {
 				if (!Pause) {
 					currentHP = currentHP + 1;
 					displayedHP += 1;
@@ -833,7 +831,7 @@ function buyUpgrade(i) {
 
 					if (displayedHP > maxHP)
 						displayedHP = maxHP;
-					
+
 					updateHPDisplay();
 				}
 			}, 5000 / ++amountUpgrade2);
@@ -866,7 +864,7 @@ function buyUpgrade(i) {
 		default:
 			return;
 	}
-	
+
 	switch(buySound){
 		case 1:
 			cachingAudio1.play();
@@ -878,13 +876,13 @@ function buyUpgrade(i) {
 			cachingAudio3.play();
 		break;
 	}
-	
+
 	if(buySound>=3){
 		buySound=1;
 	}else{
 		buySound++;
 	}
-	
+
 	changeMoney(-costUpgrade[i]);
 	moneySpentInShop += costUpgrade[i];
 	costUpgrade[i] = parseInt(costUpgrade[i] * costUpgradeFactor[i]);
@@ -894,36 +892,36 @@ function buyUpgrade(i) {
 
 function pickUpPowerUpNote(value){
 	document.getElementById('powerUpPickUpNote').innerHTML = value;
-	
+
 	var box = document.getElementById('powerUpPickUp');
-	
+
 	//$(box).animate({bottom: '-50px'}, 1);
 	$(box).animate({bottom: '60px'}, 500);
 	$(box).animate({bottom: '60px'}, 1000);
 	$(box).animate({bottom: '-50px'}, 500);
-	
+
 
 }
 
 /**
  * FUNCTIONS FOR MILESTONES
  */
- 
+
 var reachedMoney = 0;
 var moneySpentInShop = 0;
 var reachedMaxSpeed = 80;
- 
+
 function displayMilestoneNote(value) {
 	//document.getElementById('milestoneNote').innerHTML = value;
 	//$('#picRef').css('background-image', 'url(../textures/GUIachievement2.png)');
-	
+
 	achievementAudio.play();
-	
+
 	var displayRef = document.getElementById('milestoneDisplay');
 	displayRef.innerHTML = 'You have unlocked: ' + milestoneName[value - 1] + '<br> Highscore += ' + milestonesHighscore[value - 1];
-	
+
 	changeScore(parseInt(milestonesHighscore[value-1]));
-	
+
 	$(displayRef).animate({opacity: '1', right: '10px'}, 1000);
 	setTimeout(function() {
 		$(displayRef).animate({opacity: '0', right: '-400px'}, 1000);
@@ -997,14 +995,14 @@ function changeMilestoneProgress (number, current, max) {
 		percentage = 100;
 		setFinished(number);
 	}
-	$('#progressbar' + number).css('width', percentage + '%'); 
+	$('#progressbar' + number).css('width', percentage + '%');
 	$('#currentAchievementProgress' + number).html(current);
 }
 
 
 function setFinished(number) {
 	/* Ideen?? */
-	
+
 	if(!reachedMilestone[number-1]){
 		displayMilestoneNote(number);
 		reachedMilestone[number-1] = true;
@@ -1019,7 +1017,7 @@ function setFinished(number) {
 /**
  * FUNCTIONS FOR OPTIONS
  */
- 
+
 /* Highlights the active crosshair */
 function checkActiveCross() {
 	$('.crossPic').css('border-color','rgba(0, 153, 204, 0.7)');
@@ -1054,19 +1052,19 @@ function hideScrollbars() {
 function invertShieldBar() {
 	var shieldBox = document.getElementById('shieldBox');
 	var shieldTextBox = document.getElementById('shieldTextBox');
-	
+
 	switch(shieldTextBox.style.left) {
 		case '46%':
 			shieldBox.style.transform = 'rotate(180deg)';
-			shieldTextBox.style.transform = 'rotate(180deg) skewX(45deg)';	
-			shieldTextBox.style.top = '3%';	
+			shieldTextBox.style.transform = 'rotate(180deg) skewX(45deg)';
+			shieldTextBox.style.top = '3%';
 			shieldTextBox.style.left = '45%';
 			document.getElementById('invertedShieldBar').checked = false;
 			break;
 		default:
 			shieldBox.style.transform = 'rotate(0deg)';
-			shieldTextBox.style.transform = 'skewX(45deg)';	
-			shieldTextBox.style.top = '0%';	
+			shieldTextBox.style.transform = 'skewX(45deg)';
+			shieldTextBox.style.top = '0%';
 			shieldTextBox.style.left = '46%';
 			document.getElementById('invertedShieldBar').checked = true;
 			break;
@@ -1075,7 +1073,7 @@ function invertShieldBar() {
 
 function changeVolume(bar, value) {
 	switch (bar) {
-		case 1: 
+		case 1:
 			for (var v = 2; v <= 4; v++) {
 				changeVolume(v, value);
 				$('#adv'+v).val(value);
@@ -1122,7 +1120,7 @@ function buttonHover() {
 		default:
 			break;
 	}
-	
+
 	if(buySound >= 2) {
 		buySound = 1;
 	} else {
@@ -1164,9 +1162,9 @@ function showFPS() {
 }
 
 function saveGame() {
-	var temp = "Control123" + " \"" + /*playername +*/ "\" " + currentLevel + " " + 
-		maxHP + " " + currentHP + " " + maxShield + " " + currentShield + " " + 
-		currentScore + " " + currentMoney + " " + MGAmmo + " " + MaxMGAmmo + " " + 
+	var temp = "Control123" + " \"" + /*playername +*/ "\" " + currentLevel + " " +
+		maxHP + " " + currentHP + " " + maxShield + " " + currentShield + " " +
+		currentScore + " " + currentMoney + " " + MGAmmo + " " + MaxMGAmmo + " " +
 		rocketAmmo + " " + MaxRocketAmmo + " " /*+ sw + lr */ ;
 	// encrypt and write
 }
@@ -1189,8 +1187,8 @@ function loadGame(save) {
 	rocketAmmo = Number(temp[9]);
 	MaxRocketAmmo = Number(temp[9]);
 	//other weapons
-	
-	
+
+
 	updateWeaponInterface();
 	document.getElementById('invertedMouse').checked = true;
 	document.getElementById('hideScrollbars').checked = true;
