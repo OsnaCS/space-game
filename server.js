@@ -25,16 +25,16 @@ connection.query(
     +'level INT DEFAULT 1,'
     +'PRIMARY KEY (id));');
 
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [1, "Superstar McAwesome", 99, 999999], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [2, "Awesomestar McSuper", 87, 781287], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [3, "Galactic Megastar", 74, 612735], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [4, "Starlord", 68, 572398], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [5, "Captain Sweatpants", 63, 512387], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [6, "Space Cowboy", 55, 498124], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [7, "Galaxy President", 47, 417615], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [8, "Rakete", 41, 381726], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [9, "Kosmonaut", 36, 291876], function(err, result) {if (err) throw err;});
-connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [10, "Astronaut", 25, 198417], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [1, "Superstar McAwesome", 10, 10000], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [2, "Irgendwas", 9, 8750], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [3, "Sombra, Emperor of the Galaxy", 7, 5400], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [4, "Tarkan", 5, 3100], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [5, "Dönerblitz", 4, 2400], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [6, "Space Cowboy", 3, 1900], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [7, "Blinky", 2, 1100], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [8, "Henry", 2, 980], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [9, "Kosmonaut Anton", 1, 340], function(err, result) {if (err) throw err;});
+connection.query('REPLACE INTO highscore VALUES (?, ?, ?, ?);', [10, "Bob", 1, 100], function(err, result) {if (err) throw err;});
 
 
 
