@@ -2,6 +2,9 @@ var cross1, cross2, cross3, cross4, cross5, cross6, cross7, cross8, cross9, cros
 var crosses = [];
 var pos = 0;
 var old = 0;
+var crossx = 0;
+var crossy = 5;
+var crossz = -40;
 function Crosshairs() {
 
     return {
@@ -13,7 +16,7 @@ function Crosshairs() {
             var materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross1 = new THREE.Sprite(materialA);
-            cross1.position.set(0, 10, -40);
+            cross1.position.set(crossx, crossy, crossz);
             cross1.scale.set(6.0, 6.0, 1.0);
             cross1.visible = false;
             crosses.push(cross1);
@@ -24,7 +27,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross2 = new THREE.Sprite(materialA);
-            cross2.position.set(0, 10, -40);
+            cross2.position.set(crossx, crossy, crossz);
             cross2.scale.set(6.0, 6.0, 1.0);
             cross2.visible = false;
             crosses.push(cross2);
@@ -34,7 +37,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross3 = new THREE.Sprite(materialA);
-            cross3.position.set(0, 10, -40);
+            cross3.position.set(crossx, crossy, crossz);
             cross3.scale.set(6.0, 6.0, 1.0);
             cross3.visible = false;
             crosses.push(cross3);
@@ -44,7 +47,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross4 = new THREE.Sprite(materialA);
-            cross4.position.set(0, 10, -40);
+            cross4.position.set(crossx, crossy, crossz);
             cross4.scale.set(6.0, 6.0, 1.0);
             cross4.visible = false;
             crosses.push(cross4);
@@ -54,7 +57,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross5 = new THREE.Sprite(materialA);
-            cross5.position.set(0, 10, -40);
+            cross5.position.set(crossx, crossy, crossz);
             cross5.scale.set(6.0, 6.0, 1.0);
             cross5.visible = false;
             crosses.push(cross5);
@@ -64,7 +67,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross6 = new THREE.Sprite(materialA);
-            cross6.position.set(0, 10, -40);
+            cross6.position.set(crossx, crossy, crossz);
             cross6.scale.set(6.0, 6.0, 1.0);
             cross6.visible = false;
             crosses.push(cross6);
@@ -74,7 +77,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross7 = new THREE.Sprite(materialA);
-            cross7.position.set(0, 10, -40);
+            cross7.position.set(crossx, crossy, crossz);
             cross7.scale.set(6.0, 6.0, 1.0);
             cross7.visible = false;
             crosses.push(cross7);
@@ -84,7 +87,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross8 = new THREE.Sprite(materialA);
-            cross8.position.set(0, 10, -40);
+            cross8.position.set(crossx, crossy, crossz);
             cross8.scale.set(6.0, 6.0, 1.0);
             cross8.visible = false;
             crosses.push(cross8);
@@ -94,7 +97,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross9 = new THREE.Sprite(materialA);
-            cross9.position.set(0, 10, -40);
+            cross9.position.set(crossx, crossy, crossz);
             cross9.scale.set(6.0, 6.0, 1.0);
             cross9.visible = false;
             crosses.push(cross9);
@@ -104,7 +107,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross10 = new THREE.Sprite(materialA);
-            cross10.position.set(0, 10, -40);
+            cross10.position.set(crossx, crossy, crossz);
             cross10.scale.set(6.0, 6.0, 1.0);
             cross10.visible = false;
             crosses.push(cross10);
@@ -114,7 +117,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross11 = new THREE.Sprite(materialA);
-            cross11.position.set(0, 10, -40);
+            cross11.position.set(crossx, crossy, crossz);
             cross11.scale.set(6.0, 6.0, 1.0);
             cross11.visible = false;
             crosses.push(cross11);
@@ -124,7 +127,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross12 = new THREE.Sprite(materialA);
-            cross12.position.set(0, 10, -40);
+            cross12.position.set(crossx, crossy, crossz);
             cross12.scale.set(6.0, 6.0, 1.0);
             cross12.visible = false;
             crosses.push(cross12);
@@ -134,7 +137,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross13 = new THREE.Sprite(materialA);
-            cross13.position.set(0, 10, -40);
+            cross13.position.set(crossx, crossy, crossz);
             cross13.scale.set(6.0, 6.0, 1.0);
             cross13.visible = false;
             crosses.push(cross13);
@@ -144,7 +147,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross14 = new THREE.Sprite(materialA);
-            cross14.position.set(0, 10, -40);
+            cross14.position.set(crossx, crossy, crossz);
             cross14.scale.set(6.0, 6.0, 1.0);
             cross14.visible = false;
             crosses.push(cross14);
@@ -154,7 +157,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross15 = new THREE.Sprite(materialA);
-            cross15.position.set(0, 10, -40);
+            cross15.position.set(crossx, crossy, crossz);
             cross15.scale.set(6.0, 6.0, 1.0);
             cross15.visible = false;
             crosses.push(cross15);
@@ -165,7 +168,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({map: mapA});
 
             cross16 = new THREE.Sprite(materialA);
-            cross16.position.set(0, 10, -40);
+            cross16.position.set(crossx, crossy, crossz);
             cross16.scale.set(6.0, 6.0, 1.0);
             cross16.visible = false;
             crosses.push(cross16);
@@ -175,7 +178,7 @@ function Crosshairs() {
             materialA = new THREE.SpriteMaterial({ map: mapA });
 
             cross17 = new THREE.Sprite(materialA);
-            cross17.position.set(0, 10, -40);
+            cross17.position.set(crossx, crossy, crossz);
             cross17.scale.set(6.0, 6.0, 1.0);
             cross17.visible = false;
             crosses.push(cross17);
@@ -198,7 +201,7 @@ function Crosshairs() {
                 crosses[pos].position.set(0, 0, -40);
             }
             else {
-                crosses[pos].position.set(0, 10, -40);
+                crosses[pos].position.set(crossx, crossy, crossz);
             }
             crosses[old].visible = false;
             ship.remove(crosses[old]);
@@ -215,7 +218,7 @@ function switchCross(neuPos){
       old=pos;
       pos=neuPos;
 
-      crosses[pos].position.set(0,10,-40);
+      crosses[pos].position.set(crossx, crossy, crossz);
       crosses[old].visible = false;
       ship.remove(crosses[old]);
       ship.add(crosses[pos]);
