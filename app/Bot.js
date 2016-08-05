@@ -9,7 +9,7 @@ var destroyedAsteroids = 0; //f�r die milestones
 // - init()
 // - update(delta)
 var asteroids = [], enemies = [], asteroidHitBoxes = [], enemyHitBoxes = [],
-    asteroidHP = [], enemyHP = [], enemy, worldRadius, gameLevel, numOfAsteroids = 50,
+    asteroidHP = [], enemyHP = [], enemy, worldRadius, gameLevel, numOfAsteroids = 100,
     asteroidSpeedVecs = [], asteroidRotVecs = [];
 var asteroidsClone = [], enemiesClone = [];
 

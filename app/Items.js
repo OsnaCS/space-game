@@ -387,26 +387,30 @@ function collected(itemNumber) {
 			break;
 
 		case "MINIGUNDAMAGE":
-			pickUpPowerUpNote("DOUBLE DAMAGE MINIGUN!!! 30sec");
-			doubleDmg(1);
-			break;
 
+			pickUpPowerUpNote("DOUBLE DAMAGE MINIGUN!!! 30sec");
+			player.doubleDmg(1);
+
+			break;
+			particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x8E0067);
 		case "LASERDAMAGE":
 			pickUpPowerUpNote("DOUBLE DAMAGE LAZOOOR!!! 30sec");
-			doubleDmg(2);
+			player.doubleDmg(2);
 			break;
 
 		case "ROCKETDAMAGE":
 			pickUpPowerUpNote("DOUBLE ROCKET DAMAGE!!! 30sec");
-			doubleDmg(3);
+			player.doubleDmg(3);
 			break;
-
+			particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x8E0067);
 		case "MINIGUN200":
 
 			MGAmmo += 200;
 			if (MGAmmo > MaxMGAmmo) {
 				MGAmmo = MaxMGAmmo;
 			}
+
+			particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x8E0067);
 
 			pickUpPowerUpNote("MGAmmo +200");
 
@@ -421,7 +425,7 @@ function collected(itemNumber) {
 			}
 
 			pickUpPowerUpNote("MGAmmo +400");
-
+			particleHandler.addExplosion(itemHitBoxes[itemNumber].position, 5, 0x8E0067);
 			break;
 
 
@@ -432,12 +436,7 @@ function collected(itemNumber) {
 
 	}
 
-	if (rocketAmmo > MaxRocketAmmo) {
-
-		rocketAmmo = MaxRocketAmmo;
-
-	}
-
+	
 	updateWeaponInterface();
 	collectedPowerups++;
 	checkPowerupMilestones();

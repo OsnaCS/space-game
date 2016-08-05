@@ -151,6 +151,32 @@ function Player() {
 
             },
 
+             increaseDamage: function (weaponType) {
+
+
+             	switch (weaponType){
+
+
+             		case "MINIGUN": 
+
+             		break; 
+             		case "LASER" : 
+
+
+             		break; 
+
+             		case "ROCKET": 
+
+
+
+             		break; 
+
+
+
+             	}
+
+            },
+
             init: function () {
 
                 // Ship erstellen
@@ -340,7 +366,7 @@ function Player() {
 
 };
 
-function doubleMgDmg(value){
+function doubleDmg(value){
 	
 	var oldDamage;
 	var bonus;

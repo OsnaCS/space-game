@@ -207,8 +207,8 @@ function handleProjectiles() {
 
                     for (var j = 0; j <= itemHitBoxes.length - 1; j++) {
 
-                        if (collision.intersectPointBox(projectiles[i].children(projectiles[i].length - 1), itemHitBoxes[j]) ||
-                               collision.intersectPointBox(projectiles[i].children(0), itemHitBoxes[j]) ||
+                        if (collision.intersectPointBox(projectiles[i].children[projectiles[i].length - 1], itemHitBoxes[j]) ||
+                               collision.intersectPointBox(projectiles[i].children[0], itemHitBoxes[j]) ||
                                collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint25"), itemHitBoxes[j]) ||
                                collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint50"), itemHitBoxes[j]) ||
                                collision.intersectPointBox(projectiles[i].getObjectByName("BoxPoint75"), itemHitBoxes[j])) {
@@ -279,8 +279,10 @@ function handleProjectiles() {
                             if (collision.intersectPointEnemyHitBox(projectiles[i].getObjectByName("BoxPoint"), enemyHitBoxes[j][k], j)) {
                                 MGbol = true;
                                 successMachineGunBullet(i);
-                                collected(j);
-                                //console.log("enemy hit by MachineGun");
+
+                                
+                                console.log("enemy hit by MachineGun");
+
                                 break;
                             }
                         }
@@ -316,21 +318,22 @@ function handleProjectiles() {
 /** NICHT LÖSCHEN **/
 function handlePlayerEnemyCollision() {
 
-    // var playerHitboxes = getPlayerHitboxes();
-    // for (var i = 0; i <= playerHitboxes.length - 1; i++) {
-    //     for (var j = 0; j <= enemies.length; j++) {
-    //         var enemyHitboxes = getEnemyHitboxes(enemies[j]);
-    //         for (var k = 0; i <= enemyHitboxes.length - 1; k++) {
-    //             if (intersectBoxBox(playerHitboxes[i], enemyHitboxes[k])) {
-    //                 playerEnemyCollision();
-    //                 enemyPlayerCollision(enemies[j]);
-    //             }
-    //         }
-    //     }
-    // }
+    if (enemies !== undefined) {
+
+        for (var i = 0; i <= playerHitBoxes.length - 1; i++) {
+            for (var j = 0; j <= enemies.length - 1; j++) {
+                for (var k = 0; k <= enemies[j].length - 1; k++) {
+                   if (intersectPlayerHitBoxEnemyBox(playerHitboxes[i], enemyHitBoxes[j][k], j)) {
+                        player.playerHitByAsteroid();
+                        // enemyPlayerCollision(enemies[j]);
+                    }
+                }
+            }
+        }
+
+    }
 
 }
-
 /** NICHT LÖSCHEN **/
 function handleEnemyEnemyCollision() {
 
